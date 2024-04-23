@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Sidebar/sidebar.dart';
+import 'package:project_ta/Page/Sidebar/sidebar.dart';
 
 void main() {
   runApp(const MainApp());
