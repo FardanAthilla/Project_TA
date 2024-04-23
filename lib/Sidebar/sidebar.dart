@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/homepage.dart';
+import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/Sidebar/gap.dart';
 import 'package:project_ta/color.dart';
 
