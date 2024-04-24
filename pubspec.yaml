@@ -8,9 +8,10 @@ environment:
 
 dependencies:
   flutter:
-    sdk: flutter
+    sdk: flutter 
   get:
   flutter_svg:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:
