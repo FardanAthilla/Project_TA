@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Center(
           child: Center(
-        child: Text('Ini adalah'),
+        child: Text('Ini adalah halaman 1'),
       ),
         ));
   }
