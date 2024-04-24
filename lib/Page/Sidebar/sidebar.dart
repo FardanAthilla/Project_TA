@@ -72,12 +72,12 @@ class Navigation extends StatelessWidget {
   Widget Sidebar() {
     return Drawer(
       child: Material(
-        // Bakground drawer
+        // Background drawer
         color: Warna.background,
         child: GetBuilder<NavigationController>(
           builder: (controller) {
             return ListView(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -140,7 +140,8 @@ class Navigation extends StatelessWidget {
                 Text(
                   title,
                   // Teks pas aktif
-                  style: TextStyle(color: Warna.main),
+                  style:
+                      TextStyle(color: Warna.main, fontWeight: FontWeight.w700),
                 )
               ].withSpaceBetween(width: 10),
             ),
