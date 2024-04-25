@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
+        fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       home: SafeArea(
         child: Navigation(),
