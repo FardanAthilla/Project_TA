@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/Sidebar/gap.dart';
+import 'package:project_ta/Page/sidebar/gap.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
@@ -31,7 +31,7 @@ class Navigation extends StatelessWidget {
         backgroundColor: Warna.background,
         foregroundColor: Warna.main,
         centerTitle: false, // Geser teks ke kiri
-        titleSpacing: 0, // ngatur spasi ke kiri woi
+        titleSpacing: 0, // ngatur spasi ke kiri
         leading: IconButton(
           icon: Icon(Icons.menu, color: Warna.teks),
           onPressed: () {
