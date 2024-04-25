@@ -5,14 +5,11 @@ import 'package:project_ta/Page/Sidebar/gap.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
-// Global key untuk mengakses ScaffoldState dari Navigation di mana pun dalam aplikasi
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-// Controller untuk mengelola state navigasi
 class NavigationController extends GetxController {
   var selectedIndex = 0.obs;
 
-  // Metode untuk memilih item dalam navigasi
   void selectItem(int index) {
     selectedIndex.value = index;
   }
@@ -23,7 +20,6 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mendapatkan instance dari NavigationController
     final navigationController = Get.put(NavigationController());
 
     return Scaffold(
@@ -34,6 +30,8 @@ class Navigation extends StatelessWidget {
         ),
         backgroundColor: Warna.background,
         foregroundColor: Warna.main,
+        centerTitle: false, // Geser teks ke kiri
+        titleSpacing: 0, // ngatur spasi ke kiri woi
         leading: IconButton(
           icon: Icon(Icons.menu, color: Warna.teks),
           onPressed: () {
@@ -59,7 +57,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun judul AppBar berdasarkan index yang dipilih
   Widget buildAppBarTitle(int index) {
     switch (index) {
       case 1:
@@ -70,7 +67,6 @@ class Navigation extends StatelessWidget {
     }
   }
 
-  // Metode untuk membangun judul AppBar dengan ikon pencarian
   Widget buildAppbarTitleWithSearch() {
     return Row(
       children: [
@@ -90,7 +86,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun judul AppBar tanpa ikon pencarian
   Widget buildAppbarTitle() {
     return SvgPicture.asset(
       'Assets/logo2.svg',
@@ -99,7 +94,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun drawer sidebar
   Widget buildSidebar() {
     return Drawer(
       child: Material(
@@ -125,7 +119,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun header pada drawer
   Widget buildDrawerHeader() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -139,7 +132,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun item pada drawer
   Widget buildDrawerItem(int index, String title, IconData icon) {
     final navigationController = Get.put(NavigationController());
 
@@ -156,6 +148,7 @@ class Navigation extends StatelessWidget {
             child: Row(
               children: [
                 Icon(icon, color: Warna.main),
+                SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -163,7 +156,7 @@ class Navigation extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 )
-              ].withSpaceBetween(width: 10),
+              ],
             ),
           )
         : TextButton(
@@ -184,6 +177,7 @@ class Navigation extends StatelessWidget {
             child: Row(
               children: [
                 Icon(icon, color: Warna.teks),
+                SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -191,7 +185,7 @@ class Navigation extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                   ),
                 )
-              ].withSpaceBetween(width: 10),
+              ],
             ),
           );
   }
