@@ -79,6 +79,7 @@ class Navigation extends StatelessWidget {
           width: 30,
           height: 30,
         ),
+        Spacer(),
         IconButton(
           icon: Icon(Icons.search, color: Warna.teks),
           onPressed: () {
