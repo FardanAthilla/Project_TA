@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/sidebar/gap.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
@@ -61,14 +60,34 @@ class Navigation extends StatelessWidget {
   Widget buildAppBarTitle(int index) {
     switch (index) {
       case 1:
+        return buildAppbarTitleSearchMesin();
       case 2:
-        return buildAppbarTitleWithSearch();
+        return buildAppbarTitleSearchSparepart();
       default:
         return buildAppbarTitle();
     }
   }
 
-  Widget buildAppbarTitleWithSearch() {
+  Widget buildAppbarTitleSearchMesin() {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          'Assets/logo2.svg',
+          width: 30,
+          height: 30,
+        ),
+        Spacer(),
+        IconButton(
+          icon: Icon(Icons.search, color: Warna.teks),
+          onPressed: () {
+            // Tambahkan logika pencarian di sini
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget buildAppbarTitleSearchSparepart() {
     return Row(
       children: [
         SvgPicture.asset(
@@ -105,13 +124,13 @@ class Navigation extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
                 buildDrawerHeader(),
-                buildDrawerItem(0, 'Halaman Utama', Icons.dashboard),
-                buildDrawerItem(1, 'Daftar Mesin', Icons.archive),
-                buildDrawerItem(2, 'Daftar Sparepart', Icons.build),
-                buildDrawerItem(3, 'Laporan Penjualan', Icons.delete),
-                buildDrawerItem(4, 'Laporan Service', Icons.edit),
-                buildDrawerItem(5, 'Rekap Penjualan', Icons.people),
-                buildDrawerItem(6, 'Rekap Service', Icons.people),
+                buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
+                buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewingmachine.svg'),
+                buildDrawerItem(2, 'Daftar Sparepart', 'Assets/sparepart.svg'),
+                buildDrawerItem(3, 'Laporan Penjualan', 'Assets/laporanpenjualan.svg'),
+                buildDrawerItem(4, 'Laporan Service', 'Assets/laporanservice.svg'),
+                buildDrawerItem(5, 'Rekap Penjualan', 'Assets/rekappenjualan.svg'),
+                buildDrawerItem(6, 'Rekap Service', 'Assets/rekapservice.svg'),
               ],
             );
           },
@@ -133,7 +152,7 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  Widget buildDrawerItem(int index, String title, IconData icon) {
+  Widget buildDrawerItem(int index, String title, String iconPath) {
     final navigationController = Get.put(NavigationController());
 
     return navigationController.selectedIndex.value == index
@@ -148,7 +167,12 @@ class Navigation extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(icon, color: Warna.main),
+                SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.main,
+              ),
                 SizedBox(width: 10),
                 Text(
                   title,
@@ -177,7 +201,12 @@ class Navigation extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(icon, color: Warna.teks),
+                SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.teks,
+              ),
                 SizedBox(width: 10),
                 Text(
                   title,
