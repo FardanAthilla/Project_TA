@@ -124,13 +124,16 @@ class Navigation extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
                 buildDrawerHeader(),
+                SizedBox(
+                  height: 10,
+                ),
                 buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
-                buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewingmachine.svg'),
-                buildDrawerItem(2, 'Daftar Sparepart', 'Assets/sparepart.svg'),
-                buildDrawerItem(3, 'Laporan Penjualan', 'Assets/laporanpenjualan.svg'),
-                buildDrawerItem(4, 'Laporan Service', 'Assets/laporanservice.svg'),
-                buildDrawerItem(5, 'Rekap Penjualan', 'Assets/rekappenjualan.svg'),
-                buildDrawerItem(6, 'Rekap Service', 'Assets/rekapservice.svg'),
+                buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewing-machine.svg'),
+                buildDrawerItem(2, 'Daftar Sparepart', 'Assets/spare-parts.svg'),
+                buildDrawerItem(3, 'Laporan Penjualan', 'Assets/sales.svg'),
+                buildDrawerItem(4, 'Laporan Service', 'Assets/information.svg'),
+                buildDrawerItem(5, 'Rekap Penjualan', 'Assets/profit-report.svg'),
+                buildDrawerItem(6, 'Rekap Service', 'Assets/report.svg'),
               ],
             );
           },
@@ -173,12 +176,12 @@ class Navigation extends StatelessWidget {
                 height: 24,
                 color: Warna.main,
               ),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
                     color: Warna.main,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w900,
                   ),
                 )
               ],
@@ -207,7 +210,7 @@ class Navigation extends StatelessWidget {
                 height: 24,
                 color: Warna.teks,
               ),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
