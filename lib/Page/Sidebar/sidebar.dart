@@ -114,16 +114,17 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  Widget buildSidebar() {
-    return Drawer(
-      child: Material(
-        color: Warna.background,
-        child: GetBuilder<NavigationController>(
-          builder: (controller) {
-            return ListView(
-              padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
+Widget buildSidebar() {
+  return Drawer(
+    child: Material(
+      color: Warna.background,
+      child: Column(
+        children: [
+          buildDrawerHeader(),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.only(top: 40.0), // untuk ngatur padding atasnya
               children: <Widget>[
-                buildDrawerHeader(),
                 buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
                 buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewingmachine.svg'),
                 buildDrawerItem(2, 'Daftar Sparepart', 'Assets/sparepart.svg'),
@@ -132,25 +133,28 @@ class Navigation extends StatelessWidget {
                 buildDrawerItem(5, 'Rekap Penjualan', 'Assets/rekappenjualan.svg'),
                 buildDrawerItem(6, 'Rekap Service', 'Assets/rekapservice.svg'),
               ],
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget buildDrawerHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      height: kToolbarHeight,
-      color: Warna.background,
-      child: SvgPicture.asset(
-        'Assets/logo2.svg',
-        width: 30,
-        height: 30,
-      ),
-    );
-  }
+
+Widget buildDrawerHeader() { //ini buat atur header
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 8.0),
+    height: kToolbarHeight,
+    color: Warna.background,
+    child: SvgPicture.asset(
+      'Assets/logo2.svg',
+      width: 100,
+      height: 100,
+    ),
+  );
+}
+
 
   Widget buildDrawerItem(int index, String title, String iconPath) {
     final navigationController = Get.put(NavigationController());
