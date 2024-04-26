@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/Sidebar/gap.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
-// Global key untuk mengakses ScaffoldState dari Navigation di mana pun dalam aplikasi
+
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-// Controller untuk mengelola state navigasi
 class NavigationController extends GetxController {
   var selectedIndex = 0.obs;
 
-  // Metode untuk memilih item dalam navigasi
   void selectItem(int index) {
     selectedIndex.value = index;
   }
@@ -23,7 +20,6 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mendapatkan instance dari NavigationController
     final navigationController = Get.put(NavigationController());
 
     return Scaffold(
@@ -34,6 +30,8 @@ class Navigation extends StatelessWidget {
         ),
         backgroundColor: Warna.background,
         foregroundColor: Warna.main,
+        centerTitle: false, // Geser teks ke kiri
+        titleSpacing: 0, // ngatur spasi ke kiri
         leading: IconButton(
           icon: Icon(Icons.menu, color: Warna.teks),
           onPressed: () {
@@ -59,19 +57,18 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun judul AppBar berdasarkan index yang dipilih
   Widget buildAppBarTitle(int index) {
     switch (index) {
       case 1:
+        return buildAppbarTitleSearchMesin();
       case 2:
-        return buildAppbarTitleWithSearch();
+        return buildAppbarTitleSearchSparepart();
       default:
         return buildAppbarTitle();
     }
   }
 
-  // Metode untuk membangun judul AppBar dengan ikon pencarian
-  Widget buildAppbarTitleWithSearch() {
+  Widget buildAppbarTitleSearchMesin() {
     return Row(
       children: [
         SvgPicture.asset(
@@ -79,6 +76,7 @@ class Navigation extends StatelessWidget {
           width: 30,
           height: 30,
         ),
+        Spacer(),
         IconButton(
           icon: Icon(Icons.search, color: Warna.teks),
           onPressed: () {
@@ -89,7 +87,25 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun judul AppBar tanpa ikon pencarian
+  Widget buildAppbarTitleSearchSparepart() {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          'Assets/logo2.svg',
+          width: 30,
+          height: 30,
+        ),
+        Spacer(),
+        IconButton(
+          icon: Icon(Icons.search, color: Warna.teks),
+          onPressed: () {
+            // Tambahkan logika pencarian di sini
+          },
+        ),
+      ],
+    );
+  }
+
   Widget buildAppbarTitle() {
     return SvgPicture.asset(
       'Assets/logo2.svg',
@@ -98,7 +114,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun drawer sidebar
   Widget buildSidebar() {
     return Drawer(
       child: Material(
@@ -109,13 +124,13 @@ class Navigation extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
                 buildDrawerHeader(),
-                buildDrawerItem(0, 'Halaman Utama', Icons.dashboard),
-                buildDrawerItem(1, 'Daftar Mesin', Icons.archive),
-                buildDrawerItem(2, 'Daftar Sparepart', Icons.category),
-                buildDrawerItem(3, 'Laporan Penjualan', Icons.delete),
-                buildDrawerItem(4, 'Laporan Service', Icons.edit),
-                buildDrawerItem(5, 'Rekap Penjualan', Icons.people),
-                buildDrawerItem(6, 'Rekap Service', Icons.people),
+                buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
+                buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewingmachine.svg'),
+                buildDrawerItem(2, 'Daftar Sparepart', 'Assets/sparepart.svg'),
+                buildDrawerItem(3, 'Laporan Penjualan', 'Assets/laporanpenjualan.svg'),
+                buildDrawerItem(4, 'Laporan Service', 'Assets/laporanservice.svg'),
+                buildDrawerItem(5, 'Rekap Penjualan', 'Assets/rekappenjualan.svg'),
+                buildDrawerItem(6, 'Rekap Service', 'Assets/rekapservice.svg'),
               ],
             );
           },
@@ -124,7 +139,6 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun header pada drawer
   Widget buildDrawerHeader() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -138,8 +152,7 @@ class Navigation extends StatelessWidget {
     );
   }
 
-  // Metode untuk membangun item pada drawer
-  Widget buildDrawerItem(int index, String title, IconData icon) {
+  Widget buildDrawerItem(int index, String title, String iconPath) {
     final navigationController = Get.put(NavigationController());
 
     return navigationController.selectedIndex.value == index
@@ -154,7 +167,13 @@ class Navigation extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(icon, color: Warna.main),
+                SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.main,
+              ),
+                SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -162,7 +181,7 @@ class Navigation extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 )
-              ].withSpaceBetween(width: 10),
+              ],
             ),
           )
         : TextButton(
@@ -182,7 +201,13 @@ class Navigation extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(icon, color: Warna.teks),
+                SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.teks,
+              ),
+                SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -190,7 +215,7 @@ class Navigation extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                   ),
                 )
-              ].withSpaceBetween(width: 10),
+              ],
             ),
           );
   }
