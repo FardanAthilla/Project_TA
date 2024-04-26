@@ -176,7 +176,7 @@ class Navigation extends StatelessWidget {
                 height: 24,
                 color: Warna.main,
               ),
-                SizedBox(width: 50),
+                SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
@@ -210,7 +210,7 @@ class Navigation extends StatelessWidget {
                 height: 24,
                 color: Warna.teks,
               ),
-                SizedBox(width: 40),
+                SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
