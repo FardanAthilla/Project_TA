@@ -5,6 +5,7 @@ import 'package:project_ta/Page/sidebar/gap.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
+
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class NavigationController extends GetxController {
@@ -106,7 +107,7 @@ class Navigation extends StatelessWidget {
                 buildDrawerHeader(),
                 buildDrawerItem(0, 'Halaman Utama', Icons.dashboard),
                 buildDrawerItem(1, 'Daftar Mesin', Icons.archive),
-                buildDrawerItem(2, 'Daftar Sparepart', Icons.category),
+                buildDrawerItem(2, 'Daftar Sparepart', Icons.build),
                 buildDrawerItem(3, 'Laporan Penjualan', Icons.delete),
                 buildDrawerItem(4, 'Laporan Service', Icons.edit),
                 buildDrawerItem(5, 'Rekap Penjualan', Icons.people),

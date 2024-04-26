@@ -12,6 +12,7 @@ dependencies:
   get:
   flutter_svg:
   google_fonts:
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
