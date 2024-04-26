@@ -114,17 +114,19 @@ class Navigation extends StatelessWidget {
     );
   }
 
-Widget buildSidebar() {
-  return Drawer(
-    child: Material(
-      color: Warna.background,
-      child: Column(
-        children: [
-          buildDrawerHeader(),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 40.0), // untuk ngatur padding atasnya
+  Widget buildSidebar() {
+    return Drawer(
+      child: Material(
+        color: Warna.background,
+        child: GetBuilder<NavigationController>(
+          builder: (controller) {
+            return ListView(
+              padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
+                buildDrawerHeader(),
+                SizedBox(
+                  height: 10,
+                ),
                 buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
                 buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewingmachine.svg'),
                 buildDrawerItem(2, 'Daftar Sparepart', 'Assets/sparepart.svg'),
@@ -133,28 +135,25 @@ Widget buildSidebar() {
                 buildDrawerItem(5, 'Rekap Penjualan', 'Assets/rekappenjualan.svg'),
                 buildDrawerItem(6, 'Rekap Service', 'Assets/rekapservice.svg'),
               ],
-            ),
-          ),
-        ],
+            );
+          },
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-
-Widget buildDrawerHeader() { //ini buat atur header
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 8.0),
-    height: kToolbarHeight,
-    color: Warna.background,
-    child: SvgPicture.asset(
-      'Assets/logo2.svg',
-      width: 100,
-      height: 100,
-    ),
-  );
-}
-
+  Widget buildDrawerHeader() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      height: kToolbarHeight,
+      color: Warna.background,
+      child: SvgPicture.asset(
+        'Assets/logo2.svg',
+        width: 30,
+        height: 30,
+      ),
+    );
+  }
 
   Widget buildDrawerItem(int index, String title, String iconPath) {
     final navigationController = Get.put(NavigationController());
@@ -177,12 +176,12 @@ Widget buildDrawerHeader() { //ini buat atur header
                 height: 24,
                 color: Warna.main,
               ),
-                SizedBox(width: 10),
+                SizedBox(width: 50),
                 Text(
                   title,
                   style: TextStyle(
                     color: Warna.main,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w900,
                   ),
                 )
               ],
@@ -211,7 +210,7 @@ Widget buildDrawerHeader() { //ini buat atur header
                 height: 24,
                 color: Warna.teks,
               ),
-                SizedBox(width: 10),
+                SizedBox(width: 40),
                 Text(
                   title,
                   style: TextStyle(
