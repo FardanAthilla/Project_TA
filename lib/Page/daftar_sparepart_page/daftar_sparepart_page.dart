@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_ta/color.dart';
 
-class DaftarMesinPage extends StatelessWidget {
-  const DaftarMesinPage({Key? key}) : super(key: key);
+class DaftarSparepartPage extends StatelessWidget {
+  const DaftarSparepartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
