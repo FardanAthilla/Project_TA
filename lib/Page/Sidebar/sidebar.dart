@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
+import 'package:project_ta/Page/laporan_penjualan/laporan_penjualan_view.dart';
 import 'package:project_ta/color.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -47,7 +48,7 @@ class Navigation extends StatelessWidget {
             HomePage(),
             Placeholder(),
             Placeholder(),
-            Placeholder(),
+            LaporanPenjualanPage(),
             Placeholder(),
             Placeholder(),
             Placeholder(),
