@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
-
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class NavigationController extends GetxController {
@@ -12,9 +11,11 @@ class NavigationController extends GetxController {
 
   void selectItem(int index) {
     selectedIndex.value = index;
+    update();
   }
 }
 
+//Appbar
 class Navigation extends StatelessWidget {
   const Navigation({Key? key});
 
@@ -22,23 +23,22 @@ class Navigation extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigationController = Get.put(NavigationController());
 
-    return Scaffold(
+    return Obx(() => 
+    Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Obx(
-          () => buildAppBarTitle(navigationController.selectedIndex.value),
+        title: buildAppBarTitle(navigationController.selectedIndex.value),
+          backgroundColor: navigationController.selectedIndex.value == 0 ? Warna.main : Warna.background,
+          foregroundColor: Warna.white,
+          centerTitle: false,
+          titleSpacing: 0,
+          leading: IconButton(  
+            icon: Icon(Icons.menu, color: navigationController.selectedIndex.value == 0 ? Warna.white : Warna.teks,),
+            onPressed: () {
+              scaffoldKey.currentState!.openDrawer();
+            },
+          ),
         ),
-        backgroundColor: Warna.background,
-        foregroundColor: Warna.main,
-        centerTitle: false, // Geser teks ke kiri
-        titleSpacing: 0, // ngatur spasi ke kiri
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: Warna.teks),
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-      ),
       drawer: buildSidebar(),
       body: Obx(
         () => IndexedStack(
@@ -54,11 +54,14 @@ class Navigation extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 
   Widget buildAppBarTitle(int index) {
     switch (index) {
+      case 0:
+        return buildAppbarHomePage();
       case 1:
         return buildAppbarTitleSearchMesin();
       case 2:
@@ -68,6 +71,44 @@ class Navigation extends StatelessWidget {
     }
   }
 
+
+Widget buildAppbarHomePage() {
+  return Row(
+    children: [
+      Spacer(),
+      Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: Text(
+          'Nama Kamu',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(right: 10.0, left: 10),
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey[300],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              'path_to_your_image',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+
+
   Widget buildAppbarTitleSearchMesin() {
     return Row(
       children: [
@@ -76,7 +117,7 @@ class Navigation extends StatelessWidget {
           width: 30,
           height: 30,
         ),
-        Spacer(),
+        const Spacer(),
         IconButton(
           icon: Icon(Icons.search, color: Warna.teks),
           onPressed: () {
@@ -95,7 +136,7 @@ class Navigation extends StatelessWidget {
           width: 30,
           height: 30,
         ),
-        Spacer(),
+        const Spacer(),
         IconButton(
           icon: Icon(Icons.search, color: Warna.teks),
           onPressed: () {
@@ -114,6 +155,7 @@ class Navigation extends StatelessWidget {
     );
   }
 
+//Sidebar
   Widget buildSidebar() {
     return Drawer(
       child: Material(
@@ -121,18 +163,20 @@ class Navigation extends StatelessWidget {
         child: GetBuilder<NavigationController>(
           builder: (controller) {
             return ListView(
-              padding: EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
               children: <Widget>[
                 buildDrawerHeader(),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
                 buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewing-machine.svg'),
-                buildDrawerItem(2, 'Daftar Sparepart', 'Assets/spare-parts.svg'),
+                buildDrawerItem(
+                    2, 'Daftar Sparepart', 'Assets/spare-parts.svg'),
                 buildDrawerItem(3, 'Laporan Penjualan', 'Assets/sales.svg'),
                 buildDrawerItem(4, 'Laporan Service', 'Assets/information.svg'),
-                buildDrawerItem(5, 'Rekap Penjualan', 'Assets/profit-report.svg'),
+                buildDrawerItem(
+                    5, 'Rekap Penjualan', 'Assets/profit-report.svg'),
                 buildDrawerItem(6, 'Rekap Service', 'Assets/report.svg'),
               ],
             );
@@ -144,7 +188,7 @@ class Navigation extends StatelessWidget {
 
   Widget buildDrawerHeader() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       height: kToolbarHeight,
       color: Warna.background,
       child: SvgPicture.asset(
@@ -163,7 +207,7 @@ class Navigation extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: Warna.mainblue,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(1000),
                 bottomRight: Radius.circular(1000),
               ),
@@ -171,12 +215,12 @@ class Navigation extends StatelessWidget {
             child: Row(
               children: [
                 SvgPicture.asset(
-                iconPath,
-                width: 24,
-                height: 24,
-                color: Warna.main,
-              ),
-                SizedBox(width: 20),
+                  iconPath,
+                  width: 24,
+                  height: 24,
+                  color: Warna.main,
+                ),
+                const SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
@@ -194,7 +238,7 @@ class Navigation extends StatelessWidget {
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(14),
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(1000),
                   bottomRight: Radius.circular(1000),
@@ -205,12 +249,12 @@ class Navigation extends StatelessWidget {
             child: Row(
               children: [
                 SvgPicture.asset(
-                iconPath,
-                width: 24,
-                height: 24,
-                color: Warna.teks,
-              ),
-                SizedBox(width: 20),
+                  iconPath,
+                  width: 24,
+                  height: 24,
+                  color: Warna.teks,
+                ),
+                const SizedBox(width: 20),
                 Text(
                   title,
                   style: TextStyle(
