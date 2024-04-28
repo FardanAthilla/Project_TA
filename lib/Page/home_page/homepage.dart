@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project_ta/color.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,13 +7,117 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Warna.background,
-        padding: const EdgeInsets.all(10),
-        child: Center(
-          child: Center(
-        child: Text('Ini adalah'),
+    List<String> teks = [
+      'Daftar Mesin',
+      'Daftar Sparepart',
+      'Laporan Penjualan',
+      'Laporan Service',
+      'Rekap Penjualan',
+      'Rekap Service',
+    ];
+
+    final double itemWidth = MediaQuery.of(context).size.width / 3;
+
+    List<VoidCallback> onTapActions = [
+      () {
+        print("Iwak1");
+      },
+      () {
+        print("Iwak2");
+      },
+      () {
+        print("Iwak3");
+      },
+      () {
+        print("Iwak4");
+      },
+      () {
+        print("Iwak5");
+      },
+      () {
+        print("Iwak6");
+      },
+    ];
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              color: Warna.main,
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Halaman Utama',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Warna.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Warna.background,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50.0),
+                  topRight: Radius.circular(50.0),
+                ),
+              ),
+              height: MediaQuery.of(context).size.height / 1.5,
+              padding: const EdgeInsets.all(20),
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 1.06,
+                mainAxisSpacing: 20.0,
+                crossAxisSpacing: 20.0,
+                children: List.generate(
+                  6,
+                  (index) => GestureDetector(
+                    onTap: onTapActions[index],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Warna.card,
+                        borderRadius: BorderRadius.circular(
+                            15.0),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'Assets/$index.png',
+                              width: itemWidth * 0.6,
+                              height: itemWidth * 0.6,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              teks[index],
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Warna.teks,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-        ));
+    );
   }
 }
