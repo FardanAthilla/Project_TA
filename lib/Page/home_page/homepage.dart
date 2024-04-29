@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Halaman Utama!',
+                    'Halaman Utama',
                     style: TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
