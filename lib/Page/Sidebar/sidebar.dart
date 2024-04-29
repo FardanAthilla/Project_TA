@@ -82,15 +82,15 @@ Widget buildAppbarHomePage() {
         child: Text(
           'Nama Kamu',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
       ),
       Padding(
         padding: EdgeInsets.only(right: 10.0, left: 10),
         child: Container(
-          width: 40,
-          height: 40,
+          width: 35,
+          height: 35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.grey[300],
