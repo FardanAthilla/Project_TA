@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/sidebar/sidebar.dart';
 import 'package:project_ta/color.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,6 +9,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationController = Get.put(NavigationController());
+
     List<String> teks = [
       'Daftar Mesin',
       'Daftar Sparepart',
@@ -20,22 +24,22 @@ class HomePage extends StatelessWidget {
 
     List<VoidCallback> onTapActions = [
       () {
-        print("Iwak1");
+        navigationController.selectedIndex.value = 1;
       },
       () {
-        print("Iwak2");
+        navigationController.selectedIndex.value = 2;
       },
       () {
-        print("Iwak3");
+        navigationController.selectedIndex.value = 3;
       },
       () {
-        print("Iwak4");
+        navigationController.selectedIndex.value = 4;
       },
       () {
-        print("Iwak5");
+        navigationController.selectedIndex.value = 5;
       },
       () {
-        print("Iwak6");
+        navigationController.selectedIndex.value = 6;
       },
     ];
 
@@ -45,7 +49,7 @@ class HomePage extends StatelessWidget {
           Positioned.fill(
             child: Container(
               color: Warna.main,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(left: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,41 +77,44 @@ class HomePage extends StatelessWidget {
                   topRight: Radius.circular(50.0),
                 ),
               ),
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: MediaQuery.of(context).size.height / 1.25,
               padding: const EdgeInsets.all(20),
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 1.06,
-                mainAxisSpacing: 20.0,
-                crossAxisSpacing: 20.0,
-                children: List.generate(
-                  6,
-                  (index) => GestureDetector(
-                    onTap: onTapActions[index],
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Warna.card,
-                        borderRadius: BorderRadius.circular(
-                            15.0),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'Assets/$index.png',
-                              width: itemWidth * 0.6,
-                              height: itemWidth * 0.6,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              teks[index],
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Warna.teks,
+              child: Center(
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.90,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
+                  children: List.generate(
+                    6,
+                    (index) => GestureDetector(
+                      onTap: onTapActions[index],
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Warna.card,
+                          borderRadius: BorderRadius.circular(
+                              15.0),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'Assets/$index.png',
+                                width: itemWidth * 0.6,
+                                height: itemWidth * 0.6,
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 20),
+                              Text(
+                                teks[index],
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Warna.teks,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
