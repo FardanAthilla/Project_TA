@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/daftar_mesin_page.dart/daftar_mesin_page.dart';
@@ -82,15 +83,15 @@ Widget buildAppbarHomePage() {
         child: Text(
           'Nama Kamu',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
       ),
       Padding(
         padding: EdgeInsets.only(right: 10.0, left: 10),
         child: Container(
-          width: 40,
-          height: 40,
+          width: 35,
+          height: 35,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.grey[300],
