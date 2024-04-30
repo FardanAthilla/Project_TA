@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       //sementara
                     },
-                    child: Text('Loginpepek'),
+                    child: Text('Login'),
                   ),
                 ],
               ),
