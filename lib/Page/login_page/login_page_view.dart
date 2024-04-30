@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
             left: 0,
             right: 0,
             child: Image.asset(
-              'Assets/login.png',
+              'Assets/login3.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -35,12 +35,13 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       //sementara
                     },
-                    child: Text('Login'),
+                    child: Text('Loginpepek'),
                   ),
                 ],
               ),
