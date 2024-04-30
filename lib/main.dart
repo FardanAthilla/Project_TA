@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_ta/Page/login_page/login_page_view.dart';
 import 'package:project_ta/Page/sidebar/sidebar.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       home: SafeArea(
-        child: Navigation(),
+        child: LoginPage(),
       ),
     );
   }
