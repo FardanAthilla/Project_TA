@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:project_ta/color.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/sidebar/sidebar.dart';
 
-class DaftarMesin extends StatelessWidget {
-  const DaftarMesin({Key? key}) : super(key: key);
+class DaftarMesinPage extends StatelessWidget {
+  const DaftarMesinPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Warna.background,
-        padding: const EdgeInsets.all(10),
-        child: Center(
-          child: Center(
-        child: Text('Ini adalah daftar mesin page'),
-      ),
-        ));
+    final navigationController = Get.put(NavigationController());
+    return WillPopScope(
+      onWillPop: () async {
+        navigationController.selectedIndex.value = 0;
+        return true;
+      },
+      child: Scaffold(),
+    );
   }
 }

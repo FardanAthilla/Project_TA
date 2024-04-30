@@ -47,7 +47,7 @@ class Navigation extends StatelessWidget {
           index: navigationController.selectedIndex.value,
           children: const [
             HomePage(),
-            DaftarMesin(),
+            DaftarMesinPage(),
             Placeholder(),
             Placeholder(),
             Placeholder(),
