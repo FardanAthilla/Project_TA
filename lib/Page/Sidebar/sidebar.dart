@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Page/daftar_mesin_page.dart/daftar_mesin_page.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/color.dart';
 
@@ -46,7 +47,7 @@ class Navigation extends StatelessWidget {
           index: navigationController.selectedIndex.value,
           children: const [
             HomePage(),
-            Placeholder(),
+            DaftarMesinPage(),
             Placeholder(),
             Placeholder(),
             Placeholder(),
