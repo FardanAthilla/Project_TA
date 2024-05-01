@@ -39,15 +39,34 @@ class LoginPage extends StatelessWidget {
               height: height / 1.40,
               padding: const EdgeInsets.all(20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded( 
-                    child: Align(
-                      alignment: Alignment.topCenter, //ini nguawur 
-                      child: SvgPicture.asset(
-                        "Assets/logo2.svg",
-                        width: 800,
+                  SvgPicture.asset(
+                    "Assets/logo2.svg",
+                    width: 800,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Selamat datang!',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Mohon login untuk melanjutkan',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
