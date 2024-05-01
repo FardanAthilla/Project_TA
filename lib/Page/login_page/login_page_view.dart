@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/sidebar/sidebar.dart';
 import 'package:project_ta/color.dart';
 
 class LoginPage extends StatelessWidget {
@@ -39,7 +41,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      //sementara
+                      Get.to(Navigation());
                     },
                     child: Text('Login'),
                   ),
