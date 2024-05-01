@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/sidebar/sidebar.dart';
 import 'package:project_ta/color.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
- @override
+  
+  @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -32,12 +36,19 @@ class LoginPage extends StatelessWidget {
                   topRight: Radius.circular(50.0),
                 ),
               ),
-              height: MediaQuery.of(context).size.height / 1.40,
+              height: height / 1.40,
               padding: const EdgeInsets.all(20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
+                  Expanded( 
+                    child: Align(
+                      alignment: Alignment.topCenter, //ini nguawur 
+                      child: SvgPicture.asset(
+                        "Assets/logo2.svg",
+                        width: 800,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
