@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:project_ta/Page/sidebar/sidebar.dart';
-import 'package:project_ta/color.dart';
+  import 'package:flutter/material.dart';
+  import 'package:flutter_svg/svg.dart';
+  import 'package:get/get.dart';
+  import 'package:project_ta/Page/sidebar/sidebar.dart';
+  import 'package:project_ta/color.dart';
 
-class LoginPage extends StatelessWidget {
+ class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   
   @override
@@ -20,10 +20,9 @@ class LoginPage extends StatelessWidget {
             child: Image.asset(
               'Assets/login3.png',
               fit: BoxFit.cover,
-              width: 800,
             ),
           ),
-          Positioned(
+          Positioned( 
             bottom: 0,
             left: 0,
             right: 0,
@@ -36,7 +35,7 @@ class LoginPage extends StatelessWidget {
                   topRight: Radius.circular(50.0),
                 ),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
               height: height / 1.40,
               width: width, // Lebar Container mengikuti lebar layar
               child: Column(
@@ -44,22 +43,29 @@ class LoginPage extends StatelessWidget {
                 children: [     
                   SvgPicture.asset(
                     "Assets/logo2.svg",
-                    width: 800,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Selamat datang!',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    width: 1000,
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    'Mohon login untuk melanjutkan',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500
+                  Center(
+                    child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Selamat datang!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Mohon login untuk melanjutkan',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 40),
@@ -71,7 +77,22 @@ class LoginPage extends StatelessWidget {
                         "Username",
                         style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Warna.card
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none
+                          ),
                         ),
                       )
                     ],
