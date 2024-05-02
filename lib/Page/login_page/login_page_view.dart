@@ -1,10 +1,11 @@
-  import 'package:flutter/material.dart';
-  import 'package:flutter_svg/svg.dart';
-  import 'package:get/get.dart';
-  import 'package:project_ta/Page/sidebar/sidebar.dart';
-  import 'package:project_ta/color.dart';
-
- class LoginPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/login_page/widget/textfield.dart';
+import 'package:project_ta/Page/sidebar/sidebar.dart';
+import 'package:project_ta/color.dart';
+import 'package:project_ta/Page/login_page/widget/textfield.dart';
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   
   @override
@@ -48,7 +49,6 @@
                   SizedBox(height: 5),
                   Center(
                     child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Selamat datang!',
@@ -69,33 +69,14 @@
                     ),
                   ),
                   SizedBox(height: 40),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Username",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Warna.card
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none
-                          ),
-                        ),
-                      )
-                    ],
+                  CustomTextField(
+                    hintText: 'Masukkan Nama pengguna', // Gunakan CustomTextField
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextField(
+                    hintText: 'Masukkan Password', // Gunakan CustomTextField
                   ),
                   ElevatedButton(
                     onPressed: () {
