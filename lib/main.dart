@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       home: SafeArea(
-        child: LoginPage(),
+        child: Navigation(),
       ),
     );
   }
