@@ -53,7 +53,7 @@ child: Container(
                   children: [
                     SvgPicture.asset(
                       "Assets/logo2.svg",
-                      width: 1000,
+                      width: 800,
                     ),
                     SizedBox(height: 5),
                     Center(
