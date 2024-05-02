@@ -34,7 +34,7 @@ class CustomTextField extends StatelessWidget {
           child: TextField(
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: hintText, // Menggunakan hintText dari properti
+                hintText: hintText, 
                 hintStyle: TextStyle(
                   fontSize: 12
                 ),
@@ -45,8 +45,6 @@ class CustomTextField extends StatelessWidget {
         
       ],
     );
-    
-
     
   }
 }
