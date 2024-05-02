@@ -42,7 +42,10 @@ Widget build(BuildContext context) {
           children: [
             Padding(
               padding: EdgeInsets.all(12.0),
-              child: Icon(icon),
+               child: Icon(
+                icon,
+                size: 18.0, // Adjust siz3
+              ),
             ),
             Expanded(
               child: Obx(() => TextField(
@@ -56,14 +59,16 @@ Widget build(BuildContext context) {
               )),
             ),
             if (isPassword)
-              IconButton(
-                onPressed: () {
-                  controller.togglePasswordVisibility();
-                },
-                icon: Obx(() => Icon(
-                      controller.isObsecure.value ? Icons.visibility_off : Icons.visibility,
-                    )),
-              ),
+             IconButton(
+  onPressed: () {
+    controller.togglePasswordVisibility();
+  },
+  icon: Obx(() => Icon(
+    controller.isObsecure.value ? Icons.visibility_off : Icons.visibility,
+  )),
+  padding: EdgeInsets.zero, //remove default ukurannya
+  iconSize: 18.0, // Adjust icon size
+),
           ],
         ),
       ),
