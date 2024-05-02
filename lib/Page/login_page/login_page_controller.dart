@@ -8,7 +8,7 @@ class LoginPageController extends GetxController {
       TextEditingController();
   final TextEditingController passwordTextEditingController =
       TextEditingController();
-  RxBool isObsecure = true.obs;
+  RxBool isObsecure = true.obs; ////aa woi
 
   @override
   void onInit() {
