@@ -18,11 +18,18 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            Positioned.fill(
-              child: Image.asset(
-                'Assets/login3.png',
-                fit: BoxFit.cover,
-              ),
+            Positioned(
+              top: -width * 0.2, // Position at the top
+              left: 0, // Align to the left
+              right: 0, // Align to the right
+             
+child: Container(
+  height: width,
+  child: Image.asset(
+    'Assets/login3.png',
+    fit: BoxFit.contain, // Use BoxFit.contain
+  ),
+),
             ),
             Positioned(
               bottom: 0,
