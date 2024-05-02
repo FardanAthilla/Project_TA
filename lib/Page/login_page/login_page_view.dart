@@ -10,18 +10,17 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
+          Positioned.fill(
             child: Image.asset(
               'Assets/login3.png',
               fit: BoxFit.cover,
+              width: 800,
             ),
           ),
           Positioned(
@@ -29,6 +28,7 @@ class LoginPage extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
+              alignment: Alignment.bottomCenter,
               decoration: BoxDecoration(
                 color: Warna.background, 
                 borderRadius: BorderRadius.only(
@@ -36,39 +36,46 @@ class LoginPage extends StatelessWidget {
                   topRight: Radius.circular(50.0),
                 ),
               ),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
               height: height / 1.40,
-              padding: const EdgeInsets.all(20),
+              width: width, // Lebar Container mengikuti lebar layar
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [     
                   SvgPicture.asset(
                     "Assets/logo2.svg",
                     width: 800,
                   ),
                   SizedBox(height: 10),
+                  Text(
+                    'Selamat datang!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Mohon login untuk melanjutkan',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                  SizedBox(height: 40),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Selamat datang!',
+                        "Username",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Mohon login untuk melanjutkan',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600
-                        ),
-                      ),
+                      )
                     ],
                   ),
-                  SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       Get.to(Navigation());
