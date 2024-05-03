@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+
       backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
