@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/login_page/login_page_controller.dart';
-import 'package:project_ta/Page/login_page/login_page_view.dart';
 import 'package:project_ta/color.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -9,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final bool isPassword;
 
-CustomTextField({
+ CustomTextField({
   Key? key,
   required this.hintText,
   required this.icon,
@@ -42,36 +41,64 @@ Widget build(BuildContext context) {
           children: [
             Padding(
               padding: EdgeInsets.all(12.0),
-               child: Icon(
+              child: Icon(
                 icon,
-                size: 18.0, // Adjust siz3
+                size: 18.0,
               ),
             ),
             Expanded(
-              child: Obx(() => TextField(
-                obscureText: controller.isObsecure.value,
+              child: TextField(
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: hintText,
                   hintStyle: TextStyle(fontSize: 12),
                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 17),
                 ),
-              )),
+              ),
             ),
-            if (isPassword)
-             IconButton(
-  onPressed: () {
-    controller.togglePasswordVisibility();
-  },
-  icon: Obx(() => Icon(
-    controller.isObsecure.value ? Icons.visibility_off : Icons.visibility,
-  )),
-  padding: EdgeInsets.zero, //remove default ukurannya
-  iconSize: 18.0, // Adjust icon size
-),
           ],
         ),
       ),
+      if (isPassword)
+        SizedBox(height: 20), // Add spacing between username and password
+      if (isPassword)
+        Obx(() => Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Warna.card,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Icon(
+                  icon,
+                  size: 18.0,
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  obscureText: controller.isObsecure.value,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: hintText,
+                    hintStyle: TextStyle(fontSize: 12),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 17),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () => controller.togglePasswordVisibility(),
+                icon: Icon(
+                  controller.isObsecure.value ? Icons.visibility_off : Icons.visibility,
+                ),
+                padding: EdgeInsets.zero,
+                iconSize: 18.0,
+              ),
+            ],
+          ),
+        )),
     ],
   );
 }
