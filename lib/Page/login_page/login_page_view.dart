@@ -18,10 +18,16 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            Positioned.fill(
-              child: Image.asset(
-                'Assets/login3.png',
-                fit: BoxFit.cover,
+            Positioned(
+              top: -width * 0.2, // Position at the top
+              left: 0, // Align to the left
+              right: 0, // Align to the right
+              child: Container(
+                height: width,
+                child: Image.asset(
+                  'Assets/login3.png',
+                  fit: BoxFit.contain, // Use BoxFit.contain
+                ),
               ),
             ),
             Positioned(
@@ -37,8 +43,7 @@ class LoginPage extends StatelessWidget {
                     topRight: Radius.circular(50.0),
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(
-                    vertical: 0, horizontal: 30),
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
                 height: height / 1.40,
                 width: width,
                 child: Column(
@@ -46,7 +51,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       "Assets/logo2.svg",
-                      width: 1000,
+                      width: 800,
                     ),
                     SizedBox(height: 5),
                     Center(
@@ -63,25 +68,25 @@ class LoginPage extends StatelessWidget {
                           Text(
                             'Mohon login untuk melanjutkan',
                             style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 40),
                     CustomTextField(
-                      hintText: 'Masukkan Nama pengguna',
+                      hintText: 'Username',
+                      icon: Icons.person, 
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    SizedBox(height: 20),
                     CustomTextField(
-                      hintText: 'Masukkan Password',
+                      hintText: 'Password',
+                      icon: Icons.lock, 
+                      isPassword: true, 
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    SizedBox(height: 40),
                     ButtonLogin(),
                   ],
                 ),
