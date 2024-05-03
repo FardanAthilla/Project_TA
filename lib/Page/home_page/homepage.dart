@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/sidebar/sidebar.dart';
+import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 
 class HomePage extends StatelessWidget {
