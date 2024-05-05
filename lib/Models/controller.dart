@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_ta/Page/daftar_mesin_page.dart/Model/product_response_api.dart';
+import 'package:project_ta/Models/product_response_api.dart';
 
 class ProductController extends GetxController {
   RxList<ProductResponseModel> productList = <ProductResponseModel>[].obs;
