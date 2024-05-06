@@ -294,5 +294,49 @@ class DateTextField extends StatelessWidget {
         ],
       ),
     );
-  } 
+  }
+}
+
+class FailurePopUp extends StatelessWidget {
+  final String message;
+
+  const FailurePopUp({Key? key, required this.message}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Error'),
+      content: Text(message),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
+}
+
+class SuccessPopUp extends StatelessWidget {
+  final String message;
+
+  const SuccessPopUp({Key? key, required this.message}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Success'),
+      content: Text(message),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
 }

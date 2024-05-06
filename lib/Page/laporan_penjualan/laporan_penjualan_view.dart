@@ -145,7 +145,6 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                   borderColor: Warna.danger,
                   onPressed: () {
                     _clearFields();
-                    _numberController.value.value = 0;
                   },
                 ),
                 BottomBarButton(
@@ -153,13 +152,26 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                   backgroundColor: Warna.main,
                   textColor: Colors.white,
                   borderColor: Warna.main,
-                  onPressed: () {
-                    APIService.postDataToSalesAPI(
-                      date: Get.find<DateController>().date.value,
-                      branch: _selectedCabang!,
-                      item: _namaBarangController.text,
-                      quantity: _numberController.value.value,
-                    );
+                  onPressed: () async {
+                    try {
+                      await APIService.postDataToSalesAPI(
+                        date: Get.find<DateController>().date.value,
+                        branch: _selectedCabang!,
+                        item: _namaBarangController.text,
+                        quantity: _numberController.value.value,
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (_) => SuccessPopUp(
+                            message: 'Data berhasil dikirim ke server'),
+                      );
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => FailurePopUp(
+                            message: 'Gagal mengirim data ke server'),
+                      );
+                    }
                   },
                 ),
               ],
