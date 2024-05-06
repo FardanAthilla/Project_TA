@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Page/laporan_penjualan/model/product_response_api.dart';
 import 'package:project_ta/Page/laporan_penjualan/widget/widget.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
@@ -152,7 +153,14 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                   backgroundColor: Warna.main,
                   textColor: Colors.white,
                   borderColor: Warna.main,
-                  onPressed: () {},
+                  onPressed: () {
+                    APIService.postDataToSalesAPI(
+                      date: Get.find<DateController>().date.value,
+                      branch: _selectedCabang!,
+                      item: _namaBarangController.text,
+                      quantity: _numberController.value.value,
+                    );
+                  },
                 ),
               ],
             ),
