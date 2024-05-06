@@ -105,9 +105,9 @@ class DropdownFieldWithTitle extends StatelessWidget {
     required this.title,
     required this.description,
     required this.value,
-    this.focusNode,
     required this.onChanged,
     required this.items,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -123,6 +123,7 @@ class DropdownFieldWithTitle extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           DropdownButtonFormField<String>(
+            focusNode: focusNode,
             value: value,
             items: items,
             onChanged: onChanged,
@@ -159,11 +160,13 @@ class NumberController extends GetxController {
 class NumberTextField extends StatelessWidget {
   final String title;
   final String description;
+  final FocusNode? focusNode;
 
   const NumberTextField({
     Key? key,
     required this.title,
     required this.description,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -181,6 +184,7 @@ class NumberTextField extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Obx(() => TextFormField(
+                focusNode: focusNode,
                 readOnly: true,
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(
@@ -233,11 +237,13 @@ class DateController extends GetxController {
 class DateTextField extends StatelessWidget {
   final String title;
   final String description;
+  final FocusNode? focusNode;
 
   DateTextField({
     Key? key,
     required this.title,
     required this.description,
+    this.focusNode,
   }) : super(key: key);
 
   final DateController controller = Get.put(DateController());
@@ -255,6 +261,7 @@ class DateTextField extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Obx(() => TextFormField(
+                focusNode: focusNode,
                 readOnly: true,
                 controller: TextEditingController(text: controller.date.value),
                 onTap: () async {

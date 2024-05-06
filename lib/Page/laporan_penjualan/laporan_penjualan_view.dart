@@ -26,11 +26,13 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
   String? _selectedCabang;
   TextEditingController _namaBarangController = TextEditingController();
   final NumberController _numberController = Get.put(NumberController());
+
   void _clearFields() {
     setState(() {
       _selectedCabang = null;
       _namaBarangController.text = '';
       _numberController.value.value = 0;
+      Get.find<DateController>().date.value = "";
     });
   }
 
@@ -42,8 +44,6 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
 
   @override
   Widget build(BuildContext context) {
-    final navigationController = Get.put(NavigationController());
-
     List<String> cabangOptions = [
       'Jl. Kyai Telingsing No.28',
       'Jl. Raya Kudus - Jepara No.424'
@@ -51,7 +51,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        navigationController.selectedIndex.value = 0;
+        Get.find<NavigationController>().selectedIndex.value = 0;
         return true;
       },
       child: GestureDetector(
@@ -80,6 +80,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                     DateTextField(
                       title: 'Tanggal,Bulan,Tahun',
                       description: 'Pilih tanggal menggunakan kalendar.',
+                      focusNode: widget.tanggalFocusNode,
                     ),
                     const SizedBox(height: 10),
                     DropdownFieldWithTitle(
@@ -87,6 +88,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                       description:
                           'Pilih lokasi terjadi nya transaksi dilakukan.',
                       value: _selectedCabang,
+                      focusNode: widget.cabangFocusNode,
                       onChanged: (newValue) {
                         setState(() {
                           _selectedCabang = newValue;
@@ -121,6 +123,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                     NumberTextField(
                       title: 'Jumlah Barang',
                       description: 'Jumlah Mesin/Spare part yang sudah dibeli',
+                      focusNode: widget.jumlahBarangFocusNode,
                     ),
                   ],
                 ),

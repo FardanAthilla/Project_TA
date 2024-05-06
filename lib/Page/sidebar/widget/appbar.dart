@@ -25,6 +25,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: buildAppBarTitle(selectedIndex),
       backgroundColor: selectedIndex == 0 ? Warna.main : Warna.background,
       foregroundColor: Warna.white,
+      surfaceTintColor: selectedIndex == 0 ? Warna.main : Warna.background,
       centerTitle: false,
       titleSpacing: 0,
       leading: IconButton(
