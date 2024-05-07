@@ -5,8 +5,8 @@ import 'package:project_ta/Models/product_response_api.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 
-class DaftarMesinPage extends StatelessWidget {
-  const DaftarMesinPage({Key? key}) : super(key: key);
+class DaftarSparepartPage extends StatelessWidget {
+  const DaftarSparepartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
