@@ -48,7 +48,6 @@ class Navigation extends StatelessWidget {
           children: const [
             HomePage(),
             Placeholder(),
-            Placeholder(),
             LaporanPenjualanPage(productTitle: "gsesgesgse",),
             Placeholder(),
             Placeholder(),
