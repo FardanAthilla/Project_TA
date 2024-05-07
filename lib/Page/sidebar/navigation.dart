@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/daftar_mesin_page.dart/daftar_mesin_page.dart';
+import 'package:project_ta/Page/daftar_sparepart_page/daftar_sparepart_page.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
 import 'package:project_ta/Page/sidebar/widget/appbar.dart';
 import 'package:project_ta/Page/sidebar/widget/sidebar.dart';
@@ -47,7 +48,7 @@ class Navigation extends StatelessWidget {
               children: [
                 HomePage(),
                 DaftarMesinPage(),
-                Placeholder(),
+                DaftarSparepartPage(),
                 Placeholder(),
                 Placeholder(),
                 Placeholder(),

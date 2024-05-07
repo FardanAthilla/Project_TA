@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/daftar_mesin_page.dart/Model/product_response_api.dart';
-import 'package:project_ta/Page/daftar_mesin_page.dart/controller.dart';
 import 'package:project_ta/Page/laporan_penjualan/laporan_penjualan_view.dart';
+import 'package:project_ta/Models/controller.dart';
+import 'package:project_ta/Models/product_response_api.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 
