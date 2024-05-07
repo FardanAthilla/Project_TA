@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:project_ta/Page/daftar_mesin_page.dart/daftar_mesin_page.dart';
 import 'package:project_ta/Page/daftar_sparepart_page/daftar_sparepart_page.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
-import 'package:project_ta/Page/sidebar/Widget/appbar.dart';
+import 'package:project_ta/Page/sidebar/widget/appbar.dart';
 import 'package:project_ta/Page/sidebar/widget/sidebar.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,18 +24,28 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FocusNode tanggalFocusNode = FocusNode();
+    FocusNode cabangFocusNode = FocusNode();
+    FocusNode namaBarangFocusNode = FocusNode();
+    FocusNode jumlahBarangFocusNode = FocusNode();
     final navigationController = Get.put(NavigationController());
 
     return SafeArea(
       child: Obx(
         () => Scaffold(
           key: scaffoldKey,
-          appBar: MyAppBar(selectedIndex: navigationController.selectedIndex.value),
+          appBar: MyAppBar(
+            selectedIndex: navigationController.selectedIndex.value,
+            tanggalFocusNode: tanggalFocusNode,
+            cabangFocusNode: cabangFocusNode,
+            namaBarangFocusNode: namaBarangFocusNode,
+            jumlahBarangFocusNode: jumlahBarangFocusNode,
+          ),
           drawer: buildSidebar(),
           body: Obx(
             () => IndexedStack(
               index: navigationController.selectedIndex.value,
-              children: const [
+              children: [
                 HomePage(),
                 DaftarMesinPage(),
                 DaftarSparepartPage(),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Page/daftar_mesin_page.dart/Model/product_response_api.dart';
+import 'package:project_ta/Page/daftar_mesin_page.dart/controller.dart';
+import 'package:project_ta/Page/laporan_penjualan/laporan_penjualan_view.dart';
 import 'package:project_ta/Models/controller.dart';
 import 'package:project_ta/Models/product_response_api.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
@@ -56,37 +59,46 @@ class DaftarMesinPage extends StatelessWidget {
                           itemCount: displayedProducts.length,
                           itemBuilder: (context, index) {
                             final product = displayedProducts[index];
-                            return Card(
-                              elevation: 3,
-                              margin: const EdgeInsets.all(10),
-                              color: Warna.main,
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.all(8),
-                                title: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right:
-                                                8.0), // Atur jarak di sebelah kanan teks judul
-                                        child: Text(
-                                          product.title,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                  () => LaporanPenjualanPage(
+                                    productTitle:
+                                        product.title, 
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                elevation: 3,
+                                margin: const EdgeInsets.all(10),
+                                color: Warna.main,
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(8),
+                                  title: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Text(
+                                            product.title,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Price: \$${product.price}',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
+                                      Text(
+                                        'Price: \$${product.price}',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

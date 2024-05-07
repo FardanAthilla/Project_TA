@@ -13,7 +13,8 @@ dependencies:
   flutter_svg:
   google_fonts:
   shared_preferences: ^2.2.3
-  double_tap_to_exit:
+  intl:
+  http:
 
 dev_dependencies:
   flutter_test:
