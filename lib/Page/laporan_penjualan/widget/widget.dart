@@ -305,16 +305,41 @@ class FailurePopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Error'),
-      content: Text(message),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: Text('OK'),
-        ),
-      ],
+      contentPadding: EdgeInsets.zero,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              'Gagal',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 20),
+          Image.asset(
+            'Assets/login.png',
+            height: 100,
+            width: 100,
+            fit: BoxFit.contain,
+          ),
+          SizedBox(height: 20),
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -327,16 +352,41 @@ class SuccessPopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Success'),
-      content: Text(message),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: Text('OK'),
-        ),
-      ],
+      contentPadding: EdgeInsets.zero,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              'Berhasil',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 20),
+          Image.asset(
+            'Assets/berhasil.png',
+            height: 100,
+            width: 100,
+            fit: BoxFit.contain,
+          ),
+          SizedBox(height: 20),
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 }

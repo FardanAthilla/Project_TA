@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/daftar_mesin_page.dart/daftar_mesin_page.dart';
 import 'package:project_ta/Page/home_page/homepage.dart';
-import 'package:project_ta/Page/laporan_penjualan/laporan_penjualan_view.dart';
 import 'package:project_ta/Page/sidebar/widget/appbar.dart';
 import 'package:project_ta/Page/sidebar/widget/sidebar.dart';
 
@@ -49,12 +48,7 @@ class Navigation extends StatelessWidget {
                 HomePage(),
                 DaftarMesinPage(),
                 Placeholder(),
-                LaporanPenjualanPage(
-                  tanggalFocusNode: tanggalFocusNode,
-                  cabangFocusNode: cabangFocusNode,
-                  jumlahBarangFocusNode: jumlahBarangFocusNode,
-                  namaBarangFocusNode: namaBarangFocusNode,
-                ),
+                Placeholder(),
                 Placeholder(),
                 Placeholder(),
                 Placeholder(),

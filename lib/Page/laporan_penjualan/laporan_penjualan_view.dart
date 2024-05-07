@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/laporan_penjualan/model/product_response_api.dart';
 import 'package:project_ta/Page/laporan_penjualan/widget/widget.dart';
-import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 
 class LaporanPenjualanPage extends StatefulWidget {
+  final String productTitle;
   final FocusNode? tanggalFocusNode;
   final FocusNode? cabangFocusNode;
   final FocusNode? namaBarangFocusNode;
@@ -13,6 +14,7 @@ class LaporanPenjualanPage extends StatefulWidget {
 
   const LaporanPenjualanPage({
     Key? key,
+    required this.productTitle,
     this.tanggalFocusNode,
     this.cabangFocusNode,
     this.namaBarangFocusNode,
@@ -28,10 +30,15 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
   TextEditingController _namaBarangController = TextEditingController();
   final NumberController _numberController = Get.put(NumberController());
 
+  @override
+  void initState() {
+    super.initState();
+    _namaBarangController.text = widget.productTitle;
+  }
+
   void _clearFields() {
     setState(() {
       _selectedCabang = null;
-      _namaBarangController.text = '';
       _numberController.value.value = 0;
       Get.find<DateController>().date.value = "";
     });
@@ -50,11 +57,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
       'Jl. Raya Kudus - Jepara No.424'
     ];
 
-    return WillPopScope(
-      onWillPop: () async {
-        Get.find<NavigationController>().selectedIndex.value = 0;
-        return true;
-      },
+    return SafeArea(
       child: GestureDetector(
         onTap: () {
           widget.tanggalFocusNode?.unfocus();
@@ -64,6 +67,14 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
         },
         child: Scaffold(
           backgroundColor: Warna.background,
+          appBar: AppBar(
+            backgroundColor: Warna.background,
+            title: SvgPicture.asset(
+              'Assets/logo2.svg',
+              width: 30,
+              height: 30,
+            ),
+          ),
           body: SingleChildScrollView(
             child: Align(
               alignment: Alignment.topLeft,
@@ -163,13 +174,13 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
                       showDialog(
                         context: context,
                         builder: (_) => SuccessPopUp(
-                            message: 'Data berhasil dikirim ke server'),
+                            message: 'Laporan anda telah tersimpan'),
                       );
                     } catch (e) {
                       showDialog(
                         context: context,
                         builder: (_) => FailurePopUp(
-                            message: 'Gagal mengirim data ke server'),
+                            message: 'Tolong isi semua form yang tersedia'),
                       );
                     }
                   },
