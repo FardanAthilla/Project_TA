@@ -13,6 +13,12 @@ class BuildRow extends StatelessWidget {
       children: [
         Expanded(
           flex: 5,
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal
+              ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -24,6 +30,12 @@ class BuildRow extends StatelessWidget {
         SizedBox(width: 8), 
         Expanded(
           flex: 3,
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold
+              ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
