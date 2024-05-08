@@ -15,14 +15,21 @@ class BuildRow extends StatelessWidget {
           flex: 5,
           child: Text(
             label,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal
+              ),
+
           ),
         ),
         Expanded(
           flex: 3,
           child: Text(
             text,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold
+              ),
           ),
         ),
       ],
