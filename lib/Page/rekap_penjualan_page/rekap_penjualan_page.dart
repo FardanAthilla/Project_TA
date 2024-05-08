@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_ta/Page/rekap_penjualan_page/widget/buildrow.dart';
+
 
 class RekapLaporanPenjualan extends StatelessWidget {
   const RekapLaporanPenjualan({Key? key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,51 +32,29 @@ class RekapLaporanPenjualan extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5, // Ganti dengan jumlah card yang Anda inginkan
+                  itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
-                          border: Border.all(color: Colors.grey.withOpacity(0.5), width: 2.0), // Mengatur ketebalan border menjadi 2.0
+                          border: Border.all(color: Colors.black, width: 1.0), 
                         ),
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          elevation: 0, // Hilangkan bayangan card
+                          elevation: 0, 
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Judul',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Tanggal: 08/05/2024',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    Text(
-                                      'Waktu: 10:00',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Deskripsi singkat mengenai penjualan.',
-                                  style: TextStyle(fontSize: 16),
-                                ),
+                                BuildRow(label: 'Tanggal:', text: '23-01-2025'),
+                                BuildRow(label: 'Cabang:', text: 'Menara'),
+                                BuildRow(label: 'Nama barang:', text: 'Mesin jack f3'),
+                                BuildRow(label: 'Jumlah:', text: '1'),
                               ],
                             ),
                           ),
