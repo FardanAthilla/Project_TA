@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:project_ta/Page/login_page/widget/buttonlogin.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/login_page/model/controller.dart';
+import 'package:project_ta/Page/login_page/model/token.dart';
 import 'package:project_ta/Page/login_page/widget/textfield.dart';
+import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
+import 'package:project_ta/Page/login_page/login_page_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginPageController());
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+    // Cek apakah token sudah tersimpan
+    checkToken() async {
+      final token = await getToken();
+      if (token != null && token.isNotEmpty) {
+        Get.off(Navigation());
+      }
+    }
 
+    checkToken(); // Panggil fungsi cek token
+
+    return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
-              top: -width * 0.2, // Position at the top
-              left: 0, // Align to the left
-              right: 0, // Align to the right
+              top: -width * 0.2,
+              left: 0,
+              right: 0,
               child: Container(
                 height: width,
                 child: Image.asset(
                   'Assets/login3.png',
-                  fit: BoxFit.contain, // Use BoxFit.contain
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -43,7 +57,8 @@ class LoginPage extends StatelessWidget {
                     topRight: Radius.circular(50.0),
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
                 height: height / 1.40,
                 width: width,
                 child: Column(
@@ -78,16 +93,59 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: 40),
                     CustomTextField(
                       hintText: 'Username',
-                      icon: Icons.person, 
+                      controllers: controller.emailTextEditingController,
+                      icon: Icons.person,
                     ),
                     SizedBox(height: 20),
                     CustomTextField(
                       hintText: 'Password',
-                      icon: Icons.lock, 
-                      isPassword: true, 
+                      controllers: controller.passwordTextEditingController,
+                      icon: Icons.lock,
+                      isPassword: true,
                     ),
                     SizedBox(height: 40),
-                    ButtonLogin(),
+                    Container(
+                      width: double.infinity,
+                      height: 50,
+                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final String email = Get.find<LoginPageController>()
+                              .emailTextEditingController
+                              .text;
+                          final String password =
+                              Get.find<LoginPageController>()
+                                  .passwordTextEditingController
+                                  .text;
+
+                          try {
+                            final String token =
+                                await loginUser(email, password);
+                            await saveToken(token);
+                            print('Token: $token');
+                            Get.off(Navigation());
+                          } catch (e) {
+                            print('Gagal login: $e');
+                            Get.snackbar(
+                              'Login Gagal',
+                              e.toString(),
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor: Warna.main,
+                        ),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800, color: Warna.white),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

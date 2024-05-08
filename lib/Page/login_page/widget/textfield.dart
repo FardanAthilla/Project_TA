@@ -5,12 +5,14 @@ import 'package:project_ta/color.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
+  final TextEditingController? controllers;
   final IconData icon;
   final bool isPassword;
 
   CustomTextField({
     Key? key,
     required this.hintText,
+    required this.controllers,
     required this.icon,
     this.isPassword = false,
   }) : super(key: key);
@@ -43,20 +45,33 @@ class CustomTextField extends StatelessWidget {
                 padding: EdgeInsets.all(12.0),
                 child: Icon(
                   icon,
-                  size: 18.0, // Adjust siz3
+                  size: 18.0,
                 ),
               ),
               Expanded(
-                child: Obx(() => TextField(
-                      obscureText: controller.isObsecure.value,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: hintText,
-                        hintStyle: TextStyle(fontSize: 12),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 17),
+                child: isPassword
+                    ? Obx(() => TextField(
+                          controller: controllers,
+                          obscureText: controller.isObsecure.value,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: hintText,
+                            hintStyle: TextStyle(fontSize: 12),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 17),
+                          ),
+                        ))
+                    : TextField(
+                        controller: controllers,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: hintText,
+                          hintStyle: TextStyle(fontSize: 12),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 17),
+                        ),
                       ),
-                    )),
               ),
               if (isPassword)
                 IconButton(
@@ -68,8 +83,8 @@ class CustomTextField extends StatelessWidget {
                             ? Icons.visibility_off
                             : Icons.visibility,
                       )),
-                  padding: EdgeInsets.zero, //remove default ukurannya
-                  iconSize: 18.0, // Adjust icon size
+                  padding: EdgeInsets.zero,
+                  iconSize: 18.0,
                 ),
             ],
           ),
