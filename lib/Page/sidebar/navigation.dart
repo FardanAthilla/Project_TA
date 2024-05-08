@@ -54,7 +54,7 @@ class Navigation extends StatelessWidget {
                 Placeholder(),
                 Placeholder(),
                 RekapLaporanPenjualan(),
-                Placeholder(),
+                RekapLaporanService(),
               ],
             ),
           ),
