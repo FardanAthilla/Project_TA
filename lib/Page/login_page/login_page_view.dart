@@ -17,16 +17,6 @@ class LoginPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    // Cek apakah token sudah tersimpan
-    checkToken() async {
-      final token = await getToken();
-      if (token != null && token.isNotEmpty) {
-        Get.off(Navigation());
-      }
-    }
-
-    checkToken(); // Panggil fungsi cek token
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
