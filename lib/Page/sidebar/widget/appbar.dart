@@ -5,18 +5,10 @@ import 'package:project_ta/color.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
-  final FocusNode? tanggalFocusNode;
-  final FocusNode? cabangFocusNode;
-  final FocusNode? namaBarangFocusNode;
-  final FocusNode? jumlahBarangFocusNode;
 
   const MyAppBar({
     Key? key,
     required this.selectedIndex,
-    required this.tanggalFocusNode,
-    required this.cabangFocusNode,
-    required this.namaBarangFocusNode,
-    required this.jumlahBarangFocusNode,
   }) : super(key: key);
 
   @override
@@ -35,10 +27,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         onPressed: () {
           scaffoldKey.currentState!.openDrawer();
-          tanggalFocusNode?.unfocus();
-          cabangFocusNode?.unfocus();
-          namaBarangFocusNode?.unfocus();
-          jumlahBarangFocusNode?.unfocus();
         },
       ),
     );

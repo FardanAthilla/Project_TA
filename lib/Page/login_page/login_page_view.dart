@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/login_page/model/controller.dart';
-import 'package:project_ta/Page/login_page/model/token.dart';
+import 'package:project_ta/Page/login_page/auth/controller.dart';
+import 'package:project_ta/Page/login_page/auth/token.dart';
 import 'package:project_ta/Page/login_page/widget/textfield.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 40),
                     CustomTextField(
-                      hintText: 'Username',
+                      hintText: 'Email',
                       controllers: controller.emailTextEditingController,
                       icon: Icons.person,
                     ),
@@ -95,47 +95,59 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 40),
                     Container(
-                      width: double.infinity,
-                      height: 50,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          final String email = Get.find<LoginPageController>()
-                              .emailTextEditingController
-                              .text;
-                          final String password =
-                              Get.find<LoginPageController>()
-                                  .passwordTextEditingController
-                                  .text;
+                        width: double.infinity,
+                        height: 50,
+                        margin: EdgeInsets.symmetric(horizontal: 0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final emailController =
+                                Get.find<LoginPageController>()
+                                    .emailTextEditingController;
+                            final passwordController =
+                                Get.find<LoginPageController>()
+                                    .passwordTextEditingController;
+                            final String email = emailController.text;
+                            final String password = passwordController.text;
 
-                          try {
-                            final String token =
-                                await loginUser(email, password);
-                            await saveToken(token);
-                            print('Token: $token');
-                            Get.off(Navigation());
-                          } catch (e) {
-                            print('Gagal login: $e');
-                            Get.snackbar(
-                              'Login Gagal',
-                              e.toString(),
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            try {
+                              final String token =
+                                  await loginUser(email, password);
+                              await saveToken(token);
+                              print('Token: $token');
+                              emailController.clear();
+                              passwordController.clear();
+                              Get.snackbar(
+                                'Login Berhasil',
+                                '$email berhasil login.',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Warna.main,
+                                colorText: Colors.white,
+                              );
+                              Get.off(Navigation());
+                            } catch (e) {
+                              print('Gagal login: $e');
+                              Get.snackbar(
+                                'Login Gagal',
+                                'Terjadi kesalahan saat melakukan login. Mohon coba lagi.',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Warna.danger,
+                                colorText: Colors.white,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            backgroundColor: Warna.main,
                           ),
-                          backgroundColor: Warna.main,
-                        ),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w800, color: Warna.white),
-                        ),
-                      ),
-                    )
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                color: Warna.white),
+                          ),
+                        ))
                   ],
                 ),
               ),

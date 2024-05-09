@@ -26,10 +26,6 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FocusNode tanggalFocusNode = FocusNode();
-    FocusNode cabangFocusNode = FocusNode();
-    FocusNode namaBarangFocusNode = FocusNode();
-    FocusNode jumlahBarangFocusNode = FocusNode();
     final navigationController = Get.put(NavigationController());
 
     return SafeArea(
@@ -38,10 +34,6 @@ class Navigation extends StatelessWidget {
           key: scaffoldKey,
           appBar: MyAppBar(
             selectedIndex: navigationController.selectedIndex.value,
-            tanggalFocusNode: tanggalFocusNode,
-            cabangFocusNode: cabangFocusNode,
-            namaBarangFocusNode: namaBarangFocusNode,
-            jumlahBarangFocusNode: jumlahBarangFocusNode,
           ),
           drawer: buildSidebar(),
           body: Obx(
