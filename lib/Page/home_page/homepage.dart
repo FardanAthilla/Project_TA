@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/sidebar/sidebar.dart';
 import 'package:project_ta/color.dart';
+import 'package:project_ta/Page/sidebar/sidebar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,43 +43,25 @@ class HomePage extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              color: Warna.main,
-              padding: const EdgeInsets.only(left: 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Halaman Utama',
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Warna.white,
-                    ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Selamat datang, User!",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Warna.main,
                   ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Warna.background,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
                 ),
-              ),
-              height: MediaQuery.of(context).size.height / 1.25,
-              padding: const EdgeInsets.all(20),
-              child: Center(
-                child: GridView.count(
+                SizedBox(
+                  height: 25,
+                ),
+                GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   childAspectRatio: 0.90,
@@ -90,40 +71,45 @@ class HomePage extends StatelessWidget {
                     6,
                     (index) => GestureDetector(
                       onTap: onTapActions[index],
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Warna.card,
-                          borderRadius: BorderRadius.circular(
-                              15.0),
+                      child: Card(
+                        elevation: 3, // Bayangan card
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'Assets/$index.png',
-                                width: itemWidth * 0.6,
-                                height: itemWidth * 0.6,
-                              ),
-                              SizedBox(height: 20),
-                              Text(
-                                teks[index],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Warna.teks,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Warna.card,
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'Assets/$index.png',
+                                  width: itemWidth * 0.6,
+                                  height: itemWidth * 0.6,
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 20),
+                                Text(
+                                  teks[index],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Warna.teks,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
