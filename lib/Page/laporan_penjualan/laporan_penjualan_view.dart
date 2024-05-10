@@ -6,7 +6,6 @@ import 'package:project_ta/Page/laporan_penjualan/widget/widget.dart';
 import 'package:project_ta/color.dart';
 
 class LaporanPenjualanPage extends StatefulWidget {
-  final String productTitle;
   final FocusNode? tanggalFocusNode;
   final FocusNode? cabangFocusNode;
   final FocusNode? namaBarangFocusNode;
@@ -14,7 +13,6 @@ class LaporanPenjualanPage extends StatefulWidget {
 
   const LaporanPenjualanPage({
     Key? key,
-    required this.productTitle,
     this.tanggalFocusNode,
     this.cabangFocusNode,
     this.namaBarangFocusNode,
@@ -30,11 +28,7 @@ class _LaporanPenjualanPageState extends State<LaporanPenjualanPage> {
   TextEditingController _namaBarangController = TextEditingController();
   final NumberController _numberController = Get.put(NumberController());
 
-  @override
-  void initState() {
-    super.initState();
-    _namaBarangController.text = widget.productTitle;
-  }
+
 
   void _clearFields() {
     setState(() {
