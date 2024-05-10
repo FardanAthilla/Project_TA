@@ -1,119 +1,140 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Page/login_page/login_page_view.dart';
+import 'package:project_ta/Page/login_page/auth/token.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 
 //Sidebar
-  Widget buildSidebar() {
-    return SafeArea(
-      child: Drawer(
-        child: Material(
-          color: Warna.background,
-          child: GetBuilder<NavigationController>(
-            builder: (controller) {
-              return ListView(
-                padding: const EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
-                children: <Widget>[
-                  buildDrawerHeader(),
-                  const SizedBox(
-                    height: 10,
+Widget buildSidebar() {
+  return SafeArea(
+    child: Drawer(
+      child: Material(
+        color: Warna.background,
+        child: GetBuilder<NavigationController>(
+          builder: (controller) {
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(0, 10.0, 30.0, 10.0),
+              children: <Widget>[
+                buildDrawerHeader(),
+                const SizedBox(
+                  height: 10,
+                ),
+                buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
+                buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewing-machine.svg'),
+                buildDrawerItem(
+                    2, 'Daftar Sparepart', 'Assets/spare-parts.svg'),
+                buildDrawerItem(3, 'Laporan Penjualan', 'Assets/sales.svg'),
+                buildDrawerItem(4, 'Laporan Service', 'Assets/information.svg'),
+                buildDrawerItem(
+                    5, 'Rekap Penjualan', 'Assets/profit-report.svg'),
+                buildDrawerItem(6, 'Rekap Service', 'Assets/report.svg'),
+                ElevatedButton(
+                  onPressed: () async {
+                    await removeToken();
+                    Get.offAll(LoginPage());
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: Warna.danger,
                   ),
-                  buildDrawerItem(0, 'Halaman Utama', 'Assets/dashboard.svg'),
-                  buildDrawerItem(1, 'Daftar Mesin', 'Assets/sewing-machine.svg'),
-                  buildDrawerItem(
-                      2, 'Daftar Sparepart', 'Assets/spare-parts.svg'),
-                  buildDrawerItem(3, 'Laporan Penjualan', 'Assets/sales.svg'),
-                  buildDrawerItem(4, 'Laporan Service', 'Assets/information.svg'),
-                  buildDrawerItem(
-                      5, 'Rekap Penjualan', 'Assets/profit-report.svg'),
-                  buildDrawerItem(6, 'Rekap Service', 'Assets/report.svg'),
-                ],
-              );
-            },
-          ),
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget buildDrawerHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      height: kToolbarHeight,
-      color: Warna.background,
-      child: SvgPicture.asset(
-        'Assets/logo2.svg',
-        width: 30,
-        height: 30,
-      ),
-    );
-  }
+Widget buildDrawerHeader() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    height: kToolbarHeight,
+    color: Warna.background,
+    child: SvgPicture.asset(
+      'Assets/logo2.svg',
+      width: 30,
+      height: 30,
+    ),
+  );
+}
 
-  Widget buildDrawerItem(int index, String title, String iconPath) {
-    final navigationController = Get.put(NavigationController());
+Widget buildDrawerItem(int index, String title, String iconPath) {
+  final navigationController = Get.put(NavigationController());
 
-    return navigationController.selectedIndex.value == index
-        ? Container(
+  return navigationController.selectedIndex.value == index
+      ? Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: Warna.mainblue,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(1000),
+              bottomRight: Radius.circular(1000),
+            ),
+          ),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.main,
+              ),
+              const SizedBox(width: 20),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Warna.main,
+                  fontWeight: FontWeight.w900,
+                ),
+              )
+            ],
+          ),
+        )
+      : TextButton(
+          onPressed: () {
+            navigationController.selectItem(index);
+            Get.back();
+          },
+          style: TextButton.styleFrom(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Warna.mainblue,
-              borderRadius: const BorderRadius.only(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
                 topRight: Radius.circular(1000),
                 bottomRight: Radius.circular(1000),
               ),
             ),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  iconPath,
-                  width: 24,
-                  height: 24,
-                  color: Warna.main,
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Warna.main,
-                    fontWeight: FontWeight.w900,
-                  ),
-                )
-              ],
-            ),
-          )
-        : TextButton(
-            onPressed: () {
-              navigationController.selectItem(index);
-              Get.back();
-            },
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.all(14),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(1000),
-                  bottomRight: Radius.circular(1000),
-                ),
+            backgroundColor: Warna.background,
+          ),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                iconPath,
+                width: 24,
+                height: 24,
+                color: Warna.teks,
               ),
-              backgroundColor: Warna.background,
-            ),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  iconPath,
-                  width: 24,
-                  height: 24,
+              const SizedBox(width: 20),
+              Text(
+                title,
+                style: TextStyle(
                   color: Warna.teks,
+                  fontWeight: FontWeight.normal,
                 ),
-                const SizedBox(width: 20),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Warna.teks,
-                    fontWeight: FontWeight.normal,
-                  ),
-                )
-              ],
-            ),
-          );
-  }
+              )
+            ],
+          ),
+        );
+}
