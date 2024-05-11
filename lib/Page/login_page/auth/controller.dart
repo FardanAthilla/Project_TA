@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<String> loginUser(String email, String password) async {
+Future<String> loginUser(String username, String password) async {
   final Uri apiUrl = Uri.parse('https://secure-sawfly-certainly.ngrok-free.app/login');
-  final Map<String, String> requestBody = {'email': email, 'password': password};
+  final Map<String, String> requestBody = {'username': username, 'password': password};
 
   try {
     final response = await http.post(

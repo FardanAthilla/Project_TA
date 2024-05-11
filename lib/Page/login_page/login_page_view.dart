@@ -82,8 +82,8 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 40),
                     CustomTextField(
-                      hintText: 'Email',
-                      controllers: controller.emailTextEditingController,
+                      hintText: 'Username',
+                      controllers: controller.usernameTextEditingController,
                       icon: Icons.person,
                     ),
                     SizedBox(height: 20),
@@ -100,25 +100,25 @@ class LoginPage extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            final emailController =
+                            final usernameController =
                                 Get.find<LoginPageController>()
-                                    .emailTextEditingController;
+                                    .usernameTextEditingController;
                             final passwordController =
                                 Get.find<LoginPageController>()
                                     .passwordTextEditingController;
-                            final String email = emailController.text;
+                            final String username = usernameController.text;
                             final String password = passwordController.text;
 
                             try {
                               final String token =
-                                  await loginUser(email, password);
+                                  await loginUser(username, password);
                               await saveToken(token);
                               print('Token: $token');
-                              emailController.clear();
+                              usernameController.clear();
                               passwordController.clear();
                               Get.snackbar(
                                 'Login Berhasil',
-                                '$email berhasil login.',
+                                '$username berhasil login.',
                                 snackPosition: SnackPosition.BOTTOM,
                                 backgroundColor: Warna.main,
                                 colorText: Colors.white,
