@@ -42,84 +42,99 @@ class HomePage extends StatelessWidget {
       },
     ];
 
-return Scaffold(
-  body: Stack(
-    children: [
-      Positioned.fill(
-        child: Container(
-          color: Warna.main,
-          padding: const EdgeInsets.only(left: 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Selamat datang, User!',
-                style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                  color: Warna.white,
-                ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              color: Warna.main,
+              padding: const EdgeInsets.only(left: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Selamat datang, User!',
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      color: Warna.white,
+                    ),
+                  ),
+                ],
               ),
-              Spacer(),
-            ],
-          ),
-        ),
-      ),
-      Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Warna.background,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(125.0),
-              topRight: Radius.zero,
             ),
           ),
-          height: MediaQuery.of(context).size.height / 1.25,
-          padding: const EdgeInsets.all(20),
-          child: Center(
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              childAspectRatio: 0.90,
-              mainAxisSpacing: 20.0,
-              crossAxisSpacing: 20.0,
-              children: List.generate(
-                6,
-                (index) => GestureDetector(
-                  onTap: onTapActions[index],
-                  child: Card(
-                    elevation: 3, // Menambahkan elevasi
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Warna.card,
-                        borderRadius: BorderRadius.circular(
-                          15.0,
-                        ),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'Assets/$index.png',
-                              width: itemWidth * 0.6,
-                              height: itemWidth * 0.6,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              teks[index],
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Warna.teks,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Warna.background,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(125.0),
+                  topRight: Radius.zero,
+                ),
+              ),
+              height: MediaQuery.of(context).size.height / 1.25,
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 1, top: 60),
+                  
+
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.90,
+                    mainAxisSpacing: 20.0,
+                    crossAxisSpacing: 20.0,
+                    children: List.generate(
+                      6,
+                      (index) => GestureDetector(
+                        onTap: onTapActions[index],
+                        child: Card(
+                          elevation: 3, // Menambahkan elevasi
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(10), // Tambah padding di sini
+                            decoration: BoxDecoration(
+                              color: Warna.card,
+                              borderRadius: BorderRadius.circular(
+                                15.0,
                               ),
                             ),
-                          ],
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'Assets/$index.png',
+                                    width: itemWidth * 0.6,
+                                    height: itemWidth * 0.6,
+                                  ),
+                                  SizedBox(height: 20),
+                                  Text(
+                                    teks[index],
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Warna.teks,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10), 
+                                  Text(
+                                    "apa ya",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -128,13 +143,8 @@ return Scaffold(
               ),
             ),
           ),
-        ),
+        ],
       ),
-    ],
-  ),
-);
-
-
-
+    );
   }
 }
