@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/laporan_penjualan/laporan_penjualan_view.dart';
 import 'package:project_ta/Models/controller.dart';
 import 'package:project_ta/Models/product_response_api.dart';
 import 'package:project_ta/Page/sidebar/navigation.dart';
@@ -58,14 +57,7 @@ class DaftarMesinPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final product = displayedProducts[index];
                             return GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                  () => LaporanPenjualanPage(
-                                    productTitle:
-                                        product.title, 
-                                  ),
-                                );
-                              },
+                              onTap: () {},
                               child: Card(
                                 elevation: 3,
                                 margin: const EdgeInsets.all(10),
