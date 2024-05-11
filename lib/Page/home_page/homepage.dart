@@ -50,16 +50,16 @@ class HomePage extends StatelessWidget {
               color: Warna.main,
               padding: const EdgeInsets.only(left: 18),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Selamat datang, User!',
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Warna.white,
-                    ),
-                  ),
+                  // Text(
+                  //   'Selamat datang, User!',
+                  //   style: TextStyle(
+                  //     fontSize: 23,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Warna.white,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -80,66 +80,83 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1, top: 60),
-                  
-
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.90,
-                    mainAxisSpacing: 20.0,
-                    crossAxisSpacing: 20.0,
-                    children: List.generate(
-                      6,
-                      (index) => GestureDetector(
-                        onTap: onTapActions[index],
-                        child: Card(
-                          elevation: 3, // Menambahkan elevasi
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                  padding: const EdgeInsets.only(bottom: 10, top: 20),
+                   child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Selamat datang, User!',
+                          style: TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            color: Warna.mainblue,
                           ),
-                          child: Container(
-                            padding: EdgeInsets.all(10), // Tambah padding di sini
-                            decoration: BoxDecoration(
-                              color: Warna.card,
-                              borderRadius: BorderRadius.circular(
-                                15.0,
-                              ),
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'Assets/$index.png',
-                                    width: itemWidth * 0.6,
-                                    height: itemWidth * 0.6,
-                                  ),
-                                  SizedBox(height: 20),
-                                  Text(
-                                    teks[index],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Warna.teks,
+                        ),
+                        SizedBox(height: 30),
+                        GridView.count(
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.90,
+                          mainAxisSpacing: 20.0,
+                          crossAxisSpacing: 20.0,
+                          children: List.generate(
+                            6,
+                            (index) => GestureDetector(
+                              onTap: onTapActions[index],
+                              child: Card(
+                                elevation: 3, // Menambahkan elevasi
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.all(10), // Tambah padding di sini
+                                  decoration: BoxDecoration(
+                                    color: Warna.card,
+                                    borderRadius: BorderRadius.circular(
+                                      15.0,
                                     ),
                                   ),
-                                  SizedBox(height: 10), 
-                                  Text(
-                                    "apa ya",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'Assets/$index.png',
+                                          width: itemWidth * 0.6,
+                                          height: itemWidth * 0.6,
+                                        ),
+                                        SizedBox(height: 20),
+                                        Text(
+                                          teks[index],
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Warna.teks,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10), 
+                                        Text(
+                                          "apa ya",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                    
+                      ],
                     ),
                   ),
                 ),
+              ),
               ),
             ),
           ),
