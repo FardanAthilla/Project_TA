@@ -81,37 +81,48 @@ class HomePage extends StatelessWidget {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 20),
-                   child: SingleChildScrollView(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Selamat datang, User!',
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            color: Warna.mainblue,
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Selamat datang, Pak User!',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Warna.main,
                         ),
-                        SizedBox(height: 30),
-                        GridView.count(
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Semangat bekerja',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: Warna.main,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Expanded(
+                        child: GridView.count(
                           shrinkWrap: true,
                           crossAxisCount: 2,
                           childAspectRatio: 0.90,
                           mainAxisSpacing: 20.0,
                           crossAxisSpacing: 20.0,
+                          physics: ClampingScrollPhysics(), //INI SIH biar gridnya bisa discroll tapi gak melebihi container luar
                           children: List.generate(
                             6,
                             (index) => GestureDetector(
                               onTap: onTapActions[index],
                               child: Card(
-                                elevation: 3, // Menambahkan elevasi
+                                elevation: 3, 
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0),
                                 ),
                                 child: Container(
-                                  padding: EdgeInsets.all(10), // Tambah padding di sini
+                                  padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     color: Warna.card,
                                     borderRadius: BorderRadius.circular(
@@ -135,7 +146,7 @@ class HomePage extends StatelessWidget {
                                             color: Warna.teks,
                                           ),
                                         ),
-                                        SizedBox(height: 10), 
+                                        SizedBox(height: 10),
                                         Text(
                                           "apa ya",
                                           style: TextStyle(
@@ -151,12 +162,10 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                    
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
               ),
             ),
           ),
