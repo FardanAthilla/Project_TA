@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Semangat lalalalla',
+                        'Semangat bekerja',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
