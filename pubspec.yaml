@@ -12,11 +12,23 @@ dependencies:
   get:
   flutter_svg:
   google_fonts:
+  shared_preferences: ^2.2.3
+  intl:
+  http:
+  animated_splash_screen: ^1.3.0
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "Assets/UD3.png"
+  min_sdk_android: 21
+  
 
 flutter:
   uses-material-design: true
