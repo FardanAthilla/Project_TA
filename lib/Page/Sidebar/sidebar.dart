@@ -201,7 +201,7 @@ Widget buildAppbarHomePage() {
   }
 
   Widget buildDrawerItem(int index, String title, String iconPath) {
-    final navigationController = Get.put(NavigationController());
+    final navigationController = Get.put(NavigationController()); 
 
     return navigationController.selectedIndex.value == index
         ? Container(

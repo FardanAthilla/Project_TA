@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
                         'Selamat datang, Pak User!',
@@ -96,11 +96,11 @@ class HomePage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'Semangat bekerja',
+                        'Semangat lalalalla',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
-                          color: Warna.main,
+                          color: Warna.main
                         ),
                       ),
                       SizedBox(height: 30),
@@ -111,13 +111,13 @@ class HomePage extends StatelessWidget {
                           childAspectRatio: 0.90,
                           mainAxisSpacing: 20.0,
                           crossAxisSpacing: 20.0,
-                          physics: ClampingScrollPhysics(), //INI SIH biar gridnya bisa discroll tapi gak melebihi container luar
+                          physics: ClampingScrollPhysics(),
                           children: List.generate(
                             6,
                             (index) => GestureDetector(
                               onTap: onTapActions[index],
                               child: Card(
-                                elevation: 3, 
+                                elevation: 3, //bayangan
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0),
                                 ),
@@ -148,13 +148,15 @@ class HomePage extends StatelessWidget {
                                         ),
                                         SizedBox(height: 10),
                                         Text(
-                                          "apa ya",
+                                          "apa yahahahah",
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Colors.grey,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
                                         ),
-                                      ],
+                                      ],  
                                     ),
                                   ),
                                 ),
