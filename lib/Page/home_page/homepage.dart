@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Page/sidebar/sidebar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
