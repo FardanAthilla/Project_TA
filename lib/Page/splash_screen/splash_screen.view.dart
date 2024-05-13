@@ -17,14 +17,14 @@ class SplashScreen extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10.0),
         child: SvgPicture.asset('Assets/logo2.svg'),
       ),
-      nextScreen: _getNextScreen(),
+      nextScreen: getNextScreen(),
       splashTransition: SplashTransition.fadeTransition,
       duration: 2000,
       splashIconSize: 100,
     );
   }
 
-  Widget _getNextScreen() {
+  Widget getNextScreen() {
     return FutureBuilder<String?>(
       future: getToken(),
       builder: (context, snapshot) {
