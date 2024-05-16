@@ -122,7 +122,7 @@ class LoginPage extends StatelessWidget {
                                 backgroundColor: Warna.main,
                                 colorText: Colors.white,
                               );
-                              Get.offNamed('/navbar');
+                              Get.offNamed("/navbar");
                             } catch (e) {
                               print('Gagal login: $e');
                               Get.snackbar(

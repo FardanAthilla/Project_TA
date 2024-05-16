@@ -11,16 +11,18 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      backgroundColor: Warna.background,
-      splash: Padding(
-        padding: const EdgeInsets.only(left: 10.0),
-        child: SvgPicture.asset('Assets/logo2.svg'),
+    return SafeArea(
+      child: AnimatedSplashScreen(
+        backgroundColor: Warna.background,
+        splash: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: SvgPicture.asset('Assets/logo2.svg'),
+        ),
+        nextScreen: getNextScreen(),
+        splashTransition: SplashTransition.fadeTransition,
+        duration: 2000,
+        splashIconSize: 100,
       ),
-      nextScreen: getNextScreen(),
-      splashTransition: SplashTransition.fadeTransition,
-      duration: 2000,
-      splashIconSize: 100,
     );
   }
 
