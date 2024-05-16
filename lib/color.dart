@@ -9,5 +9,5 @@ class Warna {
   static Color teksactive = Color(0xffFFFFFF);
   static Color white = Color(0xffD5EFF2);
   static Color danger = Color(0xffFF0000);
-  static Color hintteks = Color.fromRGBO(0, 0, 0, 0.5);
+  static Color hitam = Color.fromRGBO(0, 0, 0, 1);
 }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:project_ta/Page/login_page/auth/controller.dart';
 import 'package:project_ta/Page/login_page/auth/token.dart';
 import 'package:project_ta/Page/login_page/widget/textfield.dart';
-import 'package:project_ta/Page/sidebar/navigation.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Page/login_page/login_page_controller.dart';
 
@@ -123,7 +122,7 @@ class LoginPage extends StatelessWidget {
                                 backgroundColor: Warna.main,
                                 colorText: Colors.white,
                               );
-                              Get.off(Navigation());
+                              Get.offNamed('/navbar');
                             } catch (e) {
                               print('Gagal login: $e');
                               Get.snackbar(
