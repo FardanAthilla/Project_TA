@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/navigation/navbar_controller.dart';
+import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
   final NavbarController controller = Get.put(NavbarController());
@@ -24,7 +25,7 @@ class Navbar extends StatelessWidget {
           'Assets/icon1.svg',
           width: 22,
           height: 22,
-          color: Colors.black,
+          color: Warna.greynavbar,
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon1.svg',
@@ -39,7 +40,7 @@ class Navbar extends StatelessWidget {
           'Assets/icon5.svg',
           width: 22,
           height: 22,
-          color: Colors.black,
+          color: Warna.greynavbar,
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon5.svg',
@@ -54,7 +55,7 @@ class Navbar extends StatelessWidget {
           'Assets/icon2.svg',
           width: 24,
           height: 24,
-          color: Colors.black,
+          color: Warna.greynavbar
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon2.svg',
@@ -69,7 +70,7 @@ class Navbar extends StatelessWidget {
           'Assets/icon4.svg',
           width: 22,
           height: 22,
-          color: Colors.black,
+          color: Warna.greynavbar,
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon4.svg',
