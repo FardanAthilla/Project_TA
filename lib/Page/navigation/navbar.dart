@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/navigation/navbar_controller.dart';
+import 'package:project_ta/Page/profile_page/profile_page.dart';
 import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
@@ -14,7 +15,7 @@ class Navbar extends StatelessWidget {
       Placeholder(),
       Placeholder(),
       Placeholder(),
-      Placeholder(),
+      ProfilePage(),
     ];
   }
 
@@ -25,13 +26,13 @@ class Navbar extends StatelessWidget {
           'Assets/icon1.svg',
           width: 22,
           height: 22,
-          color: Warna.greynavbar,
+          color: Warna.teks,
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon1.svg',
           width: 22,
           height: 22,
-          color: Colors.blue,
+          color: Warna.main,
         ),
         label: 'Stock',
       ),
@@ -40,13 +41,13 @@ class Navbar extends StatelessWidget {
           'Assets/icon5.svg',
           width: 22,
           height: 22,
-          color: Warna.greynavbar,
+          color: Warna.teks,
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon5.svg',
           width: 22,
           height: 22,
-          color: Colors.blue,
+          color: Warna.main,
         ),
         label: 'Lapor',
       ),
@@ -55,13 +56,13 @@ class Navbar extends StatelessWidget {
           'Assets/icon2.svg',
           width: 24,
           height: 24,
-          color: Warna.greynavbar
+          color: Warna.teks
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon2.svg',
           width: 24,
           height: 24,
-          color: Colors.blue,
+          color: Warna.main,
         ),
         label: 'Rekap',
       ),
@@ -70,13 +71,13 @@ class Navbar extends StatelessWidget {
           'Assets/icon4.svg',
           width: 22,
           height: 22,
-          color: Warna.greynavbar,
+          color: Warna.teks
         ),
         activeIcon: SvgPicture.asset(
           'Assets/icon4.svg',
           width: 22,
           height: 22,
-          color: Colors.blue,
+          color: Warna.main,
         ),
         label: 'Profile',
       ),
@@ -85,37 +86,39 @@ class Navbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(() => IndexedStack(
-            index: controller.selectedIndex.value,
-            children: _buildScreens(),
-          )),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              spreadRadius: 0,
-              blurRadius: 10,
-              offset: Offset(0, -1),
-            ),
-          ],
-        ),
-        child: Obx(() => BottomNavigationBar(
-              items: _navbarItems(),
-              currentIndex: controller.selectedIndex.value,
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.black,
-              onTap: controller.onItemTapped,
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
+    return SafeArea(
+      child: Scaffold(
+        body: Obx(() => IndexedStack(
+              index: controller.selectedIndex.value,
+              children: _buildScreens(),
             )),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 255, 255, 255),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                spreadRadius: 0,
+                blurRadius: 10,
+                offset: Offset(0, -1),
+              ),
+            ],
+          ),
+          child: Obx(() => BottomNavigationBar(
+                items: _navbarItems(),
+                currentIndex: controller.selectedIndex.value,
+                selectedItemColor: Colors.blue,
+                unselectedItemColor: Colors.black,
+                onTap: controller.onItemTapped,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+              )),
+        ),
       ),
     );
   }
