@@ -1,129 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:project_ta/Page/profile_page/profile_page.dart';
-import 'package:project_ta/color.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/navigation/navbar_controller.dart';
 
 class Navbar extends StatelessWidget {
-  const Navbar({Key? key});
+  final NavbarController controller = Get.put(NavbarController());
+
+  Navbar({Key? key}) : super(key: key);
+
+  List<Widget> _buildScreens() {
+    return [
+      Placeholder(),
+      Placeholder(),
+      Placeholder(),
+      Placeholder(),
+    ];
+  }
+
+  List<BottomNavigationBarItem> _navbarItems() {
+    return [
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'Assets/icon1.svg',
+          width: 22,
+          height: 22,
+          color: Colors.black,
+        ),
+        activeIcon: SvgPicture.asset(
+          'Assets/icon1.svg',
+          width: 22,
+          height: 22,
+          color: Colors.blue,
+        ),
+        label: 'Stock',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'Assets/icon2.svg',
+          width: 22,
+          height: 22,
+          color: Colors.black,
+        ),
+        activeIcon: SvgPicture.asset(
+          'Assets/icon2.svg',
+          width: 22,
+          height: 22,
+          color: Colors.blue,
+        ),
+        label: 'Rekap',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'Assets/icon5.svg',
+          width: 24,
+          height: 24,
+          color: Colors.black,
+        ),
+        activeIcon: SvgPicture.asset(
+          'Assets/icon5.svg',
+          width: 24,
+          height: 24,
+          color: Colors.blue,
+        ),
+        label: 'Lapor',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'Assets/icon4.svg',
+          width: 22,
+          height: 22,
+          color: Colors.black,
+        ),
+        activeIcon: SvgPicture.asset(
+          'Assets/icon4.svg',
+          width: 22,
+          height: 22,
+          color: Colors.blue,
+        ),
+        label: 'Profile',
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    PersistentTabController _controller =
-        PersistentTabController(initialIndex: 0);
-
-    List<Widget> _buildScreens() {
-      return [
-        Placeholder(),
-        Placeholder(),
-        Placeholder(),
-        Placeholder(),
-        ProfilePage(),
-      ];
-    }
-
-    List<PersistentBottomNavBarItem> _navbarItem() {
-      return [
-        PersistentBottomNavBarItem(
-          //1
-          icon: SvgPicture.asset(
-            'Assets/dashboard.svg',
-            width: 24,
-            height: 24,
-            color: Warna.main,
+    return Scaffold(
+      body: Obx(() => IndexedStack(
+            index: controller.selectedIndex.value,
+            children: _buildScreens(),
+          )),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
           ),
-          inactiveIcon: SvgPicture.asset(
-            'Assets/dashboard.svg',
-            width: 24,
-            height: 24,
-            color: Warna.hitam,
-          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: Offset(0, -1),
+            ),
+          ],
         ),
-        //2
-        PersistentBottomNavBarItem(
-          icon: SvgPicture.asset(
-            'Assets/icon1.svg',
-            width: 24,
-            height: 24,
-            color: Warna.main,
-          ),
-          inactiveIcon: SvgPicture.asset(
-            'Assets/icon1.svg',
-            width: 24,
-            height: 24,
-            color: Warna.hitam,
-          ),
-        ),
-        //3
-        PersistentBottomNavBarItem(
-          activeColorPrimary: Colors.white,
-          icon: SvgPicture.asset(
-            'Assets/icon3.svg',
-            width: 24,
-            height: 24,
-            color: Warna.main,
-          ),
-        ),
-        //4
-        PersistentBottomNavBarItem(
-          icon: SvgPicture.asset(
-            'Assets/icon2.svg',
-            width: 24,
-            height: 24,
-            color: Warna.main,
-          ),
-          inactiveIcon: SvgPicture.asset(
-            'Assets/icon2.svg',
-            width: 24,
-            height: 24,
-            color: Warna.hitam,
-          ),
-        ),
-        //5
-        PersistentBottomNavBarItem(
-          icon: SvgPicture.asset(
-            'Assets/icon4.svg',
-            width: 24,
-            height: 24,
-            color: Warna.main,
-          ),
-          inactiveIcon: SvgPicture.asset(
-            'Assets/icon4.svg',
-            width: 24,
-            height: 24,
-            color: Warna.hitam,
-          ),
-        ),
-      ];
-    }
-
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: _buildScreens(),
-      items: _navbarItem(),
-      confineInSafeArea: true,
-      backgroundColor: Colors.white,
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true,
-      stateManagement: true,
-      hideNavigationBarWhenKeyboardShows: true,
-      decoration: NavBarDecoration(
-        colorBehindNavBar: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        child: Obx(() => BottomNavigationBar(
+              items: _navbarItems(),
+              currentIndex: controller.selectedIndex.value,
+              selectedItemColor: Colors.blue,
+              unselectedItemColor: Colors.black,
+              onTap: controller.onItemTapped,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            )),
       ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style16,
     );
   }
 }
