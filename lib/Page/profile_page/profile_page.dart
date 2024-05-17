@@ -1,68 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:project_ta/Page/login_page/auth/model.dart';
+import 'package:get/get.dart';
+import 'package:project_ta/Page/login_page/auth/token.dart';
+import 'package:project_ta/Page/profile_page/profile_controller.dart';
 
 class ProfilePage extends StatelessWidget {
+  final ProfileController profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Profile Page'),
       ),
-      body: FutureBuilder(
-        future: getUserData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Obx(() {    
+        if (profileController.userData!.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          final userData = profileController.userData!;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Row(
                 children: [
-                  Text('Error: ${snapshot.error}'),
+                  Spacer(),
+                  Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      '${userData['username']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.0, left: 10),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        await removeToken();
+                        Get.offAllNamed('/splash');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        "Logout",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            );
-          } else {
-            final userData = snapshot.data as Map<String, dynamic>;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Spacer(),
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Text(
-                        '${userData['username']}',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 10.0, left: 10),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey[300],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                              'https://secure-sawfly-certainly.ngrok-free.app/' +
-                                  userData['image']),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }
-        },
-      ),
+            ],
+          );
+        }
+      }),
     );
   }
 }
