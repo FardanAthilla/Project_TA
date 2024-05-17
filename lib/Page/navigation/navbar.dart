@@ -36,33 +36,33 @@ class Navbar extends StatelessWidget {
       ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
-          'Assets/icon2.svg',
+          'Assets/icon5.svg',
           width: 22,
           height: 22,
           color: Colors.black,
         ),
         activeIcon: SvgPicture.asset(
-          'Assets/icon2.svg',
+          'Assets/icon5.svg',
           width: 22,
           height: 22,
-          color: Colors.blue,
-        ),
-        label: 'Rekap',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          'Assets/icon5.svg',
-          width: 24,
-          height: 24,
-          color: Colors.black,
-        ),
-        activeIcon: SvgPicture.asset(
-          'Assets/icon5.svg',
-          width: 24,
-          height: 24,
           color: Colors.blue,
         ),
         label: 'Lapor',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'Assets/icon2.svg',
+          width: 24,
+          height: 24,
+          color: Colors.black,
+        ),
+        activeIcon: SvgPicture.asset(
+          'Assets/icon2.svg',
+          width: 24,
+          height: 24,
+          color: Colors.blue,
+        ),
+        label: 'Rekap',
       ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
