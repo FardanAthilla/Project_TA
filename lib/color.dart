@@ -10,6 +10,6 @@ class Warna {
   static Color white = Color(0xffD5EFF2);
   static Color danger = Color(0xffFF0000);
   static Color hitam = Color.fromRGBO(0, 0, 0, 1);
-  static Color greynavbar = Color(0xDAC0A3);
-  static Color a = Color(0x212A3E);
+  static Color greynavbar = Color(0xFFDAC0A3);
+  static Color a = Color(0xFF212A3E);
 }

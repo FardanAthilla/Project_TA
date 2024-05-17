@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       home: SafeArea(
-        child: Navbar(),
+        child: SplashScreen(),
       ),
     );
   }
