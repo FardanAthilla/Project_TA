@@ -22,11 +22,15 @@ class ProfileController extends GetxController {
   }
 
   Future<Map<String, dynamic>> getUserDataFromApi(String token) async {
+      Map<String, String> headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json', 
+  };
     try {
       final Uri apiUrl = Uri.parse('https://secure-sawfly-certainly.ngrok-free.app/userAuth/getUser');
       final response = await http.post(
         apiUrl,
-        body: {'Token': token},
+        headers: headers
       );
 
       if (response.statusCode == 200) {
