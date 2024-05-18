@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller.dart';
-import 'package:project_ta/Pages/daftar_page/models/model.dart';
+import 'package:project_ta/Pages/daftar_page/models/Mesin/model.dart';
 
 class DaftarMesin extends StatelessWidget {
   final StoreController storeController = Get.put(StoreController());
