@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:project_ta/Page/login_page/auth/token.dart';
+import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

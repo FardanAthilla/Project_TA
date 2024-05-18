@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/login_page/auth/controller.dart';
-import 'package:project_ta/Page/login_page/auth/token.dart';
-import 'package:project_ta/Page/login_page/widget/textfield.dart';
+import 'package:project_ta/Pages/login_page/auth/controller.dart';
+import 'package:project_ta/Pages/login_page/auth/token.dart';
+import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Page/login_page/login_page_controller.dart';
+import 'package:project_ta/Pages/login_page/login_page_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
