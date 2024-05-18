@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/login_page/login_page_controller.dart';
+import 'package:project_ta/Pages/login_page/login_page_controller.dart';
 import 'package:project_ta/color.dart';
 
 class CustomTextField extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/daftar_page/daftarmesin.dart';
-import 'package:project_ta/Page/navigation/navbar_controller.dart';
-import 'package:project_ta/Page/profile_page/profile_page.dart';
+import 'package:project_ta/Pages/daftar_page/daftar_mesin_view.dart';
+import 'package:project_ta/Pages/navigation/navbar_controller.dart';
+import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:project_ta/Page/daftar_page/model/model.dart';
+import 'package:project_ta/Pages/daftar_page/models/model.dart';
 
 class StoreController extends GetxController {
   var storeItems = <StoreItem>[].obs;

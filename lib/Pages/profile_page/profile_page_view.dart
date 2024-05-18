@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Page/login_page/auth/token.dart';
-import 'package:project_ta/Page/profile_page/profile_controller.dart';
-import 'package:project_ta/Page/navigation/navbar_controller.dart'; 
+import 'package:project_ta/Pages/login_page/auth/token.dart';
+import 'package:project_ta/Pages/profile_page/profile_controller.dart';
+import 'package:project_ta/Pages/navigation/navbar_controller.dart'; 
 import 'package:project_ta/color.dart';
 import 'package:shimmer/shimmer.dart';
 
