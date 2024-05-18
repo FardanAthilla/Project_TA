@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Page/login_page/auth/token.dart';
 import 'package:project_ta/Page/profile_page/profile_controller.dart';
+import 'package:project_ta/Page/navigation/navbar_controller.dart'; 
 import 'package:project_ta/color.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfilePage extends StatelessWidget {
   final ProfileController profileController = Get.put(ProfileController());
+  final NavbarController navbarController = Get.put(NavbarController());
 
   Future<void> _refreshData() async {
     await profileController.fetchUserData();
@@ -26,7 +28,7 @@ class ProfilePage extends StatelessWidget {
             padding: EdgeInsets.all(screenWidth * 0.05),
             child: Center(
               child: FutureBuilder(
-                future: Future.delayed(Duration(seconds: 2)),
+                future: profileController.fetchUserData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting ||
                       profileController.userData == null ||
@@ -116,7 +118,9 @@ class ProfilePage extends StatelessWidget {
                         ElevatedButton.icon(
                           onPressed: () async {
                             await removeToken();
+                            profileController.resetUserData(); 
                             Get.offAllNamed('/splash');
+                            navbarController.resetIndex();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Warna.danger,

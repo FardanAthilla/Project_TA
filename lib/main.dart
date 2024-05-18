@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_ta/Page/navigation/navbar.dart';
 import 'package:project_ta/Page/navigation/routes/route.dart';
 import 'package:project_ta/Page/splash_screen/splash_screen.view.dart';
 

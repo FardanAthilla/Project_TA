@@ -49,4 +49,7 @@ class ProfileController extends GetxController {
     fetchUserData();
     super.onInit();
   }
+    void resetUserData() {
+    userData?.value = {};
+  }
 }

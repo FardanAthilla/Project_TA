@@ -6,5 +6,8 @@ class NavbarController extends GetxController {
   void onItemTapped(int index) {
     selectedIndex.value = index;
   }
+
+  void resetIndex() {
+    selectedIndex.value = 0;
+  }
 }
-  
