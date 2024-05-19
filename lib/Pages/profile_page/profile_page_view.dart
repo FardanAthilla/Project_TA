@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                           child: CircleAvatar(
                             radius: screenWidth * 0.18,
                             backgroundImage: NetworkImage(
-                              'https://secure-sawfly-certainly.ngrok-free.app/' +
+                              'https://rdo-app-o955y.ondigitalocean.app/' +
                                   userData['image'],
                             ),
                           ),

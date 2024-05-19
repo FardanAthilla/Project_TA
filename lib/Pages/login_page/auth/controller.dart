@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<String> loginUser(String username, String password) async {
-  final Uri apiUrl = Uri.parse('https://secure-sawfly-certainly.ngrok-free.app/login');
+  final Uri apiUrl = Uri.parse('https://rdo-app-o955y.ondigitalocean.app/login');
   final Map<String, String> requestBody = {'username': username, 'password': password};
 
   try {

@@ -27,7 +27,7 @@ class ProfileController extends GetxController {
     'Content-Type': 'application/json', 
   };
     try {
-      final Uri apiUrl = Uri.parse('https://secure-sawfly-certainly.ngrok-free.app/userAuth/getUser');
+      final Uri apiUrl = Uri.parse('https://rdo-app-o955y.ondigitalocean.app/userAuth/getUser');
       final response = await http.post(
         apiUrl,
         headers: headers
