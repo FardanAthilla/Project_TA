@@ -121,7 +121,7 @@ class DaftarMesin extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12.0),
                                   child: Image.asset(
-                                    'Assets/iconlistmesin.png',
+                                    'Assets/iconlistmesin3.png',
                                     width: 80,
                                     height: 80,
                                     fit: BoxFit.contain,
