@@ -32,6 +32,30 @@ class DaftarMesin extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Row(
                 children: [
+                  _buildCategoryButton(
+                    context: context,
+                    label: 'Mesin',
+                    isSelected: true,
+                    onTap: () {},
+                  ),
+                  const SizedBox(width: 8),
+                  _buildCategoryButton(
+                    context: context,
+                    label: 'Sparepart',
+                    isSelected: false,
+                    onTap: () {
+                      Get.to(() => Placeholder()); 
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
                   const Expanded(
                     child: SizedBox(
                       height: 48,
@@ -191,6 +215,32 @@ class DaftarMesin extends StatelessWidget {
     );
   }
 
+  Widget _buildCategoryButton({
+    required BuildContext context,
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.blue : Colors.white,
+          borderRadius: BorderRadius.circular(54),
+          border: Border.all(color: Colors.blue),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            color: isSelected ? Colors.white : Colors.grey,
+          ),
+        ),
+      ),
+    );
+  }
+
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -338,8 +388,7 @@ class DaftarMesin extends StatelessWidget {
                                 height: 15,
                                 color: Colors.white,
                               ),
-                              const SizedBox
-                              (height: 8),
+                              const SizedBox(height: 8),
                               Container(
                                 height: 12,
                                 color: Colors.white,
