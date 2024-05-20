@@ -234,7 +234,7 @@ class ProfilePage extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.business,
+                Icons.phone,
                 size: 30,
                 color: Warna.main,
               ),
@@ -266,7 +266,7 @@ class ProfilePage extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.business,
+                Icons.location_on,
                 size: 30,
                 color: Warna.main,
               ),
