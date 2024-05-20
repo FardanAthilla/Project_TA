@@ -47,13 +47,14 @@ class DaftarMesin extends StatelessWidget {
                             hintText: 'Cari sekarang...',
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.all(Radius.circular(9.0)),
                             ),
                             prefixIcon: Icon(Icons.search),
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 14.0),
+                            contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                           ),
                         ),
                       ),
@@ -320,8 +321,7 @@ class DaftarMesin extends StatelessWidget {
               itemCount: 10,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
