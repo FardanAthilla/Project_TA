@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
-import 'package:project_ta/Pages/navigation/navbar_controller.dart'; 
+import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/color.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -81,10 +81,11 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                         Divider(),
+                        SizedBox(width: 12),
                         Row(
                           children: [
                             Icon(
-                              Icons.business,
+                              Icons.phone,
                               size: 30,
                               color: Warna.main,
                             ),
@@ -96,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.symmetric(vertical: 5),
                                     child: Text(
-                                      'Cabang:',
+                                      'Nomor Handphone:',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -104,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                   SizedBox(width: 100),
                                   Text(
-                                    '${userData['branch']}',
+                                    '+62 ${userData['no_handphone']}',
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ],
@@ -112,13 +113,45 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
                         Divider(),
-                        Spacer(),
+                        SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 30,
+                              color: Warna.main,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 5),
+                                    child: Text(
+                                      'Alamat:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  SizedBox(width: 100),
+                                  Text(
+                                    '${userData['address']}',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(),
+                        SizedBox(height: 10),
                         ElevatedButton.icon(
                           onPressed: () async {
                             await removeToken();
-                            profileController.resetUserData(); 
+                            profileController.resetUserData();
                             Get.offAllNamed('/splash');
                             navbarController.resetIndex();
                           },
@@ -201,7 +234,7 @@ class ProfilePage extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.business,
+                Icons.phone,
                 size: 30,
                 color: Warna.main,
               ),
@@ -228,9 +261,40 @@ class ProfilePage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 5),
           Divider(),
-          Spacer(),
+          SizedBox(height: 5),
+          Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                size: 30,
+                color: Warna.main,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      width: screenWidth * 0.3,
+                      height: 20,
+                      color: Colors.white,
+                    ),
+                    SizedBox(height: 8),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      width: screenWidth * 0.5,
+                      height: 20,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          SizedBox(height: 10),
           Container(
             width: double.infinity,
             height: 50,
