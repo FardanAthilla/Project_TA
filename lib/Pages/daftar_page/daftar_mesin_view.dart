@@ -46,7 +46,7 @@ class DaftarMesin extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: 'Cari sekarang...',
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
@@ -314,50 +314,53 @@ class DaftarMesin extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 15,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              height: 12,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              height: 12,
-                              width: 100,
-                              color: Colors.white,
-                            ),
-                          ],
+          child: RefreshIndicator(
+            onRefresh: _refreshItems,
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          color: Colors.white,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 15,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 12,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 12,
+                                width: 100,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ],
