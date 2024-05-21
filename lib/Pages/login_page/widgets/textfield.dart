@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Warna.card,
+            color: Warna.cards,
           ),
           child: Row(
             children: [

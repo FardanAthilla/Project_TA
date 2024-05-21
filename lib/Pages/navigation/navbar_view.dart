@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/daftar_mesin_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan_view.dart';
 import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
@@ -15,7 +16,7 @@ class Navbar extends StatelessWidget {
     return [
       DaftarMesin(),
       Placeholder(),
-      Placeholder(),
+      RekapPenjualanPage(),
       ProfilePage(),
     ];
   }
