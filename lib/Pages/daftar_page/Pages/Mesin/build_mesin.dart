@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
-import 'package:project_ta/Pages/daftar_page/models/Mesin/model.dart';
-import 'package:project_ta/Pages/daftar_page/Pages/filter_button.dart';
+import 'package:project_ta/Pages/daftar_page/models/Mesin/model_mesin.dart';
+import 'package:project_ta/Pages/daftar_page/Pages/Mesin/filter_mesin.dart';
 import 'package:project_ta/color.dart';
 
 Widget buildMesinList(BuildContext context, StoreController storeController) {
