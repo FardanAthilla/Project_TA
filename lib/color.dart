@@ -5,6 +5,7 @@ class Warna {
   static Color mainblue = const Color(0xFF0D99FF).withOpacity(0.3);
   static Color background = const Color(0xFFFAFAFA);
   static Color card = Color.fromARGB(255, 191, 191, 191);
+  static Color cards = Color.fromARGB(255, 220, 220, 220);
   static Color teks = const Color.fromARGB(255, 0, 51, 83);
   static Color teksactive = const Color(0xffFFFFFF);
   static Color white = const Color(0xffD5EFF2);
