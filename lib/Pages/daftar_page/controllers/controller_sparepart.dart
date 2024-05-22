@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_ta/Pages/daftar_page/models/Mesin/model_sparepart.dart';
+import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
 import 'dart:convert';
 
 class SparepartController extends GetxController {
@@ -46,6 +46,7 @@ class SparepartController extends GetxController {
 
   void clearSelectedCategories() {
     selectedCategories.clear();
+    searchItems("");
   }
 
   void searchItems(String query) async {

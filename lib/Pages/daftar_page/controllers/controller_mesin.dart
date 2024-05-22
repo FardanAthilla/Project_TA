@@ -45,6 +45,7 @@ class StoreController extends GetxController {
 
   void clearSelectedCategories() {
     selectedCategories.clear();
+    searchItems("");
   }
 
   void searchItems(String query) async {
@@ -54,7 +55,6 @@ class StoreController extends GetxController {
       List<dynamic> data = json.decode(response.body);
       filteredItems.value =
           data.map((item) => StoreItem.fromJson(item)).toList();
-      print(filteredItems);
     } else {
       filteredItems.value = [];
     }

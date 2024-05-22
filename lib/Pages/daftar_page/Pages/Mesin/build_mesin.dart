@@ -70,7 +70,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController) {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Kategori Mesin',
+              'Daftar Mesin',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController) {
               if (storeController.filteredItems.isEmpty) {
                 return Center(
                   child: Text(
-                    'Tidak ada data',
+                    'Barang tidak ditemukan',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,

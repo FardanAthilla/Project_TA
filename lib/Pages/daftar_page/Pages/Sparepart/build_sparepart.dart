@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
-import 'package:project_ta/Pages/daftar_page/models/Mesin/model_sparepart.dart';
+import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/Pages/Sparepart/filter_sparepart.dart';
 import 'package:project_ta/color.dart';
 
@@ -71,7 +71,7 @@ Widget buildSparepartList(
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Kategori Sparepart',
+              'Daftar Sparepart',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ Widget buildSparepartList(
               if (sparepartController.filteredItems.isEmpty) {
                 return const Center(
                   child: Text(
-                    'Tidak ada data',
+                    'Barang tidak ditemukan',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
