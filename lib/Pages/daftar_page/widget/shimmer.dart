@@ -6,7 +6,7 @@ Widget buildShimmer() {
   return Column(
     children: [
       Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(13.0),
         child: Row(
           children: [
             SizedBox(
@@ -14,30 +14,16 @@ Widget buildShimmer() {
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,
                 child: Container(
-                  height: 40,
-                  width: 80,
+                  height: 54,
+                  width: 165,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(54),
+                    borderRadius: BorderRadius.circular(9),
                   ),
                 ),
               ),
             ),
             const SizedBox(width: 12),
-            SizedBox(
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  height: 40,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(54),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
