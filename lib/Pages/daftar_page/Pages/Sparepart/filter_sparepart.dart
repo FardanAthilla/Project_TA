@@ -32,7 +32,7 @@ void showFilterModal(BuildContext context, SparepartController sparepartControll
                               sparepartController.selectedCategories
                                   .remove(category.categorySparepartId);
                             }
-                            sparepartController.filterItemsByCategories();
+                            sparepartController.searchItems(sparepartController.searchController.text);
                           },
                         ),
                         const Divider(),
