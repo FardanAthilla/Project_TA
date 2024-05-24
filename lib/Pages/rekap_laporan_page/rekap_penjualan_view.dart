@@ -38,13 +38,6 @@ class RekapPenjualanPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Rekap Laporan Penjualan Mesin',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
               const SizedBox(height: 20),
               Expanded(
                 child: CustomTabBar(
@@ -65,8 +58,7 @@ class RekapPenjualanPage extends StatelessWidget {
     );
   }
 
-  Widget rekapMesinPage(
-      BuildContext context, SalesReportController controller) {
+  Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
     return Obx(() {
       if (controller.salesData.isEmpty) {
         return ShimmerLoading(); // Display shimmer loading widget
@@ -94,7 +86,7 @@ class RekapPenjualanPage extends StatelessWidget {
             itemBuilder: (context, index) {
               var currentDate = dates[index];
               var currentData = groupedSales[currentDate];
-          
+
               return GestureDetector(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -118,21 +110,47 @@ class RekapPenjualanPage extends StatelessWidget {
                       itemCount: currentData!.length,
                       itemBuilder: (context, index) {
                         var data = currentData[index];
-                        return Card(
-                          color: Warna.main,
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          child: ListTile(
-                            title: Text(
-                              data['item_name'],
-                              style: TextStyle(color: Warna.white),
-                            ),
-                            trailing: Text(
-                              data['quantity'].toString(),
-                              style: TextStyle(
-                                color: Warna.white,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Image.asset(
+                                  'Assets/iconlistmesin3.png',
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data['item_name'],
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Warna.hitam,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Jumlah: ${data['quantity']}',
+                                      style: TextStyle(
+                                        color: Warna.card,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w100,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
