@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/daftar_barang_view.dart';
+import 'package:project_ta/Pages/laporan_page/laporan_page_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan_view.dart';
@@ -15,7 +16,7 @@ class Navbar extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       DaftarMesin(),
-      Placeholder(),
+      LaporanPage(),
       RekapPenjualanPage(),
       ProfilePage(),
     ];

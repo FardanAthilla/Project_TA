@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
@@ -13,6 +15,10 @@ class ProfilePage extends StatelessWidget {
   Future<void> _refreshData() async {
     await profileController.fetchUserData();
   }
+
+  final StoreController storeController = Get.put(StoreController());
+  final SparepartController sparepartController =
+      Get.put(SparepartController());
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +160,10 @@ class ProfilePage extends StatelessWidget {
                             profileController.resetUserData();
                             Get.offAllNamed('/splash');
                             navbarController.resetIndex();
+                            storeController.clearSelectedCategories();
+                            sparepartController.clearSelectedCategories();
+                            storeController.searchController.clear();
+                            sparepartController.searchController.clear();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Warna.danger,

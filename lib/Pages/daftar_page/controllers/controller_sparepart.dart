@@ -46,7 +46,7 @@ class SparepartController extends GetxController {
 
   void clearSelectedCategories() {
     selectedCategories.clear();
-    searchItems("");
+    searchItems(searchController.text);
   }
 
   void searchItems(String query) async {
