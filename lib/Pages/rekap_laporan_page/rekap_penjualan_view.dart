@@ -110,48 +110,57 @@ class RekapPenjualanPage extends StatelessWidget {
                       itemCount: currentData!.length,
                       itemBuilder: (context, index) {
                         var data = currentData[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: Image.asset(
-                                  'Assets/iconlistmesin3.png',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      data['item_name'],
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Warna.hitam,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    child: Image.asset(
+                                      'Assets/iconlistmesin3.png',
+                                      width: 52,
+                                      height: 52,
+                                      fit: BoxFit.contain,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Jumlah: ${data['quantity']}',
-                                      style: TextStyle(
-                                        color: Warna.card,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w100,
-                                      ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data['item_name'],
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Warna.hitam,
+                                            fontWeight: FontWeight.w500, // Medium
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Jumlah barang: ${data['quantity']}',
+                                          style: TextStyle(
+                                            color: Warna.card,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400, // Normal
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            if (currentData.length > 1 && index != currentData.length - 1)
+                              Container(
+                                width: 350, // Set the desired width here
+                                child: const Divider(), //buat list dividernya kalo rekapan lebih dari satu hari itu
+                              ),
+                          ],
                         );
                       },
                     ),
