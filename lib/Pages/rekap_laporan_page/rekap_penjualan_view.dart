@@ -6,7 +6,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
 
@@ -46,8 +45,8 @@ class RekapPenjualanPage extends StatelessWidget {
                     Tab(text: 'Service'),
                   ],
                   tabViews: [
-                    rekapMesinPage(context, controller),
-                    Placeholder(),
+                    // rekapMesinPage(context, controller),
+                    // Placeholder(),
                   ],
                 ),
               ),

@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginPageController());
+    final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
               top: -width * 0.2,
               left: 0,
               right: 0,
-              child: Container(
+              child: SizedBox(
                 height: width,
                 child: Image.asset(
                   'Assets/login3.png',
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 decoration: BoxDecoration(
                   color: Warna.background,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(50.0),
                     topRight: Radius.circular(50.0),
                   ),
@@ -57,8 +58,8 @@ class LoginPage extends StatelessWidget {
                       "Assets/logo2.svg",
                       width: 800,
                     ),
-                    SizedBox(height: 5),
-                    Center(
+                    const SizedBox(height: 5),
+                    const Center(
                       child: Column(
                         children: [
                           Text(
@@ -79,74 +80,90 @@ class LoginPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     CustomTextField(
                       hintText: 'Username',
                       controllers: controller.usernameTextEditingController,
                       icon: Icons.person,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextField(
                       hintText: 'Password',
                       controllers: controller.passwordTextEditingController,
                       icon: Icons.lock,
                       isPassword: true,
                     ),
-                    SizedBox(height: 40),
-                    Container(
-                        width: double.infinity,
-                        height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 0),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final usernameController =
-                                Get.find<LoginPageController>()
-                                    .usernameTextEditingController;
-                            final passwordController =
-                                Get.find<LoginPageController>()
-                                    .passwordTextEditingController;
-                            final String username = usernameController.text;
-                            final String password = passwordController.text;
+                    const SizedBox(height: 40),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: isLoading,
+                      builder: (context, loading, child) {
+                        return Container(
+                          width: double.infinity,
+                          height: 50,
+                          margin: const EdgeInsets.symmetric(horizontal: 0),
+                          child: ElevatedButton(
+                            onPressed: loading
+                                ? null
+                                : () async {
+                                    isLoading.value = true;
+                                    final usernameController = controller
+                                        .usernameTextEditingController;
+                                    final passwordController = controller
+                                        .passwordTextEditingController;
+                                    final String username =
+                                        usernameController.text;
+                                    final String password =
+                                        passwordController.text;
 
-                            try {
-                              final String token =
-                                  await loginUser(username, password);
-                              await saveToken(token);
-                              print('Token: $token');
-                              usernameController.clear();
-                              passwordController.clear();
-                              Get.snackbar(
-                                'Login Berhasil',
-                                '$username berhasil login.',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Warna.main,
-                                colorText: Colors.white,
-                              );
-                              Get.offNamed("/navbar");
-                            } catch (e) {
-                              print('Gagal login: $e');
-                              Get.snackbar(
-                                'Login Gagal',
-                                'Terjadi kesalahan saat melakukan login. Mohon coba lagi.',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Warna.danger,
-                                colorText: Colors.white,
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                                    try {
+                                      final String token =
+                                          await loginUser(username, password);
+                                      await saveToken(token);
+                                      print('Token: $token');
+                                      usernameController.clear();
+                                      passwordController.clear();
+                                      Get.snackbar(
+                                        'Login Berhasil',
+                                        '$username berhasil login.',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Warna.main,
+                                        colorText: Colors.white,
+                                      );
+                                      Get.offNamed("/navbar");
+                                    } catch (e) {
+                                      print('Gagal login: $e');
+                                      Get.snackbar(
+                                        'Login Gagal',
+                                        'Terjadi kesalahan saat melakukan login. Mohon isi data yang sesuai.',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Warna.danger,
+                                        colorText: Colors.white,
+                                      );
+                                    } finally {
+                                      isLoading.value = false;
+                                    }
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: Warna.main,
                             ),
-                            backgroundColor: Warna.main,
+                            child: loading
+                                ? CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Warna.teksactive),
+                                  )
+                                : Text(
+                                    "Login",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        color: Warna.white),
+                                  ),
                           ),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Warna.white),
-                          ),
-                        ))
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

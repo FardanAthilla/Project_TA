@@ -8,6 +8,7 @@ class StoreController extends GetxController {
   var storeItems = <StoreItem>[].obs;
   var filteredItems = <StoreItem>[].obs;
   var categories = <CategoryMachine>[].obs;
+  var itemSelect = <StoreItem>[].obs;
   var selectedCategories = <int>[].obs;
   var isLoading = false.obs;
   final TextEditingController searchController = TextEditingController();
@@ -57,6 +58,18 @@ class StoreController extends GetxController {
           data.map((item) => StoreItem.fromJson(item)).toList();
     } else {
       filteredItems.value = [];
+    }
+  }
+
+  void ItemSelect(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories=${selectedCategories.join(',')}'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      itemSelect.value =
+          data.map((item) => StoreItem.fromJson(item)).toList();
+    } else {
+      itemSelect.value = [];
     }
   }
 }
