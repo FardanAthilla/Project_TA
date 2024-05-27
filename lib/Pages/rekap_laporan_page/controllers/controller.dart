@@ -1,30 +1,31 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 
 class SalesReportController extends GetxController {
-  RxList salesData = [].obs;
-  RxBool isLoading = true.obs;
+  var salesReports = <SalesReport>[].obs;
+  var isLoading = true.obs;
 
   @override
   void onInit() {
+    fetchSalesReports();
     super.onInit();
-    fetchSalesReport();
   }
 
-  Future<void> fetchSalesReport() async {
-    isLoading.value = true;
+  void fetchSalesReports() async {
     try {
-      final response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
+      isLoading(true);
+      var response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
       if (response.statusCode == 200) {
-        salesData.value = json.decode(response.body)['Data'];
+        var jsonResponse = json.decode(response.body);
+        Iterable salesReportsJson = jsonResponse['Data'];
+        salesReports.assignAll(salesReportsJson.map((model) => SalesReport.fromJson(model)).toList());
       } else {
-        throw Exception('Failed to load sales report');
+        print('Request failed with status: ${response.statusCode}.');
       }
-    } catch (e) {
-      // Handle error
     } finally {
-      isLoading.value = false; // Set isLoading to false after fetching data
+      isLoading(false);
     }
   }
 }
