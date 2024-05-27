@@ -19,6 +19,7 @@ class StoreController extends GetxController {
     fetchStoreItems();
     fetchCategories();
     searchItems("");
+    ItemSelect("");
   }
 
   void fetchStoreItems() async {
