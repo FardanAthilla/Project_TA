@@ -51,27 +51,29 @@ class RekapPenjualanPage extends StatelessWidget {
     );
   }
 
-  Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
-    return Obx(() {
-      if (controller.isLoading.value && controller.salesReports.isEmpty) {
-        return buildShimmer(); // Display shimmer loading widget
-      } else if (controller.salesReports.isEmpty) {
-        return Center(child: Text('No data available'));
-      } else {
-        Map<String, List<SalesReportItem>> groupedSales = {};
-        List<String> dates = [];
+Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
+  return Obx(() {
+    if (controller.isLoading.value && controller.salesReports.isEmpty) {
+      return buildShimmer(); // Display shimmer loading widget
+    } else if (controller.salesReports.isEmpty) {
+      return Center(child: Text('No data available'));
+    } else {
+      Map<String, List<SalesReportItem>> groupedSales = {};
+      List<String> dates = [];
 
-        for (var report in controller.salesReports) {
-          var formattedDate =
-              DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
-          if (!groupedSales.containsKey(formattedDate)) {
-            groupedSales[formattedDate] = [];
-            dates.insert(0, formattedDate);
-          }
-          groupedSales[formattedDate]?.addAll(report.salesReportItems);
+      for (var report in controller.salesReports) {
+        var formattedDate =
+            DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
+        if (!groupedSales.containsKey(formattedDate)) {
+          groupedSales[formattedDate] = [];
+          dates.insert(0, formattedDate);
         }
+        groupedSales[formattedDate]?.addAll(report.salesReportItems);
+      }
 
-        return SingleChildScrollView(
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0), // Add padding here
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
@@ -163,8 +165,10 @@ class RekapPenjualanPage extends StatelessWidget {
               );
             },
           ),
-        );
-      }
-    });
-  }
+        ),
+      );
+    }
+  });
+}
+
 }
