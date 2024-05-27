@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -7,14 +8,18 @@ class StoreController extends GetxController {
   var storeItems = <StoreItem>[].obs;
   var filteredItems = <StoreItem>[].obs;
   var categories = <CategoryMachine>[].obs;
+  var itemSelect = <StoreItem>[].obs;
   var selectedCategories = <int>[].obs;
   var isLoading = false.obs;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     fetchStoreItems();
     fetchCategories();
+    searchItems("");
+    ItemSelect("");
   }
 
   void fetchStoreItems() async {
@@ -24,7 +29,6 @@ class StoreController extends GetxController {
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body)['Data'];
       storeItems.value = data.map((item) => StoreItem.fromJson(item)).toList();
-      filterItemsByCategories();
     }
     isLoading(false);
   }
@@ -41,18 +45,32 @@ class StoreController extends GetxController {
     isLoading(false);
   }
 
-  void filterItemsByCategories() {
-    if (selectedCategories.isEmpty) {
-      filteredItems.value = storeItems;
+  void clearSelectedCategories() {
+    selectedCategories.clear();
+    searchItems(searchController.text);
+  }
+
+  void searchItems(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories=${selectedCategories.join(',')}'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      filteredItems.value =
+          data.map((item) => StoreItem.fromJson(item)).toList();
     } else {
-      filteredItems.value = storeItems
-          .where((item) => selectedCategories.contains(item.categoryMachineId))
-          .toList();
+      filteredItems.value = [];
     }
   }
 
-  void clearSelectedCategories() {
-    selectedCategories.clear();
-    filterItemsByCategories();
+  void ItemSelect(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories=${selectedCategories.join(',')}'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      itemSelect.value =
+          data.map((item) => StoreItem.fromJson(item)).toList();
+    } else {
+      itemSelect.value = [];
+    }
   }
 }

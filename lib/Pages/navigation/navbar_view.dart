@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Pages/daftar_page/daftar_mesin_view.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
+import 'package:project_ta/Pages/daftar_page/daftar_barang_view.dart';
+import 'package:project_ta/Pages/laporan_page/laporan_page_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan_view.dart';
@@ -9,13 +12,16 @@ import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
   final NavbarController controller = Get.put(NavbarController());
+  final StoreController storeController = Get.put(StoreController());
+  final SparepartController sparepartController =
+      Get.put(SparepartController());
 
   Navbar({Key? key}) : super(key: key);
 
   List<Widget> _buildScreens() {
     return [
       DaftarMesin(),
-      Placeholder(),
+      LaporanPage(),
       RekapPenjualanPage(),
       ProfilePage(),
     ];
@@ -54,12 +60,8 @@ class Navbar extends StatelessWidget {
         label: 'Lapor',
       ),
       BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          'Assets/icon2.svg',
-          width: 24,
-          height: 24,
-          color: Warna.teks
-        ),
+        icon: SvgPicture.asset('Assets/icon2.svg',
+            width: 24, height: 24, color: Warna.teks),
         activeIcon: SvgPicture.asset(
           'Assets/icon2.svg',
           width: 24,
@@ -69,12 +71,8 @@ class Navbar extends StatelessWidget {
         label: 'Rekap',
       ),
       BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          'Assets/icon4.svg',
-          width: 22,
-          height: 22,
-          color: Warna.teks
-        ),
+        icon: SvgPicture.asset('Assets/icon4.svg',
+            width: 22, height: 22, color: Warna.teks),
         activeIcon: SvgPicture.asset(
           'Assets/icon4.svg',
           width: 22,
@@ -95,7 +93,7 @@ class Navbar extends StatelessWidget {
               children: _buildScreens(),
             )),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
@@ -115,7 +113,16 @@ class Navbar extends StatelessWidget {
                 currentIndex: controller.selectedIndex.value,
                 selectedItemColor: Colors.blue,
                 unselectedItemColor: Colors.black,
-                onTap: controller.onItemTapped,
+                onTap: (index) {
+                  controller.onItemTapped(index);
+                  if (index == 0) {
+                    storeController.searchItems(storeController.searchController.text);
+                    sparepartController.searchItems(sparepartController.searchController.text);
+                  } if (index == 1) {
+                      storeController.ItemSelect(storeController.searchController.text);
+                      sparepartController.SparePartSelect(sparepartController.searchController.text);
+                  }
+                },
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: Colors.transparent,
                 elevation: 0,

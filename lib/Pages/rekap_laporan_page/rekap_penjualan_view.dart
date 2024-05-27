@@ -40,6 +40,26 @@ class RekapPenjualanPage extends StatelessWidget {
             tabs: [
               Tab(text: 'ㅤMesinㅤ'),
               Tab(text: 'Service'),
+      body: RefreshIndicator(
+        onRefresh: controller.fetchSalesReport,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Expanded(
+                child: CustomTabBar(
+                  tabs: [
+                    Tab(text: 'ㅤMesinㅤ'),
+                    Tab(text: 'Service'),
+                  ],
+                  tabViews: [
+                    // rekapMesinPage(context, controller),
+                    // Placeholder(),
+                  ],
+                ),
+              ),
             ],
             tabViews: [
               rekapMesinPage(context, controller),
