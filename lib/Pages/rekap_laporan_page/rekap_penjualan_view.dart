@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
+import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart'; // Import CustomTabBar
 
 class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
@@ -19,17 +21,25 @@ class RekapPenjualanPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Warna.background,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
               'Assets/logo2.svg',
               width: 30,
               height: 30,
-            ),
+            )
           ],
         ),
       ),
+      body: Obx(() {
+        if (controller.isLoading.value && controller.salesReports.isEmpty) {
+          return buildShimmer(); // Display shimmer loading widget
+        } else {
+          return CustomTabBar(
+            tabs: [
+              Tab(text: 'ㅤMesinㅤ'),
+              Tab(text: 'Service'),
       body: RefreshIndicator(
         onRefresh: controller.fetchSalesReport,
         child: Padding(
@@ -51,32 +61,39 @@ class RekapPenjualanPage extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
+            tabViews: [
+              rekapMesinPage(context, controller),
+              Placeholder(), // Placeholder for the 'Service' tab
+            ],
+          );
+        }
+      }),
     );
   }
 
-  Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
-    return Obx(() {
-      if (controller.salesData.isEmpty) {
-        return ShimmerLoading(); // Display shimmer loading widget
-      } else {
-        Map<String, List<dynamic>> groupedSales = {};
-        List<String> dates = [];
+Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
+  return Obx(() {
+    if (controller.isLoading.value && controller.salesReports.isEmpty) {
+      return buildShimmer(); // Display shimmer loading widget
+    } else if (controller.salesReports.isEmpty) {
+      return Center(child: Text('No data available'));
+    } else {
+      Map<String, List<SalesReportItem>> groupedSales = {};
+      List<String> dates = [];
 
-        for (var data in controller.salesData) {
-          var date = DateTime.parse(data['date']);
-          var formattedDate =
-              DateFormat('EEEE, d MMMM y', 'id_ID').format(date);
-          if (!groupedSales.containsKey(formattedDate)) {
-            groupedSales[formattedDate] = [];
-            dates.insert(0, formattedDate);
-          }
-          groupedSales[formattedDate]?.add(data);
+      for (var report in controller.salesReports) {
+        var formattedDate =
+            DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
+        if (!groupedSales.containsKey(formattedDate)) {
+          groupedSales[formattedDate] = [];
+          dates.insert(0, formattedDate);
         }
+        groupedSales[formattedDate]?.addAll(report.salesReportItems);
+      }
 
-        return SingleChildScrollView(
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0), // Add padding here
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
@@ -132,7 +149,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          data['item_name'],
+                                          data.itemName,
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Warna.hitam,
@@ -141,7 +158,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
-                                          'Jumlah barang: ${data['quantity']}',
+                                          'Jumlah barang: ${data.quantity}',
                                           style: TextStyle(
                                             color: Warna.card,
                                             fontSize: 13,
@@ -156,8 +173,8 @@ class RekapPenjualanPage extends StatelessWidget {
                             ),
                             if (currentData.length > 1 && index != currentData.length - 1)
                               Container(
-                                width: 350, // Set the desired width here
-                                child: const Divider(), //buat list dividernya kalo rekapan lebih dari satu hari itu
+                                width: 333, // Set the desired width here
+                                child: const Divider(), // Divider for list items
                               ),
                           ],
                         );
@@ -168,8 +185,10 @@ class RekapPenjualanPage extends StatelessWidget {
               );
             },
           ),
-        );
-      }
-    });
-  }
+        ),
+      );
+    }
+  });
+}
+
 }
