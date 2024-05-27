@@ -7,6 +7,7 @@ import 'dart:convert';
 class SparepartController extends GetxController {
   var storeItems = <SparepartItem>[].obs;
   var filteredItems = <SparepartItem>[].obs;
+  var sparePartSelect = <SparepartItem>[].obs;
   var categories = <CategorySparepart>[].obs;
   var selectedCategories = <int>[].obs;
   var isLoading = false.obs;
@@ -18,6 +19,7 @@ class SparepartController extends GetxController {
     fetchStoreItems();
     fetchCategories();
     searchItems("");
+    SparePartSelect("");
   }
 
   void fetchStoreItems() async {
@@ -58,6 +60,18 @@ class SparepartController extends GetxController {
           data.map((item) => SparepartItem.fromJson(item)).toList();
     } else {
       filteredItems.value = [];
+    }
+  }
+
+  void SparePartSelect(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://rdo-app-o955y.ondigitalocean.app/search/sparePart?name=$query&categories=${selectedCategories.join(',')}'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      sparePartSelect.value =
+          data.map((item) => SparepartItem.fromJson(item)).toList();
+    } else {
+      sparePartSelect.value = [];
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
+import 'package:project_ta/Pages/laporan_page/Mesin/itemselection.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
@@ -11,6 +12,8 @@ import 'package:shimmer/shimmer.dart';
 class ProfilePage extends StatelessWidget {
   final ProfileController profileController = Get.put(ProfileController());
   final NavbarController navbarController = Get.put(NavbarController());
+  final ItemSelectionController itemSelectionController =
+      Get.put(ItemSelectionController());
 
   Future<void> _refreshData() async {
     await profileController.fetchUserData();
@@ -164,6 +167,7 @@ class ProfilePage extends StatelessWidget {
                             sparepartController.clearSelectedCategories();
                             storeController.searchController.clear();
                             sparepartController.searchController.clear();
+                            itemSelectionController.selectedItems.clear();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Warna.danger,

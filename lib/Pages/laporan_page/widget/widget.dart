@@ -8,17 +8,23 @@ class DateController extends GetxController {
   void setDate(DateTime picked) {
     date.value = DateFormat('yyyy-MM-dd').format(picked);
   }
+
+  void clear() {
+    date.value = '';
+  }
 }
 
 class DateTextField extends StatelessWidget {
   final String title;
   final String description;
+  final DateController dateController;
   final FocusNode? focusNode;
 
   DateTextField({
     Key? key,
     required this.title,
     required this.description,
+    required this.dateController,
     this.focusNode,
   }) : super(key: key);
 
@@ -68,6 +74,44 @@ class DateTextField extends StatelessWidget {
             style: const TextStyle(fontSize: 8, color: Colors.grey),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class BottomBarButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final Color textColor;
+  final Color borderColor;
+  final VoidCallback onPressed;
+
+  const BottomBarButton({
+    Key? key,
+    required this.text,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.borderColor,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              side: BorderSide(color: borderColor),
+              minimumSize: Size(double.infinity, 40),
+              padding: EdgeInsets.symmetric(vertical: 10.0)),
+          child: Text(
+            text,
+            style: TextStyle(color: textColor),
+          ),
+        ),
       ),
     );
   }
