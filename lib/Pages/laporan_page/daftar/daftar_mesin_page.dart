@@ -31,9 +31,9 @@ class DaftarMesinPage extends StatelessWidget {
           tabViews: [
             Obx(() {
               return ListView.builder(
-                itemCount: storeController.filteredItems.length,
+                itemCount: storeController.itemSelect.length,
                 itemBuilder: (context, index) {
-                  final item = storeController.filteredItems[index];
+                  final item = storeController.itemSelect[index];
                   final isSelected = itemSelectionController.isSelected(
                     SelectedItems(
                       categoryItemsId: item.categoryMachineId,

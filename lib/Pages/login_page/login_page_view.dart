@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
@@ -14,6 +16,9 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(LoginPageController());
     final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+    final StoreController storeController = Get.put(StoreController());
+    final SparepartController sparepartController = Get.put(SparepartController());
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -129,6 +134,8 @@ class LoginPage extends StatelessWidget {
                                         backgroundColor: Warna.main,
                                         colorText: Colors.white,
                                       );
+                                      storeController.searchItems(storeController.searchController.text);
+                                      sparepartController.searchItems(sparepartController.searchController.text);
                                       Get.offNamed("/navbar");
                                     } catch (e) {
                                       print('Gagal login: $e');
