@@ -8,9 +8,12 @@ import 'package:project_ta/color.dart';
 Widget buildSparepartList(
     BuildContext context, SparepartController sparepartController) {
   final FocusNode searchFocusNode = FocusNode();
+  var isLoading = false.obs;
 
   Future<void> refreshItems() async {
-    sparepartController.fetchStoreItems();
+    isLoading(true);
+    sparepartController.searchItems(sparepartController.searchController.text);
+    isLoading(false);
   }
 
   return GestureDetector(

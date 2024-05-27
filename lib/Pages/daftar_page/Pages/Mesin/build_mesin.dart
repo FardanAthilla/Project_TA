@@ -7,9 +7,12 @@ import 'package:project_ta/color.dart';
 
 Widget buildMesinList(BuildContext context, StoreController storeController) {
   final FocusNode searchFocusNode = FocusNode();
+  var isLoading = false.obs;
 
-  Future<void> _refreshItems() async {
-    storeController.fetchStoreItems();
+  Future<void> refreshItems() async {
+    isLoading(true);
+    storeController.searchItems(storeController.searchController.text);
+    isLoading(false);
   }
 
   return GestureDetector(
@@ -28,7 +31,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController) {
                   child: TextField(
                     controller: storeController.searchController,
                     focusNode: searchFocusNode,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Cari sekarang...',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -81,10 +84,10 @@ Widget buildMesinList(BuildContext context, StoreController storeController) {
         ),
         Expanded(
           child: RefreshIndicator(
-            onRefresh: _refreshItems,
+            onRefresh: refreshItems,
             child: Obx(() {
               if (storeController.filteredItems.isEmpty) {
-                return Center(
+                return const Center(
                   child: Text(
                     'Barang tidak ditemukan',
                     style: TextStyle(

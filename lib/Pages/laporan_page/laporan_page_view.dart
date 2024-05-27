@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
-import 'package:project_ta/Pages/laporan_page/Mesin/daftar_mesin_page.dart';
-import 'package:project_ta/Pages/laporan_page/Mesin/itemselection.dart';
+import 'package:project_ta/Pages/laporan_page/daftar/daftar_mesin_page.dart';
+import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
@@ -12,12 +12,10 @@ import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart'
 import 'package:project_ta/color.dart';
 
 class LaporanPage extends StatelessWidget {
-  final ItemSelectionController itemSelectionController =
-      Get.put(ItemSelectionController());
-      final SalesReportController salesReportController = Get.put(SalesReportController());
+  final ItemSelectionController itemSelectionController = Get.put(ItemSelectionController());
+  final SalesReportController salesReportController = Get.put(SalesReportController());
   final StoreController storeController = Get.put(StoreController());
-  final SparepartController sparepartController =
-      Get.put(SparepartController());
+  final SparepartController sparepartController = Get.put(SparepartController());
   final DateController dateController = Get.put(DateController());
 
   @override
@@ -42,16 +40,16 @@ class LaporanPage extends StatelessWidget {
         ],
         tabViews: [
           Padding(
-            padding: EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(12.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(9.0),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black26,
                           blurRadius: 0.5,
@@ -65,20 +63,20 @@ class LaporanPage extends StatelessWidget {
                       description: 'Pilih tanggal menggunakan kalendar.',
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => DaftarMesinPage(
-                          itemSelectionController: itemSelectionController));
-                      
+                      storeController.ItemSelect(storeController.searchController.text);
+                      sparepartController.SparePartSelect(sparepartController.searchController.text);
+                      Get.to(() => DaftarMesinPage(itemSelectionController: itemSelectionController));
                     },
                     child: Container(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       height: 60,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 0.5,
@@ -86,7 +84,7 @@ class LaporanPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('Daftar Barang'),
@@ -95,15 +93,14 @@ class LaporanPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Obx(() {
                     if (itemSelectionController.selectedItems.isEmpty) {
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     } else {
                       return Column(
                         children: [
-                          ...itemSelectionController.selectedItems
-                              .map((entry) {
+                          ...itemSelectionController.selectedItems.map((entry) {
                             final item = entry.item;
                             final quantity = entry.quantity;
                             return Column(
@@ -112,7 +109,7 @@ class LaporanPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: Warna.teksactive,
                                     borderRadius: BorderRadius.circular(8.0),
-                                    boxShadow: [
+                                    boxShadow: const [
                                       BoxShadow(
                                         color: Colors.black26,
                                         blurRadius: 1.0,
@@ -129,7 +126,9 @@ class LaporanPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(12.0),
                                           child: Image.asset(
-                                          entry.category == "mesin" ? 'Assets/iconlistmesin3.png' : 'Assets/iconsparepart.png',
+                                            entry.category == "mesin"
+                                                ? 'Assets/iconlistmesin3.png'
+                                                : 'Assets/iconsparepart.png',
                                             width: 70,
                                             height: 70,
                                             fit: BoxFit.contain,
@@ -171,19 +170,23 @@ class LaporanPage extends StatelessWidget {
                                         color: Warna.danger,
                                       ),
                                       onPressed: () {
-                                        itemSelectionController.deselectItem(SelectedItems(
-                                          categoryItemsId: entry.categoryItemsId,
-                                          category: entry.category == "mesin" ? "mesin" : "spare_part",
+                                        itemSelectionController
+                                            .deselectItem(SelectedItems(
+                                          categoryItemsId:
+                                              entry.categoryItemsId,
+                                          category: entry.category == "mesin"
+                                              ? "mesin"
+                                              : "spare_part",
                                           price: entry.price,
-                    id: entry.id,
-                    item: item,
-                    quantity: 1,
-                  ));
+                                          id: entry.id,
+                                          item: item,
+                                          quantity: 1,
+                                        ));
                                       },
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 15),
+                                const SizedBox(height: 15),
                               ],
                             );
                           }).toList(),
@@ -204,7 +207,7 @@ class LaporanPage extends StatelessWidget {
                           itemSelectionController.selectedItems.clear();
                         },
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       BottomBarButton(
                         text: 'Kirim',
                         backgroundColor: Warna.main,
@@ -220,7 +223,7 @@ class LaporanPage extends StatelessWidget {
               ),
             ),
           ),
-          Placeholder(),
+          const Placeholder(),
         ],
       ),
     );
