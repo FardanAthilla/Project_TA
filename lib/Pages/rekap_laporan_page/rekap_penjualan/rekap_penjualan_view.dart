@@ -119,7 +119,11 @@ class RekapPenjualanPage extends StatelessWidget {
                               var data = currentData[index];
                               return GestureDetector(
                                 onTap: () {
-                                  Get.to(() => DetailPage(itemName: data.itemName));
+                                  Get.to(() => DetailPage(
+                                        itemName: data.itemName,
+                                        quantity: data.quantity,
+                                        price: data.price,
+                                      ));
                                 },
                                 child: Column(
                                   children: [
@@ -193,3 +197,4 @@ class RekapPenjualanPage extends StatelessWidget {
     });
   }
 }
+
