@@ -26,6 +26,7 @@ class SalesReportItem {
   double price;
   String category;
   int categoryMachineId;
+  String categoryMachineName;
 
   SalesReportItem({
     required this.salesReportItemsId,
@@ -34,7 +35,8 @@ class SalesReportItem {
     required this.quantity,
     required this.price,
     required this.category,
-    required this.categoryMachineId,
+    required this.categoryMachineId, 
+    required this.categoryMachineName, 
   });
 
   factory SalesReportItem.fromJson(Map<String, dynamic> json) {
@@ -45,7 +47,8 @@ class SalesReportItem {
       quantity: json['quantity'],
       price: json['price'].toDouble(),
       category: json['category'],
-      categoryMachineId: json['category_machine_id'],
+      categoryMachineId: json['category_machine_id'], 
+      categoryMachineName: json['category_machine_name'],
     );
   }
 }
