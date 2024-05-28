@@ -32,7 +32,7 @@ void showFilterModal(BuildContext context, StoreController storeController) {
                               storeController.selectedCategories
                                   .remove(category.categoryMachineId);
                             }
-                            storeController.filterItemsByCategories();
+                            storeController.searchItems(storeController.searchController.text);
                           },
                         ),
                         const Divider(),

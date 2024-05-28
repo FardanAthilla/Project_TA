@@ -33,7 +33,7 @@ class RekapPenjualanPage extends StatelessWidget {
         ),
       ),
       body: Obx(() {
-        if (controller.isLoading.value && controller.salesReports.isEmpty) {
+        if (controller.isLoading.value && controller.salesData.isEmpty) {
           return buildShimmer(); // Display shimmer loading widget
         } else {
           return CustomTabBar(
@@ -51,17 +51,17 @@ class RekapPenjualanPage extends StatelessWidget {
     );
   }
 
-Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
+ Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
   return Obx(() {
-    if (controller.isLoading.value && controller.salesReports.isEmpty) {
+    if (controller.isLoading.value && controller.salesData.isEmpty) {
       return buildShimmer(); // Display shimmer loading widget
-    } else if (controller.salesReports.isEmpty) {
+    } else if (controller.salesData.isEmpty) {
       return Center(child: Text('No data available'));
     } else {
       Map<String, List<SalesReportItem>> groupedSales = {};
       List<String> dates = [];
 
-      for (var report in controller.salesReports) {
+      for (var report in controller.salesData) {
         var formattedDate =
             DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
         if (!groupedSales.containsKey(formattedDate)) {
@@ -73,7 +73,7 @@ Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
 
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0), // Add padding here
+          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding here
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
