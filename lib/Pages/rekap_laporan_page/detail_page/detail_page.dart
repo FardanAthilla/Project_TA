@@ -4,11 +4,14 @@ class DetailPage extends StatelessWidget {
   final String itemName;
   final int quantity;
   final double price;
+  // final String categoryMachineName;
+
 
   DetailPage({
     required this.itemName,
     required this.quantity,
     required this.price,
+    // required this.categoryMachineName
   });
 
   @override
@@ -23,7 +26,8 @@ class DetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Category Machine:',
+              'Category Machine: ',
+
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),

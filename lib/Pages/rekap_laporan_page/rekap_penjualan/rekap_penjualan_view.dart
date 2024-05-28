@@ -5,12 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/detail_page/detail_page.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
-import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart'; 
+import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/detail_page/detail_page.dart';
 
 class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
@@ -44,7 +44,7 @@ class RekapPenjualanPage extends StatelessWidget {
             ],
             tabViews: [
               rekapMesinPage(context, controller),
-              Placeholder(), 
+              Placeholder(),
             ],
           );
         }
@@ -123,6 +123,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                         itemName: data.itemName,
                                         quantity: data.quantity,
                                         price: data.price,
+                                        // categoryMachineName: data.categoryMachineName, // Updated
                                       ));
                                 },
                                 child: Column(
@@ -197,4 +198,3 @@ class RekapPenjualanPage extends StatelessWidget {
     });
   }
 }
-
