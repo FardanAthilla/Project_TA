@@ -229,3 +229,4 @@ class LaporanPage extends StatelessWidget {
     );
   }
 }
+
