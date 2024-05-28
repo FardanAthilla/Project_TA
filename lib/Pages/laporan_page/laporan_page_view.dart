@@ -214,7 +214,7 @@ class LaporanPage extends StatelessWidget {
                         textColor: Colors.white,
                         borderColor: Warna.main,
                         onPressed: () async {
-                          salesReportController.sendSalesReport(dateController,itemSelectionController.selectedItems);
+                          // salesReportController.sendSalesReport(dateController,itemSelectionController.selectedItems); //error karna e comment
                         },
                       ),
                     ],
