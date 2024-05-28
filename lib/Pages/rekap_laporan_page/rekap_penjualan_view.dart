@@ -51,124 +51,134 @@ class RekapPenjualanPage extends StatelessWidget {
     );
   }
 
- Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
-  return Obx(() {
-    if (controller.isLoading.value && controller.salesData.isEmpty) {
-      return buildShimmer(); // Display shimmer loading widget
-    } else if (controller.salesData.isEmpty) {
-      return Center(child: Text('No data available'));
-    } else {
-      Map<String, List<SalesReportItem>> groupedSales = {};
-      List<String> dates = [];
+  Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
+    return Obx(() {
+      if (controller.isLoading.value && controller.salesData.isEmpty) {
+        return buildShimmer(); // Display shimmer loading widget
+      } else if (controller.salesData.isEmpty) {
+        return Center(child: Text('No data available'));
+      } else {
+        Map<String, List<SalesReportItem>> groupedSales = {};
+        List<String> dates = [];
 
-      for (var report in controller.salesData) {
-        var formattedDate =
-            DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
-        if (!groupedSales.containsKey(formattedDate)) {
-          groupedSales[formattedDate] = [];
-          dates.insert(0, formattedDate);
+        for (var report in controller.salesData) {
+          var formattedDate =
+              DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
+          if (!groupedSales.containsKey(formattedDate)) {
+            groupedSales[formattedDate] = [];
+            dates.add(formattedDate); // Add to the end
+          }
+          groupedSales[formattedDate]?.addAll(report.salesReportItems);
         }
-        groupedSales[formattedDate]?.addAll(report.salesReportItems);
-      }
 
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding here
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: groupedSales.length,
-            itemBuilder: (context, index) {
-              var currentDate = dates[index];
-              var currentData = groupedSales[currentDate];
+        // Sort dates in descending order
+        dates.sort((a, b) {
+          var dateA = DateFormat('EEEE, d MMMM y', 'id_ID').parse(a);
+          var dateB = DateFormat('EEEE, d MMMM y', 'id_ID').parse(b);
+          return dateB.compareTo(dateA);
+        });
 
-              return GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        currentDate,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: groupedSales.length,
+              itemBuilder: (context, index) {
+                var currentDate = dates[index];
+                var currentData = groupedSales[currentDate];
+
+                return GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          currentDate,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: currentData!.length,
-                      itemBuilder: (context, index) {
-                        var data = currentData[index];
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: Image.asset(
-                                      'Assets/iconlistmesin3.png',
-                                      width: 52,
-                                      height: 52,
-                                      fit: BoxFit.contain,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: currentData!.length,
+                        itemBuilder: (context, index) {
+                          var data = currentData[index];
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image.asset(
+                                        'Assets/iconlistmesin3.png',
+                                        width: 52,
+                                        height: 52,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.itemName,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Warna.hitam,
-                                            fontWeight: FontWeight.w500, // Medium
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.itemName,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: Warna.hitam,
+                                              fontWeight: FontWeight.w500, // Medium
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          'Jumlah barang: ${data.quantity}',
-                                          style: TextStyle(
-                                            color: Warna.card,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400, // Normal
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'Jumlah barang: ${data.quantity}',
+                                            style: TextStyle(
+                                              color: Warna.card,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400, // Normal
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            if (currentData.length > 1 && index != currentData.length - 1)
-                              Container(
-                                width: 333, // Set the desired width here
-                                child: const Divider(), // Divider for list items
-                              ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
+                              if (currentData.length > 1 &&
+                                  index != currentData.length - 1)
+                                Container(
+                                  width: 333, // Set the desired width here
+                                  child: const Divider(), // Divider for list items
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      );
-    }
-  });
-}
-
+        );
+      }
+    });
+  }
 }
