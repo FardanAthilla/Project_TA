@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/detail_page/detail_page.dart';
 
@@ -123,7 +123,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                         itemName: data.itemName,
                                         quantity: data.quantity,
                                         price: data.price,
-                                        // categoryMachineName: data.categoryMachineName, // Updated
+                                        categoryMachineName: data.categoryMachine.categoryMachineName, 
                                       ));
                                 },
                                 child: Column(

@@ -7,7 +7,7 @@ import 'package:project_ta/Pages/daftar_page/daftar_barang_view.dart';
 import 'package:project_ta/Pages/laporan_page/laporan_page_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan/rekap_penjualan_view.dart';
 import 'package:project_ta/color.dart';
 

@@ -8,7 +8,7 @@ import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/color.dart';
 
 class LaporanPage extends StatelessWidget {
