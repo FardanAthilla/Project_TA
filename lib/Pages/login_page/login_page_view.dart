@@ -17,7 +17,9 @@ class LoginPage extends StatelessWidget {
     final controller = Get.put(LoginPageController());
     final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
     final StoreController storeController = Get.put(StoreController());
-    final SparepartController sparepartController = Get.put(SparepartController());
+    final SparepartController sparepartController =
+        Get.put(SparepartController());
+    bool isSnackbarActive = false;
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -127,27 +129,40 @@ class LoginPage extends StatelessWidget {
                                       print('Token: $token');
                                       usernameController.clear();
                                       passwordController.clear();
-                                      Get.snackbar(
-                                        'Login Berhasil',
-                                        '$username berhasil login.',
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: Warna.main,
-                                        colorText: Colors.white,
-                                      );
-                                      storeController.searchItems(storeController.searchController.text);
-                                      sparepartController.searchItems(sparepartController.searchController.text);
+                                      if (!isSnackbarActive) {
+                                        isSnackbarActive = true;
+                                        Get.snackbar(
+                                          'Login Berhasil',
+                                          '$username berhasil login.',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Warna.main,
+                                          colorText: Colors.white,
+                                        );
+                                      }
+                                      storeController.searchItems(
+                                          storeController
+                                              .searchController.text);
+                                      sparepartController.searchItems(
+                                          sparepartController
+                                              .searchController.text);
                                       Get.offNamed("/navbar");
                                     } catch (e) {
                                       print('Gagal login: $e');
-                                      Get.snackbar(
-                                        'Login Gagal',
-                                        'Terjadi kesalahan saat melakukan login. Mohon isi data yang sesuai.',
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: Warna.danger,
-                                        colorText: Colors.white,
-                                      );
+                                      if (!isSnackbarActive) {
+                                        isSnackbarActive = true;
+                                        Get.snackbar(
+                                          'Login Gagal',
+                                          'Terjadi kesalahan saat melakukan login. Mohon isi data yang sesuai.',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Warna.danger,
+                                          colorText: Colors.white,
+                                        );
+                                      }
                                     } finally {
                                       isLoading.value = false;
+                                      Future.delayed(Duration(seconds: 2), () {
+                                        isSnackbarActive = false;
+                                      });
                                     }
                                   },
                             style: ElevatedButton.styleFrom(
@@ -157,9 +172,11 @@ class LoginPage extends StatelessWidget {
                               backgroundColor: Warna.main,
                             ),
                             child: loading
-                                ? CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Warna.teksactive),
+                                ? Text(
+                                    "Sedang memuat",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.white),
                                   )
                                 : Text(
                                     "Login",

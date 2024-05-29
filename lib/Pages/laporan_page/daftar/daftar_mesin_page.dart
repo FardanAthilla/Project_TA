@@ -11,7 +11,7 @@ import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 class DaftarMesinPage extends StatelessWidget {
   final ItemSelectionController itemSelectionController;
 
-  DaftarMesinPage({required this.itemSelectionController});
+  const DaftarMesinPage({super.key, required this.itemSelectionController});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class DaftarMesinPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Pilih Barang'),
+          title: const Text('Pilih Barang'),
         ),
         body: CustomTabBar(
           tabs: const [
@@ -50,7 +50,7 @@ class DaftarMesinPage extends StatelessWidget {
                     trailing: item.quantity > 0
                         ? (isSelected
                             ? IconButton(
-                                icon: Icon(Icons.remove_circle),
+                                icon: const Icon(Icons.remove_circle),
                                 onPressed: () {
                                   itemSelectionController.deselectItem(
                                     SelectedItems(
@@ -65,12 +65,12 @@ class DaftarMesinPage extends StatelessWidget {
                                 },
                               )
                             : IconButton(
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 onPressed: () {
                                   showQuantityStore(context, item);
                                 },
                               ))
-                        : Text('Stok Habis'),
+                        : const Text('Stok Habis'),
                   );
                 },
               );
@@ -96,7 +96,7 @@ class DaftarMesinPage extends StatelessWidget {
                     trailing: sparepart.quantity > 0
                         ? (isSelected
                             ? IconButton(
-                                icon: Icon(Icons.remove_circle),
+                                icon: const Icon(Icons.remove_circle),
                                 onPressed: () {
                                   itemSelectionController.deselectItem(
                                     SelectedItems(
@@ -111,12 +111,12 @@ class DaftarMesinPage extends StatelessWidget {
                                 },
                               )
                             : IconButton(
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 onPressed: () {
                                   showQuantitySparepart(context, sparepart);
                                 },
                               ))
-                        : Text('Stok Habis'),
+                        : const Text('Stok Habis'),
                   );
                 },
               );
@@ -137,12 +137,12 @@ class DaftarMesinPage extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Pilih Jumlah'),
+              title: const Text('Pilih Jumlah'),
               content: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                     onPressed: () {
                       if (selectedQuantity > 1) {
                         setState(() {
@@ -153,10 +153,10 @@ class DaftarMesinPage extends StatelessWidget {
                   ),
                   Text(
                     selectedQuantity.toString(),
-                    style: TextStyle(fontSize: 24.0),
+                    style: const TextStyle(fontSize: 24.0),
                   ),
                   IconButton(
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     onPressed: () {
                       if (selectedQuantity < stock) {
                         setState(() {
@@ -181,7 +181,7 @@ class DaftarMesinPage extends StatelessWidget {
                     itemSelectionController.selectItem(items);
                     Get.back();
                   },
-                  child: Text('Tambah'),
+                  child: const Text('Tambah'),
                 ),
               ],
             );
@@ -201,12 +201,12 @@ class DaftarMesinPage extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return AlertDialog(
-              title: Text('Pilih Jumlah'),
+              title: const Text('Pilih Jumlah'),
               content: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                     onPressed: () {
                       if (selectedQuantity > 1) {
                         setState(() {
@@ -217,10 +217,10 @@ class DaftarMesinPage extends StatelessWidget {
                   ),
                   Text(
                     selectedQuantity.toString(),
-                    style: TextStyle(fontSize: 24.0),
+                    style: const TextStyle(fontSize: 24.0),
                   ),
                   IconButton(
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     onPressed: () {
                       if (selectedQuantity < stock) {
                         setState(() {
@@ -245,7 +245,7 @@ class DaftarMesinPage extends StatelessWidget {
                     itemSelectionController.selectItem(items);
                     Get.back();
                   },
-                  child: Text('Tambah'),
+                  child: const Text('Tambah'),
                 ),
               ],
             );

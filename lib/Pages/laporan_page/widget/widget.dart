@@ -84,7 +84,7 @@ class BottomBarButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final Color borderColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const BottomBarButton({
     Key? key,
@@ -104,7 +104,7 @@ class BottomBarButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
               backgroundColor: backgroundColor,
-              side: BorderSide(color: borderColor),
+              side: BorderSide(color: borderColor,style: BorderStyle.solid),
               minimumSize: Size(double.infinity, 40),
               padding: EdgeInsets.symmetric(vertical: 10.0)),
           child: Text(
