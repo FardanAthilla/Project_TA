@@ -8,7 +8,7 @@ import 'package:project_ta/Pages/laporan_page/laporan_page_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan/rekap_penjualan_view.dart';
 import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
