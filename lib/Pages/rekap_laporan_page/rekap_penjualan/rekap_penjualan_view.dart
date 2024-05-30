@@ -53,29 +53,10 @@ class RekapPenjualanPage extends StatelessWidget {
   Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
     return Obx(() {
       if (controller.isLoading.value && controller.salesData.isEmpty) {
-        return buildShimmer(); 
+        return buildShimmer();
       } else if (controller.salesData.isEmpty) {
         return Center(child: Text('No data available'));
       } else {
-        Map<String, List<SalesReportItem>> groupedSales = {};
-        List<String> dates = [];
-
-        for (var report in controller.salesData) {
-          var formattedDate =
-              DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date);
-          if (!groupedSales.containsKey(formattedDate)) {
-            groupedSales[formattedDate] = [];
-            dates.add(formattedDate); 
-          }
-          groupedSales[formattedDate]?.addAll(report.salesReportItems);
-        }
-
-        dates.sort((a, b) {
-          var dateA = DateFormat('EEEE, d MMMM y', 'id_ID').parse(a);
-          var dateB = DateFormat('EEEE, d MMMM y', 'id_ID').parse(b);
-          return dateB.compareTo(dateA);
-        });
-
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -87,106 +68,73 @@ class RekapPenjualanPage extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: groupedSales.length,
+                  itemCount: controller.salesData.length,
                   itemBuilder: (context, index) {
-                    var currentDate = dates[index];
-                    var currentData = groupedSales[currentDate];
-
+                    var report = controller.salesData[index];
                     return GestureDetector(
                       onTap: () {
                         FocusScope.of(context).unfocus();
                       },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              currentDate,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                      child: Card(
+                        margin: const EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}',
+                                style: TextStyle(
+                                    color: Warna.hitam,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14),
                               ),
-                            ),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: currentData!.length,
-                            itemBuilder: (context, index) {
-                              var data = currentData[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.to(() => DetailPage(
-                                        itemName: data.itemName,
-                                        quantity: data.quantity,
-                                        price: data.price,
-                                        categoryMachineName: data.categoryMachine.categoryMachineName, 
-                                        category: data.category,
-                                      ));
-                                },
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0, vertical: 8.0),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(12.0),
-                                            child: Image.asset(
-                                              data.category == "mesin"
-                                                  ? 'Assets/iconlistmesin3.png'
-                                                  : 'Assets/iconsparepart.png',
-                                              width: 52,
-                                              height: 52,
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  data.itemName,
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Warna.hitam,
-                                                    fontWeight: FontWeight.w500, // Medium
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 8),
-                                                Text(
-                                                  'Jumlah barang: ${data.quantity}',
-                                                  style: TextStyle(
-                                                    color: Warna.card,
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w400, // Normal
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    if (currentData.length > 1 &&
-                                        index != currentData.length - 1)
-                                      Container(
-                                        width: 333, 
-                                        child: const Divider(), 
-                                      ),
-                                  ],
+                              SizedBox(height: 5),
+                              Text(
+                                'Order ID: ${report.salesReportId}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
                                 ),
-                              );
-                            },
+                              ),
+                              SizedBox(height: 8.0),
+                              Column(
+                                children: report.salesReportItems.map<Widget>((item) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(100.0),
+                                          child: Image.asset(
+                                            item.category == "mesin"
+                                                ? 'Assets/iconlistmesin3.png'
+                                                : 'Assets/iconsparepart.png',
+                                            width: 35,
+                                            height: 35,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                        SizedBox(width: 16), 
+                                        Expanded(
+                                          child: Text(item.itemName),
+                                        ),
+                                        Text(
+                                          'x${item.quantity}',
+                                          style: TextStyle(
+                                            color: Warna.main, 
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     );
                   },
