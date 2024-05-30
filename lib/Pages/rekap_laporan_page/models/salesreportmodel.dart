@@ -4,8 +4,8 @@ class SalesReportItem {
   String itemName;
   int quantity;
   double price;
-  String category;
-  CategoryMachine categoryMachine; // Include CategoryMachine
+  String? category; // buat categorynya nullable
+  CategoryMachine categoryMachine;
 
   SalesReportItem({
     required this.salesReportItemsId,
@@ -13,8 +13,8 @@ class SalesReportItem {
     required this.itemName,
     required this.quantity,
     required this.price,
-    required this.category,
-    required this.categoryMachine, 
+    this.category, // allow null nya
+    required this.categoryMachine,
   });
 
   factory SalesReportItem.fromJson(Map<String, dynamic> json) {
@@ -24,8 +24,8 @@ class SalesReportItem {
       itemName: json['item_name'],
       quantity: json['quantity'],
       price: json['price'].toDouble(),
-      category: json['category'],
-      categoryMachine: CategoryMachine.fromJson(json['CategoryMachine']), 
+      category: json['category'], 
+      categoryMachine: CategoryMachine.fromJson(json['CategoryMachine']),
     );
   }
 }
