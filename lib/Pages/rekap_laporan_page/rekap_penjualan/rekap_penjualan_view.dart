@@ -13,6 +13,10 @@ import 'package:project_ta/Pages/rekap_laporan_page/detail_page/detail_page.dart
 class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
 
+  Future<void> _refreshData() async {
+    await controller.fetchSalesReport(); // Fetch sales report data
+  }
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('id_ID', null);
@@ -35,15 +39,18 @@ class RekapPenjualanPage extends StatelessWidget {
         if (controller.isLoading.value && controller.salesData.isEmpty) {
           return buildShimmer(); // Display shimmer loading widget
         } else {
-          return CustomTabBar(
-            tabs: [
-              Tab(text: 'ㅤMesinㅤ'),
-              Tab(text: 'Service'),
-            ],
-            tabViews: [
-              rekapMesinPage(context, controller),
-              Placeholder(),
-            ],
+          return RefreshIndicator(
+            onRefresh: _refreshData,
+            child: CustomTabBar(
+              tabs: [
+                Tab(text: 'ㅤMesinㅤ'),
+                Tab(text: 'Service'),
+              ],
+              tabViews: [
+                rekapMesinPage(context, controller),
+                Placeholder(),
+              ],
+            ),
           );
         }
       }),
@@ -53,7 +60,7 @@ class RekapPenjualanPage extends StatelessWidget {
   Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
     return Obx(() {
       if (controller.isLoading.value && controller.salesData.isEmpty) {
-        return buildShimmer();
+        return Center(child: CircularProgressIndicator()); // Loading indicator
       } else if (controller.salesData.isEmpty) {
         return Center(child: Text('No data available'));
       } else {
@@ -75,7 +82,7 @@ class RekapPenjualanPage extends StatelessWidget {
                       onTap: () {
                         FocusScope.of(context).unfocus();
                       },
-                      child: Card(
+                      child: Card(  
                         margin: const EdgeInsets.all(8.0),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
