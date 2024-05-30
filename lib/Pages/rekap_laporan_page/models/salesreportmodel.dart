@@ -1,3 +1,35 @@
+class SalesReportItem {
+  int salesReportItemsId;
+  int storeItemsId;
+  String itemName;
+  int quantity;
+  double price;
+  String? category; // buat categorynya nullable
+  CategoryMachine categoryMachine;
+
+  SalesReportItem({
+    required this.salesReportItemsId,
+    required this.storeItemsId,
+    required this.itemName,
+    required this.quantity,
+    required this.price,
+    this.category, // allow null nya
+    required this.categoryMachine,
+  });
+
+  factory SalesReportItem.fromJson(Map<String, dynamic> json) {
+    return SalesReportItem(
+      salesReportItemsId: json['sales_report_items_id'],
+      storeItemsId: json['store_items_id'],
+      itemName: json['item_name'],
+      quantity: json['quantity'],
+      price: json['price'].toDouble(),
+      category: json['category'], 
+      categoryMachine: CategoryMachine.fromJson(json['CategoryMachine']),
+    );
+  }
+}
+
 class SalesReport {
   int salesReportId;
   DateTime date;
@@ -18,37 +50,19 @@ class SalesReport {
   }
 }
 
-class SalesReportItem {
-  int salesReportItemsId;
-  int storeItemsId;
-  String itemName;
-  int quantity;
-  double price;
-  String category;
-  int categoryMachineId;
+class CategoryMachine {
   String categoryMachineName;
+  int categoryMachineId;
 
-  SalesReportItem({
-    required this.salesReportItemsId,
-    required this.storeItemsId,
-    required this.itemName,
-    required this.quantity,
-    required this.price,
-    required this.category,
-    required this.categoryMachineId, 
-    required this.categoryMachineName, 
+  CategoryMachine({
+    required this.categoryMachineName,
+    required this.categoryMachineId,
   });
 
-  factory SalesReportItem.fromJson(Map<String, dynamic> json) {
-    return SalesReportItem(
-      salesReportItemsId: json['sales_report_items_id'],
-      storeItemsId: json['store_items_id'],
-      itemName: json['item_name'],
-      quantity: json['quantity'],
-      price: json['price'].toDouble(),
-      category: json['category'],
-      categoryMachineId: json['category_machine_id'], 
+  factory CategoryMachine.fromJson(Map<String, dynamic> json) {
+    return CategoryMachine(
       categoryMachineName: json['category_machine_name'],
+      categoryMachineId: json['category_machine_id'],
     );
   }
 }

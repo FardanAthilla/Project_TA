@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -8,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controller.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/detail_page/detail_page.dart';
 
@@ -123,7 +121,8 @@ class RekapPenjualanPage extends StatelessWidget {
                                         itemName: data.itemName,
                                         quantity: data.quantity,
                                         price: data.price,
-                                        // categoryMachineName: data.categoryMachineName, // Updated
+                                        categoryMachineName: data.categoryMachine.categoryMachineName, 
+                                        category: data.category,
                                       ));
                                 },
                                 child: Column(
@@ -137,7 +136,9 @@ class RekapPenjualanPage extends StatelessWidget {
                                           ClipRRect(
                                             borderRadius: BorderRadius.circular(12.0),
                                             child: Image.asset(
-                                              'Assets/iconlistmesin3.png',
+                                              data.category == "mesin"
+                                                  ? 'Assets/iconlistmesin3.png'
+                                                  : 'Assets/iconsparepart.png',
                                               width: 52,
                                               height: 52,
                                               fit: BoxFit.contain,
