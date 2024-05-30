@@ -14,12 +14,12 @@ class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
 
   Future<void> _refreshData() async {
-    await controller.fetchSalesReport(); // Fetch sales report data
+    await controller.fetchSalesReport();
   }
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('id_ID', null);
+    initializeDateFormatting('id_ID', null);  
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +37,7 @@ class RekapPenjualanPage extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.salesData.isEmpty) {
-          return buildShimmer(); // Display shimmer loading widget
+          return buildShimmer(); 
         } else {
           return RefreshIndicator(
             onRefresh: _refreshData,
