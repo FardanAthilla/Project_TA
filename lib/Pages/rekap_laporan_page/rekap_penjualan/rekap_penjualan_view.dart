@@ -82,21 +82,29 @@ class RekapPenjualanPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}',
-                                style: TextStyle(
-                                    color: Warna.hitam,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 14),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}',
+                                    style: TextStyle(
+                                        color: Warna.hitam,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    'Order ID: ${report.salesReportId}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Order ID: ${report.salesReportId}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                ),
+                              SizedBox(
+                                height: 3,
                               ),
+                              Divider(),
                               SizedBox(height: 8.0),
                               Column(
                                 children: report.salesReportItems.map<Widget>((item) {
@@ -115,7 +123,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                             fit: BoxFit.contain,
                                           ),
                                         ),
-                                        SizedBox(width: 16), 
+                                        SizedBox(width: 16), // Space between image and text
                                         Expanded(
                                           child: Text(item.itemName),
                                         ),
