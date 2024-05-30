@@ -195,18 +195,44 @@ class SalesTabView extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Konfirmasi'),
-                          content:
-                              Text('Apakah Anda yakin untuk membersihkannya?'),
+                          title: Text(
+                            'Konfirmasi',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: Text(
+                            'Apakah Anda yakin untuk membersihkannya?',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          backgroundColor:
+                              Colors.white, 
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                15.0), 
+                          ),
                           actions: <Widget>[
                             TextButton(
-                              child: Text('Batal'),
+                              child: Text(
+                                'Batal',
+                                style: TextStyle(
+                                  color: Warna.main,
+                                ),
+                              ),
                               onPressed: () {
                                 Get.back();
                               },
                             ),
                             TextButton(
-                              child: Text('Ya'),
+                              child: Text(
+                                'Ya',
+                                style: TextStyle(
+                                  color: Warna.main,
+                                ),
+                              ),
                               onPressed: () {
                                 dateController.clear();
                                 itemSelectionController.selectedItems.clear();
@@ -227,7 +253,9 @@ class SalesTabView extends StatelessWidget {
                       text: value ? 'Mengirim...' : 'Kirim',
                       backgroundColor: Warna.main,
                       textColor: Colors.white,
-                      borderColor: value ? Color.fromARGB(151, 203, 203, 203) : Warna.main,
+                      borderColor: value
+                          ? Color.fromARGB(151, 203, 203, 203)
+                          : Warna.main,
                       onPressed: value
                           ? null
                           : () async {
