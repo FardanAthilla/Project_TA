@@ -124,11 +124,9 @@ class Navbar extends StatelessWidget {
                       storeController.ItemSelect(storeController.searchController.text);
                       sparepartController.SparePartSelect(sparepartController.searchController.text);
                   } if (index == 2) {
-                      storeController.ItemSelect(storeController.searchController.text);
-                      sparepartController.SparePartSelect(sparepartController.searchController.text);
-                  }
                       salesController.fetchSalesReports();
 
+                  }
                 },
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: Colors.transparent,

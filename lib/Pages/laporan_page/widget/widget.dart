@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:project_ta/color.dart';
 
 class DateController extends GetxController {
   var date = ''.obs;
@@ -39,7 +40,10 @@ class DateTextField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 5),
           Obx(() => TextFormField(
@@ -52,6 +56,20 @@ class DateTextField extends StatelessWidget {
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2101),
+                    builder: (BuildContext context, Widget? child) {
+                      return Theme(
+                        data: ThemeData.light().copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary: Warna.main,
+                            surface:
+                                Colors.white,
+                          ),
+                          dialogBackgroundColor:
+                              Warna.teksactive, 
+                        ),
+                        child: child!,
+                      );
+                    },
                   );
                   if (picked != null) {
                     controller.setDate(picked);
@@ -63,15 +81,18 @@ class DateTextField extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(color: Colors.blue),
+                    borderSide: BorderSide(color: Warna.main),
                   ),
-                  suffixIcon: Icon(Icons.calendar_today),
+                  suffixIcon: const Icon(Icons.calendar_today),
                 ),
               )),
           const SizedBox(height: 5),
           Text(
             description,
-            style: const TextStyle(fontSize: 8, color: Colors.grey),
+            style: const TextStyle(
+              fontSize: 8,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
@@ -84,7 +105,7 @@ class BottomBarButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final Color borderColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const BottomBarButton({
     Key? key,
@@ -104,7 +125,7 @@ class BottomBarButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
               backgroundColor: backgroundColor,
-              side: BorderSide(color: borderColor),
+              side: BorderSide(color: borderColor, style: BorderStyle.solid),
               minimumSize: Size(double.infinity, 40),
               padding: EdgeInsets.symmetric(vertical: 10.0)),
           child: Text(

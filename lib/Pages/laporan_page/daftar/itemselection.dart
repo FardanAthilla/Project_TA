@@ -5,7 +5,10 @@ class ItemSelectionController extends GetxController {
   var selectedItems = <SelectedItems>[].obs;
 
   bool isSelected(SelectedItems item) {
-    return selectedItems.any((selected) => selected.item == item.item && selected.category == item.category && selected.categoryItemsId == item.categoryItemsId);
+    return selectedItems.any((selected) =>
+        selected.item == item.item &&
+        selected.category == item.category &&
+        selected.categoryItemsId == item.categoryItemsId);
   }
 
   void selectItem(SelectedItems item) {
@@ -13,6 +16,19 @@ class ItemSelectionController extends GetxController {
   }
 
   void deselectItem(SelectedItems item) {
-    selectedItems.removeWhere((selected) => selected.item == item.item && selected.category == item.category && selected.categoryItemsId == item.categoryItemsId);
+    selectedItems.removeWhere((selected) =>
+        selected.item == item.item &&
+        selected.category == item.category &&
+        selected.categoryItemsId == item.categoryItemsId);
+  }
+
+  void editItem(SelectedItems item) {
+    final index = selectedItems.indexWhere((selected) =>
+        selected.item == item.item &&
+        selected.category == item.category &&
+        selected.categoryItemsId == item.categoryItemsId);
+    if (index != -1) {
+      selectedItems[index] = item;
+    }
   }
 }
