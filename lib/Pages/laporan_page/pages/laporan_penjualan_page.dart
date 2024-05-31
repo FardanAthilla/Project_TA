@@ -159,8 +159,8 @@ class SalesTabView extends StatelessWidget {
                                   color: Warna.danger,
                                 ),
                                 onPressed: () {
-                                  itemSelectionController
-                                      .deselectItem(SelectedItems(
+                                  itemSelectionController.clearSingleItem(entry.id);
+                                  itemSelectionController.deselectItem(SelectedItems(
                                     categoryItemsId: entry.categoryItemsId,
                                     category: entry.category == "mesin"
                                         ? "mesin"
@@ -208,11 +208,9 @@ class SalesTabView extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          backgroundColor:
-                              Colors.white, 
+                          backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                15.0), 
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
                           actions: <Widget>[
                             TextButton(
@@ -235,6 +233,7 @@ class SalesTabView extends StatelessWidget {
                               ),
                               onPressed: () {
                                 dateController.clear();
+                                itemSelectionController.resetAllQuantities();
                                 itemSelectionController.selectedItems.clear();
                                 Get.back();
                               },

@@ -121,11 +121,10 @@ class Navbar extends StatelessWidget {
                     storeController.searchItems(storeController.searchController.text);
                     sparepartController.searchItems(sparepartController.searchController.text);
                   } if (index == 1) {
-                      storeController.ItemSelect(storeController.searchController.text);
-                      sparepartController.SparePartSelect(sparepartController.searchController.text);
+                      storeController.ItemSelect(storeController.searchControllerReport.text);
+                      sparepartController.SparePartSelect(sparepartController.searchControllerReport.text);
                   } if (index == 2) {
                       salesController.fetchSalesReports();
-
                   }
                 },
                 type: BottomNavigationBarType.fixed,
