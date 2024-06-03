@@ -7,6 +7,7 @@ class ItemSelectionController extends GetxController {
   var selectedItemsSparepart = <SelectedItems>[].obs;
   var selectedQuantitiesSparepart = <int, int>{}.obs;
   var showBottomBar = false.obs;
+  var showBottomBarSparepart = false.obs;
 
   void updateQuantityMachine(int itemId, int quantity) {
     selectedQuantities[itemId] = quantity;
@@ -35,20 +36,21 @@ class ItemSelectionController extends GetxController {
       selectedItems.add(item);
     }
   }
+
+void deselectItem(SelectedItems item, int itemId) {
+  // Hapus item dari selectedItems berdasarkan id
+  selectedItems.removeWhere((selected) => selected.id == itemId);
   
+  // Hapus kuantitas item dari selectedQuantities dan selectedQuantitiesSparepart
+  selectedQuantities.remove(itemId);
+  selectedQuantitiesSparepart.remove(itemId);
 
-  void deselectItem(SelectedItems item, int itemId) {
-    selectedItems.removeWhere((selected) =>
-        selected.item == item.item &&
-        selected.category == item.category &&
-        selected.categoryItemsId == item.categoryItemsId);
-    selectedQuantities.remove(itemId);
-    selectedQuantitiesSparepart.remove(itemId);
-
-    if (selectedQuantities.isEmpty) {
-      showBottomBar.value = false;
-    }
+  // Periksa apakah ada item yang tersisa, jika tidak, sembunyikan BottomBar
+  if (selectedQuantities.isEmpty) {
+    showBottomBar.value = false;
   }
+}
+
 
   void resetAllQuantities() {
     selectedQuantities.clear();

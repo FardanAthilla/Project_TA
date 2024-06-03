@@ -132,7 +132,7 @@
                                           onPressed: () {
                                             setState(() {
                                               widget.itemSelectionController.updateQuantitySparepart(item.sparepartItemsId, 1);
-                                              widget.itemSelectionController.showBottomBar.value = true;
+                                              widget.itemSelectionController.showBottomBarSparepart.value = true;
                                             });
                                           },
                                         )
@@ -151,8 +151,20 @@
                                                         widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! - 1);
                                                   } else {
                                                     widget.itemSelectionController.removeQuantitySparepart(item.sparepartItemsId);
+                                                    widget.itemSelectionController.deselectItem(
+                                                     SelectedItems(
+                                                       categoryItemsId: item.categorySparepartId,
+                                                       category: 'mesin',
+                                                       id: item.sparepartItemsId,
+                                                       item: item.sparepartItemsName,
+                                                       price: item.price,
+                                                       quantity: 0,
+                                                     ), 
+                                                     item.sparepartItemsId,
+                                                   );
+
                                                     if (widget.itemSelectionController.selectedQuantitiesSparepart.isEmpty) {
-                                                      widget.itemSelectionController.showBottomBar.value = false;
+                                                      widget.itemSelectionController.showBottomBarSparepart.value = false;
                                                     }
                                                   }
                                                 });
@@ -170,6 +182,7 @@
                                               icon: Icon(Icons.add, color: Warna.main),
                                               onPressed: () {
                                                 setState(() {
+                                                  print(widget.itemSelectionController.selectedQuantitiesSparepart);
                                                   if (widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! < item.quantity) {
                                                     widget.itemSelectionController.updateQuantitySparepart(item.sparepartItemsId,
                                                         widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! + 1);
@@ -199,7 +212,7 @@
           ],
         ),
         bottomNavigationBar: Obx(() {
-          return widget.itemSelectionController.showBottomBar.value
+          return widget.itemSelectionController.showBottomBarSparepart.value
               ? BottomAppBar(
                   color: Colors.blue,
                   child: Padding(
@@ -208,12 +221,7 @@
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Obx(() {
-                        int totalItems = sparepartController.sparePartSelect.fold(0, (sum, item) {
-                          if (widget.itemSelectionController.selectedQuantitiesSparepart.containsKey(item.sparepartItemsId)) {
-                            return sum + widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]!;
-                          }
-                          return sum;
-                        });
+  int totalItems= widget.itemSelectionController.selectedQuantitiesSparepart.values.fold(0, (prev, element) => prev + element);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -229,7 +237,7 @@
                         }),
                         ElevatedButton(
                           onPressed: () {
-                            for (var item in sparepartController.sparePartSelect) {
+                            for (var item in sparepartController.storeItems) {
                               if (widget.itemSelectionController.selectedQuantitiesSparepart.containsKey(item.sparepartItemsId)) {
                                 var selectedQuantity = widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]!;
                                 var selectedItem = SelectedItems(

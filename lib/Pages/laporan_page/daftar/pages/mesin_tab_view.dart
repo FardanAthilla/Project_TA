@@ -151,6 +151,17 @@ class _MesinTabViewState extends State<MesinTabView> {
                                                       widget.itemSelectionController.selectedQuantities[item.storeItemsId]! - 1);
                                                 } else {
                                                   widget.itemSelectionController.removeQuantityMachine(item.storeItemsId);
+                                                  widget.itemSelectionController.deselectItem(
+                                                     SelectedItems(
+                                                       categoryItemsId: item.categoryMachineId,
+                                                       category: 'mesin',
+                                                       id: item.storeItemsId,
+                                                       item: item.storeItemsName,
+                                                       price: item.price,
+                                                       quantity: 0,
+                                                     ), 
+                                                     item.storeItemsId,
+                                                   );
                                                   if (widget.itemSelectionController.selectedQuantities.isEmpty) {
                                                     widget.itemSelectionController.showBottomBar.value = false;
                                                   }
@@ -208,12 +219,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Obx(() {
-                        int totalItems = storeController.itemSelect.fold(0, (sum, item) {
-                          if (widget.itemSelectionController.selectedQuantities.containsKey(item.storeItemsId)) {
-                            return sum + widget.itemSelectionController.selectedQuantities[item.storeItemsId]!;
-                          }
-                          return sum;
-                        });
+                       int totalItems= widget.itemSelectionController.selectedQuantities.values.fold(0, (prev, element) => prev + element);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -229,7 +235,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                         }),
                       ElevatedButton(
                         onPressed: () {
-                          for (var item in storeController.itemSelect) {
+                          for (var item in storeController.storeItems) {
                             if (widget.itemSelectionController.selectedQuantities.containsKey(item.storeItemsId)) {
                               var selectedQuantity = widget.itemSelectionController.selectedQuantities[item.storeItemsId]!;
                               var selectedItem = SelectedItems(
