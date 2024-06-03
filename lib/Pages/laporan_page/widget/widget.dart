@@ -31,6 +31,36 @@ class DateTextField extends StatelessWidget {
 
   final DateController controller = Get.put(DateController());
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      builder: (BuildContext context, Widget? child) {
+        return Center(
+          child: Transform.scale(
+            scale: 0.9,
+            child: Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: Warna.main,
+                  surface: Colors.white,
+                ),
+                dialogBackgroundColor: Warna.main,
+              ),
+              child: child!,
+            ),
+          ),
+        );
+      },
+    );
+
+    if (picked != null) {
+      controller.setDate(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,31 +80,7 @@ class DateTextField extends StatelessWidget {
                 focusNode: focusNode,
                 readOnly: true,
                 controller: TextEditingController(text: controller.date.value),
-                onTap: () async {
-                  final DateTime? picked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101),
-                    builder: (BuildContext context, Widget? child) {
-                      return Theme(
-                        data: ThemeData.light().copyWith(
-                          colorScheme: ColorScheme.light(
-                            primary: Warna.main,
-                            surface:
-                                Colors.white,
-                          ),
-                          dialogBackgroundColor:
-                              Warna.teksactive, 
-                        ),
-                        child: child!,
-                      );
-                    },
-                  );
-                  if (picked != null) {
-                    controller.setDate(picked);
-                  }
-                },
+                onTap: () => _selectDate(context),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
