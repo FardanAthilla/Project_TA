@@ -142,7 +142,7 @@ class RekapPenjualanPage extends StatelessWidget {
                                           fit: BoxFit.contain,
                                         ),
                                       ),
-                                      SizedBox(width: 16), // Space between image and text
+                                      SizedBox(width: 16), 
                                       Expanded(
                                         child: Text(item.itemName),
                                       ),

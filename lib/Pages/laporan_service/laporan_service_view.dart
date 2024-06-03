@@ -29,8 +29,7 @@ class ServiceReportPage extends StatelessWidget {
                     FocusScope.of(context).unfocus();
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0), // Match horizontal padding
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0), 
                     child: Container(
                       margin: EdgeInsets.all(8.0),
                       padding: EdgeInsets.all(16.0),
@@ -70,7 +69,7 @@ class ServiceReportPage extends StatelessWidget {
                                   border: Border.all(color: Warna.main),
                                 ),
                                 child: Text(
-                                  'Status: ${report.status}',
+                                  '${report.status}',
                                   style: TextStyle(
                                     color: Warna.hitam,
                                     fontWeight: FontWeight.w500,
@@ -86,18 +85,30 @@ class ServiceReportPage extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Order ID: ${report.serviceReportId}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'Assets/serviceicon4.png',
+                                    width: 35,
+                                    height: 35,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(width: 8.0),
+                                  Text(
+                                    'Order ID: ${report.serviceReportId}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
                               ),
+                              SizedBox(height: 4.0),
                               Text(
                                 'Person: ${report.personName}',
                                 style: TextStyle(
                                   color: Warna.hitam,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
                               ),
