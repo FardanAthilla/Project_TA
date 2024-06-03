@@ -3,14 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
-import 'package:project_ta/Pages/laporan_service/laporan_service_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
-
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rekapShimmer; // Prefixed
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
+import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_service/laporan_service_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
+import 'package:project_ta/color.dart';
 
 class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
@@ -39,7 +40,7 @@ class RekapPenjualanPage extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.salesData.isEmpty) {
-          return buildShimmer(); 
+          return rekapShimmer.buildShimmer(); // Use the prefixed function
         } else {
           return RefreshIndicator(
             onRefresh: _refreshData,

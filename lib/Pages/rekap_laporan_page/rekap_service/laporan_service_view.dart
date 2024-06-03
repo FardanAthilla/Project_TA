@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:project_ta/Pages/laporan_service/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
 
 class ServiceReportPage extends StatelessWidget {
@@ -29,7 +29,7 @@ class ServiceReportPage extends StatelessWidget {
                     FocusScope.of(context).unfocus();
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0), 
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
                       margin: EdgeInsets.all(8.0),
                       padding: EdgeInsets.all(16.0),
@@ -87,11 +87,14 @@ class ServiceReportPage extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset(
-                                    'Assets/serviceicon4.png',
-                                    width: 35,
-                                    height: 35,
-                                    fit: BoxFit.contain,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: Image.asset(
+                                      'Assets/serviceicon4.png',
+                                      width: 35,
+                                      height: 35,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                   SizedBox(width: 8.0),
                                   Text(
