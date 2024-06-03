@@ -159,7 +159,6 @@ class SalesTabView extends StatelessWidget {
                                   color: Warna.danger,
                                 ),
                                 onPressed: () {
-                                  itemSelectionController.clearSingleItem(entry.id);
                                   itemSelectionController.deselectItem(SelectedItems(
                                     categoryItemsId: entry.categoryItemsId,
                                     category: entry.category == "mesin"
@@ -169,7 +168,7 @@ class SalesTabView extends StatelessWidget {
                                     id: entry.id,
                                     item: item,
                                     quantity: 1,
-                                  ));
+                                  ),(entry.id));
                                 },
                               ),
                             ),

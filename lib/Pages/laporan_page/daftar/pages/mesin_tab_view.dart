@@ -23,7 +23,6 @@ class _MesinTabViewState extends State<MesinTabView> {
     return Scaffold(
       body: Column(
         children: [
-          // Search bar
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: SizedBox(
@@ -49,7 +48,6 @@ class _MesinTabViewState extends State<MesinTabView> {
               ),
             ),
           ),
-          // List view of items
           Expanded(
             child: Obx(() {
               if (storeController.itemSelect.isEmpty) {
@@ -133,7 +131,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            widget.itemSelectionController.updateQuantity(item.storeItemsId, 1);
+                                            widget.itemSelectionController.updateQuantityMachine(item.storeItemsId, 1);
                                             widget.itemSelectionController.showBottomBar.value = true;
                                           });
                                         },
@@ -149,20 +147,10 @@ class _MesinTabViewState extends State<MesinTabView> {
                                             onPressed: () {
                                               setState(() {
                                                 if (widget.itemSelectionController.selectedQuantities[item.storeItemsId]! > 1) {
-                                                  widget.itemSelectionController.updateQuantity(item.storeItemsId,
+                                                  widget.itemSelectionController.updateQuantityMachine(item.storeItemsId,
                                                       widget.itemSelectionController.selectedQuantities[item.storeItemsId]! - 1);
                                                 } else {
-                                                  widget.itemSelectionController.removeQuantity(item.storeItemsId);
-                                                  widget.itemSelectionController.deselectItem(
-                                                    SelectedItems(
-                                                      categoryItemsId: item.categoryMachineId,
-                                                      category: 'mesin',
-                                                      id: item.storeItemsId,
-                                                      item: item.storeItemsName,
-                                                      price: item.price,
-                                                      quantity: 0,
-                                                    ),
-                                                  );
+                                                  widget.itemSelectionController.removeQuantityMachine(item.storeItemsId);
                                                   if (widget.itemSelectionController.selectedQuantities.isEmpty) {
                                                     widget.itemSelectionController.showBottomBar.value = false;
                                                   }
@@ -183,7 +171,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                                             onPressed: () {
                                               setState(() {
                                                 if (widget.itemSelectionController.selectedQuantities[item.storeItemsId]! < item.quantity) {
-                                                  widget.itemSelectionController.updateQuantity(item.storeItemsId,
+                                                  widget.itemSelectionController.updateQuantityMachine(item.storeItemsId,
                                                       widget.itemSelectionController.selectedQuantities[item.storeItemsId]! + 1);
                                                 }
                                               });
@@ -220,29 +208,27 @@ class _MesinTabViewState extends State<MesinTabView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Obx(() {
-                        double totalPrice = storeController.itemSelect.fold(0, (sum, item) {
+                        int totalItems = storeController.itemSelect.fold(0, (sum, item) {
                           if (widget.itemSelectionController.selectedQuantities.containsKey(item.storeItemsId)) {
-                            return sum +
-                                (item.price * widget.itemSelectionController.selectedQuantities[item.storeItemsId]!);
+                            return sum + widget.itemSelectionController.selectedQuantities[item.storeItemsId]!;
                           }
                           return sum;
                         });
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total: Rp.$totalPrice',
-                              style: const TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.white,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Total Barang: $totalItems',
+                                style: const TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      }),
+                            ],
+                          );
+                        }),
                       ElevatedButton(
                         onPressed: () {
-                          widget.itemSelectionController.selectedItems.clear();
                           for (var item in storeController.itemSelect) {
                             if (widget.itemSelectionController.selectedQuantities.containsKey(item.storeItemsId)) {
                               var selectedQuantity = widget.itemSelectionController.selectedQuantities[item.storeItemsId]!;
