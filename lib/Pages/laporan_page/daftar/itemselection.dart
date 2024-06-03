@@ -38,14 +38,9 @@ class ItemSelectionController extends GetxController {
   }
 
 void deselectItem(SelectedItems item, int itemId) {
-  // Hapus item dari selectedItems berdasarkan id
   selectedItems.removeWhere((selected) => selected.id == itemId);
-  
-  // Hapus kuantitas item dari selectedQuantities dan selectedQuantitiesSparepart
-  selectedQuantities.remove(itemId);
+    selectedQuantities.remove(itemId);
   selectedQuantitiesSparepart.remove(itemId);
-
-  // Periksa apakah ada item yang tersisa, jika tidak, sembunyikan BottomBar
   if (selectedQuantities.isEmpty) {
     showBottomBar.value = false;
   }
