@@ -3,32 +3,54 @@ import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 
 class ItemSelectionController extends GetxController {
   var selectedItems = <SelectedItems>[].obs;
+  var selectedQuantities = <int, int>{}.obs;
+  var selectedItemsSparepart = <SelectedItems>[].obs;
+  var selectedQuantitiesSparepart = <int, int>{}.obs;
+  var showBottomBar = false.obs;
+  var showBottomBarSparepart = false.obs;
 
-  bool isSelected(SelectedItems item) {
-    return selectedItems.any((selected) =>
-        selected.item == item.item &&
-        selected.category == item.category &&
-        selected.categoryItemsId == item.categoryItemsId);
+  void updateQuantityMachine(int itemId, int quantity) {
+    selectedQuantities[itemId] = quantity;
+  }
+
+  void removeQuantityMachine(int itemId) {
+    selectedQuantities.remove(itemId);
+  }
+
+  void updateQuantitySparepart(int item, int quantity) {
+    selectedQuantitiesSparepart[item] = quantity;
+  }
+
+  void removeQuantitySparepart(int item) {
+    selectedQuantitiesSparepart.remove(item);
   }
 
   void selectItem(SelectedItems item) {
-    selectedItems.add(item);
-  }
-
-  void deselectItem(SelectedItems item) {
-    selectedItems.removeWhere((selected) =>
-        selected.item == item.item &&
-        selected.category == item.category &&
-        selected.categoryItemsId == item.categoryItemsId);
-  }
-
-  void editItem(SelectedItems item) {
-    final index = selectedItems.indexWhere((selected) =>
+    int index = selectedItems.indexWhere((selected) =>
         selected.item == item.item &&
         selected.category == item.category &&
         selected.categoryItemsId == item.categoryItemsId);
     if (index != -1) {
       selectedItems[index] = item;
+    } else {
+      selectedItems.add(item);
     }
+  }
+
+  void deselectItem(SelectedItems item, int itemId) {
+    selectedItems.removeWhere((selected) => selected.id == itemId);
+    selectedQuantities.remove(itemId);
+    selectedQuantitiesSparepart.remove(itemId);
+    if (selectedQuantities.isEmpty) {
+      showBottomBar.value = false;
+    }
+  }
+
+  void resetAllQuantities() {
+    selectedQuantities.clear();
+    selectedQuantitiesSparepart.clear();
+    selectedItems.clear();
+    showBottomBar.value = false;
+    showBottomBarSparepart.value = false;
   }
 }
