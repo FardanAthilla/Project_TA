@@ -37,20 +37,20 @@ class ItemSelectionController extends GetxController {
     }
   }
 
-void deselectItem(SelectedItems item, int itemId) {
-  selectedItems.removeWhere((selected) => selected.id == itemId);
+  void deselectItem(SelectedItems item, int itemId) {
+    selectedItems.removeWhere((selected) => selected.id == itemId);
     selectedQuantities.remove(itemId);
-  selectedQuantitiesSparepart.remove(itemId);
-  if (selectedQuantities.isEmpty) {
-    showBottomBar.value = false;
+    selectedQuantitiesSparepart.remove(itemId);
+    if (selectedQuantities.isEmpty) {
+      showBottomBar.value = false;
+    }
   }
-}
-
 
   void resetAllQuantities() {
     selectedQuantities.clear();
     selectedQuantitiesSparepart.clear();
     selectedItems.clear();
     showBottomBar.value = false;
+    showBottomBarSparepart.value = false;
   }
 }

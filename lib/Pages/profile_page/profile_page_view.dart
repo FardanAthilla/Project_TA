@@ -13,10 +13,12 @@ import 'package:shimmer/shimmer.dart';
 class ProfilePage extends StatelessWidget {
   final ProfileController profileController = Get.put(ProfileController());
   final NavbarController navbarController = Get.put(NavbarController());
-  final ItemSelectionController itemSelectionController = Get.put(ItemSelectionController());
+  final ItemSelectionController itemSelectionController =
+      Get.put(ItemSelectionController());
   final DateController dateController = Get.put(DateController());
   final StoreController storeController = Get.put(StoreController());
-  final SparepartController sparepartController = Get.put(SparepartController());
+  final SparepartController sparepartController =
+      Get.put(SparepartController());
 
   Future<void> _refreshData() async {
     await profileController.fetchUserData();
@@ -160,13 +162,16 @@ class ProfilePage extends StatelessWidget {
                           onPressed: () async {
                             await removeToken();
                             profileController.resetUserData();
+                            itemSelectionController.resetAllQuantities();
+                            itemSelectionController.selectedItems.clear();
                             Get.offAllNamed('/splash');
                             navbarController.resetIndex();
                             storeController.clearSelectedCategories();
                             sparepartController.clearSelectedCategories();
                             storeController.searchController.clear();
                             sparepartController.searchController.clear();
-                            itemSelectionController.selectedItems.clear();
+                            storeController.searchControllerReport.clear();
+                            sparepartController.searchControllerReport.clear();
                             dateController.clear();
                           },
                           style: ElevatedButton.styleFrom(
