@@ -24,4 +24,6 @@ class ServiceReportController extends GetxController {
     super.onInit();
     fetchSalesReport();
   }
+
+  fetchServiceReports() {}
 }

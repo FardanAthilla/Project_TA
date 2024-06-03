@@ -21,11 +21,11 @@ class ServiceReportModel {
     return ServiceReportModel(
       serviceReportId: json['service_report_id'],
       date: DateTime.parse(json['date']),
-      personName: json['person_name'],
-      machineNumber: json['machine_number'],
-      machineName: json['machine_name'],
-      complaints: json['complaints'],
-      status: json['status'],
+      personName: json['person_name'] ?? '',
+      machineNumber: json['machine_number'] ?? '',
+      machineName: json['machine_name'] ?? '',
+      complaints: json['complaints'] ?? '',
+      status: json['status'] ?? '',
     );
   }
 

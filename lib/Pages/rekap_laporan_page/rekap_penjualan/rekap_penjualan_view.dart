@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:project_ta/Pages/laporan_service/laporan_service_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
@@ -48,7 +49,7 @@ class RekapPenjualanPage extends StatelessWidget {
               ],
               tabViews: [
                 rekapMesinPage(context, controller),
-                Placeholder(),
+                ServiceReportPage(),
               ],
             ),
           );
@@ -60,7 +61,7 @@ class RekapPenjualanPage extends StatelessWidget {
   Widget rekapMesinPage(BuildContext context, SalesReportController controller) {
     return Obx(() {
       if (controller.isLoading.value && controller.salesData.isEmpty) {
-        return Center(child: CircularProgressIndicator()); // Loading indicator
+        return Center(child: CircularProgressIndicator()); 
       } else if (controller.salesData.isEmpty) {
         return Center(child: Text('No data available'));
       } else {
@@ -82,73 +83,83 @@ class RekapPenjualanPage extends StatelessWidget {
                       onTap: () {
                         FocusScope.of(context).unfocus();
                       },
-                      child: Card(  
+                      child: Container(
                         margin: const EdgeInsets.all(8.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}',
-                                    style: TextStyle(
-                                        color: Warna.hitam,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 14),
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset: Offset(0, 2), 
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}',
+                                  style: TextStyle(
+                                      color: Warna.hitam,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  'Order ID: ${report.salesReportId}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
                                   ),
-                                  Text(
-                                    'Order ID: ${report.salesReportId}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13,
-                                    ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Divider(),
+                            SizedBox(height: 8.0),
+                            Column(
+                              children: report.salesReportItems.map<Widget>((item) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(100.0),
+                                        child: Image.asset(
+                                          item.category == "mesin"
+                                              ? 'Assets/iconlistmesin3.png'
+                                              : 'Assets/iconsparepart.png',
+                                          width: 35,
+                                          height: 35,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                      SizedBox(width: 16), // Space between image and text
+                                      Expanded(
+                                        child: Text(item.itemName),
+                                      ),
+                                      Text(
+                                        'x${item.quantity}',
+                                        style: TextStyle(
+                                          color: Warna.main, 
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Divider(),
-                              SizedBox(height: 8.0),
-                              Column(
-                                children: report.salesReportItems.map<Widget>((item) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(100.0),
-                                          child: Image.asset(
-                                            item.category == "mesin"
-                                                ? 'Assets/iconlistmesin3.png'
-                                                : 'Assets/iconsparepart.png',
-                                            width: 35,
-                                            height: 35,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                        SizedBox(width: 16), // Space between image and text
-                                        Expanded(
-                                          child: Text(item.itemName),
-                                        ),
-                                        Text(
-                                          'x${item.quantity}',
-                                          style: TextStyle(
-                                            color: Warna.main, 
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
+                                );
+                              }).toList(),
+                            ),
+                          ],
                         ),
                       ),
                     );

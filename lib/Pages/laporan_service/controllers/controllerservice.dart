@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:project_ta/color.dart';
 
 class ServiceReportController extends GetxController {
-  RxList<ServiceReportModel> serviceData = <ServiceReportModel>[].obs;
+  var serviceData = <ServiceReportModel>[].obs;
   var isLoading = false.obs;
 
   Future<void> fetchServiceReports() async {
