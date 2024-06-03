@@ -24,41 +24,105 @@ class ServiceReportPage extends StatelessWidget {
               itemCount: controller.serviceData.length,
               itemBuilder: (context, index) {
                 var report = controller.serviceData[index];
-                return Card(
-                  margin: EdgeInsets.all(8.0),
+                return GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 14,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0), // Match horizontal padding
+                    child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                DateFormat('EEEE, d MMMM y', 'id_ID')
+                                    .format(report.date),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Order ID: ${report.serviceReportId}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.0, horizontal: 12.0),
+                                decoration: BoxDecoration(
+                                  color: Warna.main.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(color: Warna.main),
+                                ),
+                                child: Text(
+                                  'Status: ${report.status}',
+                                  style: TextStyle(
+                                    color: Warna.hitam,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 3),
-                        Divider(),
-                        SizedBox(height: 8.0),
-                        Text('Person: ${report.personName}'),
-                        Text('Machine: ${report.machineName}'),
-                        Text('Complaints: ${report.complaints}'),
-                        Text('Status: ${report.status}'),
-                      ],
+                            ],
+                          ),
+                          SizedBox(height: 3),
+                          Divider(),
+                          SizedBox(height: 8.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Order ID: ${report.serviceReportId}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                'Person: ${report.personName}',
+                                style: TextStyle(
+                                  color: Warna.hitam,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Text(
+                                'Machine: ${report.machineName}',
+                                style: TextStyle(
+                                  color: Warna.hitam,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Text(
+                                'Complaints: ${report.complaints}',
+                                style: TextStyle(
+                                  color: Warna.hitam,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
