@@ -5,7 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
-import 'package:project_ta/Pages/laporan_service/laporan_service_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_service/laporan_service_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/color.dart';
 
