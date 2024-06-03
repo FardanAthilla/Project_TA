@@ -3,11 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
+
 import 'package:project_ta/Pages/laporan_service/laporan_service_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
-=======
->>>>>>> f094c96864325e75531f016359efdd0f119000be
+
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
