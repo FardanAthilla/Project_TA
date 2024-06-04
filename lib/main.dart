@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_ta/Page/sidebar/sidebar.dart';
+import 'package:project_ta/Pages/navigation/routes/route.dart';
+import 'package:project_ta/Pages/splash_screen/splash_screen.view.dart';
 
 void main() {
   runApp(const MainApp());
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 }
 
 class MainApp extends StatelessWidget {
@@ -13,12 +19,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      getPages: routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: SafeArea(
-        child: Navigation(),
+      home: const SafeArea(
+        child: SplashScreen(),
       ),
     );
   }
