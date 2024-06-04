@@ -42,7 +42,7 @@
                     prefixIcon: Icon(Icons.search),
                     contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                   ),
-                  onSubmitted: (query) {
+                  onChanged: (query) {
                     sparepartController.SparePartSelect(query);
                   },
                 ),

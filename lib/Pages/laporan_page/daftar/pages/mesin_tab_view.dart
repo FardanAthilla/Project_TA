@@ -42,7 +42,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                   prefixIcon: Icon(Icons.search),
                   contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                 ),
-                onSubmitted: (query) {
+                onChanged: (query) {
                   storeController.ItemSelect(query);
                 },
               ),

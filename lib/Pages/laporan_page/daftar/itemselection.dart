@@ -44,6 +44,9 @@ class ItemSelectionController extends GetxController {
     if (selectedQuantities.isEmpty) {
       showBottomBar.value = false;
     }
+    if (selectedQuantitiesSparepart.isEmpty) {
+      showBottomBarSparepart.value = false;
+    }
   }
 
   void resetAllQuantities() {
