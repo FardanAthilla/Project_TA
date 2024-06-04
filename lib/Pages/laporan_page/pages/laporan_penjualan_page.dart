@@ -300,13 +300,15 @@ class SalesTabView extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          Get.back(); 
+                                          Get.back();
                                           isLoading.value = true;
                                           await salesReportController
                                               .sendSalesReport(
                                                   dateController,
                                                   itemSelectionController
                                                       .selectedItems);
+                                                      itemSelectionController
+                                              .resetAllQuantities();
                                           isLoading.value = false;
                                         },
                                       ),
