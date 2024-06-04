@@ -5,6 +5,7 @@ import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.da
 import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
+import 'package:project_ta/Pages/profile_page/edit_profile_page.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/color.dart';
@@ -29,178 +30,190 @@ class ProfilePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('Profile Page')),
+      appBar: AppBar(
+        title: Align(
+          alignment: Alignment.center,
+          child: Text('Profile Page'),
         ),
-        body: RefreshIndicator(
-          onRefresh: _refreshData,
-          child: Padding(
-            padding: EdgeInsets.all(screenWidth * 0.05),
-            child: Center(
-              child: FutureBuilder(
-                future: profileController.fetchUserData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting ||
-                      profileController.userData == null ||
-                      profileController.userData!.isEmpty) {
-                    return _buildShimmerEffect(screenWidth);
-                  } else {
-                    final userData = profileController.userData!;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 25),
-                          child: CircleAvatar(
-                            radius: screenWidth * 0.18,
-                            backgroundImage: NetworkImage(
-                              'https://rdo-app-o955y.ondigitalocean.app/' +
-                                  userData['image'],
-                            ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Get.to(EditProfilePage());
+            },
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: Padding(
+          padding: EdgeInsets.all(screenWidth * 0.05),
+          child: Center(
+            child: FutureBuilder(
+              future: profileController.fetchUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting ||
+                    profileController.userData == null ||
+                    profileController.userData!.isEmpty) {
+                  return _buildShimmerEffect(screenWidth);
+                } else {
+                  final userData = profileController.userData!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 25),
+                        child: CircleAvatar(
+                          radius: screenWidth * 0.18,
+                          backgroundImage: NetworkImage(
+                            'https://rdo-app-o955y.ondigitalocean.app/' +
+                                userData['image'],
                           ),
                         ),
-                        SizedBox(width: 12),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.person,
-                              size: 30,
-                              color: Warna.main,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
-                                      'Nama:',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${userData['username']}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        SizedBox(width: 12),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.phone,
-                              size: 30,
-                              color: Warna.main,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
-                                      'Nomor Handphone:',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  SizedBox(width: 100),
-                                  Text(
-                                    '+62 ${userData['no_handphone']}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 30,
-                              color: Warna.main,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
-                                      'Alamat:',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  SizedBox(width: 100),
-                                  Text(
-                                    '${userData['address']}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        SizedBox(height: 10),
-                        ElevatedButton.icon(
-                          onPressed: () async {
-                            await removeToken();
-                            profileController.resetUserData();
-                            itemSelectionController.resetAllQuantities();
-                            itemSelectionController.selectedItems.clear();
-                            Get.offAllNamed('/splash');
-                            navbarController.resetIndex();
-                            storeController.clearSelectedCategories();
-                            sparepartController.clearSelectedCategories();
-                            storeController.searchController.clear();
-                            sparepartController.searchController.clear();
-                            storeController.searchControllerReport.clear();
-                            sparepartController.searchControllerReport.clear();
-                            dateController.clear();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Warna.danger,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            minimumSize: Size(double.infinity, 50),
+                      ),
+                      SizedBox(width: 12),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            size: 30,
+                            color: Warna.main,
                           ),
-                          icon: Icon(
-                            Icons.logout,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  child: Text(
+                                    'Nama:',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  '${userData['username']}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      SizedBox(width: 12),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone,
+                            size: 30,
+                            color: Warna.main,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  child: Text(
+                                    'Nomor Handphone:',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(width: 100),
+                                Text(
+                                  '+62 ${userData['no_handphone']}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 30,
+                            color: Warna.main,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  child: Text(
+                                    'Alamat:',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(width: 100),
+                                Text(
+                                  '${userData['address']}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      SizedBox(height: 10),
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          await removeToken();
+                          profileController.resetUserData();
+                          itemSelectionController.resetAllQuantities();
+                          itemSelectionController.selectedItems.clear();
+                          Get.offAllNamed('/splash');
+                          navbarController.resetIndex();
+                          storeController.clearSelectedCategories();
+                          sparepartController.clearSelectedCategories();
+                          storeController.searchController.clear();
+                          sparepartController.searchController.clear();
+                          storeController.searchControllerReport.clear();
+                          sparepartController.searchControllerReport.clear();
+                          dateController.clear();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Warna.danger,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          minimumSize: Size(double.infinity, 50),
+                        ),
+                        icon: Icon(
+                          Icons.logout,
+                          color: Warna.white,
+                        ),
+                        label: Text(
+                          "Keluar",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
                             color: Warna.white,
                           ),
-                          label: Text(
-                            "Keluar",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              color: Warna.white,
-                            ),
-                          ),
                         ),
-                      ],
-                    );
-                  }
-                },
-              ),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildShimmerEffect(double screenWidth) {

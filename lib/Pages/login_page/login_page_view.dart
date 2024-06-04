@@ -137,6 +137,8 @@ class LoginPage extends StatelessWidget {
                                           snackPosition: SnackPosition.BOTTOM,
                                           backgroundColor: Warna.main,
                                           colorText: Colors.white,
+                                          margin: EdgeInsets.only(
+                                              bottom: 50.0), // Adjust the value as needed
                                         );
                                       }
                                       storeController.searchItems(
@@ -156,6 +158,8 @@ class LoginPage extends StatelessWidget {
                                           snackPosition: SnackPosition.BOTTOM,
                                           backgroundColor: Warna.danger,
                                           colorText: Colors.white,
+                                          margin: EdgeInsets.only(
+                                              bottom: 10.0), 
                                         );
                                       }
                                     } finally {
