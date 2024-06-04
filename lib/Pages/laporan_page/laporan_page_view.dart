@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
+import 'package:project_ta/Pages/laporan_page/laporan_service_view.dart';
 import 'package:project_ta/Pages/laporan_page/pages/laporan_penjualan_page.dart';
 import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
@@ -44,7 +45,7 @@ class LaporanPage extends StatelessWidget {
             dateController: dateController,
             salesReportController: salesReportController,
           ),
-          const Placeholder(),
+          const LaporanServicePage(),
         ],
       ),
     );
