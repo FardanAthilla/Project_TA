@@ -289,7 +289,7 @@ class SalesTabView extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Get.back(); // Close the dialog
+                                          Get.back();
                                         },
                                       ),
                                       TextButton(
@@ -300,7 +300,7 @@ class SalesTabView extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          Get.back(); // Close the dialog
+                                          Get.back(); 
                                           isLoading.value = true;
                                           await salesReportController
                                               .sendSalesReport(
