@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:project_ta/Pages/login_page/login_page_view.dart';
+import 'package:project_ta/Pages/login_page/pages/login_page_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_view.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/color.dart';

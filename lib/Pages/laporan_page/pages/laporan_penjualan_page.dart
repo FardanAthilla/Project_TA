@@ -159,16 +159,18 @@ class SalesTabView extends StatelessWidget {
                                   color: Warna.danger,
                                 ),
                                 onPressed: () {
-                                  itemSelectionController.deselectItem(SelectedItems(
-                                    categoryItemsId: entry.categoryItemsId,
-                                    category: entry.category == "mesin"
-                                        ? "mesin"
-                                        : "spare_part",
-                                    price: entry.price,
-                                    id: entry.id,
-                                    item: item,
-                                    quantity: 1,
-                                  ),(entry.id));
+                                  itemSelectionController.deselectItem(
+                                      SelectedItems(
+                                        categoryItemsId: entry.categoryItemsId,
+                                        category: entry.category == "mesin"
+                                            ? "mesin"
+                                            : "spare_part",
+                                        price: entry.price,
+                                        id: entry.id,
+                                        item: item,
+                                        quantity: 1,
+                                      ),
+                                      (entry.id));
                                 },
                               ),
                             ),
@@ -256,12 +258,62 @@ class SalesTabView extends StatelessWidget {
                           : Warna.main,
                       onPressed: value
                           ? null
-                          : () async {
-                              isLoading.value = true;
-                              await salesReportController.sendSalesReport(
-                                  dateController,
-                                  itemSelectionController.selectedItems);
-                              isLoading.value = false;
+                          : () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      'Konfirmasi',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    content: Text(
+                                      'Apakah Anda yakin untuk mengirimkan laporan penjualan?',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'Batal',
+                                          style: TextStyle(
+                                            color: Warna.main,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                          'Ya',
+                                          style: TextStyle(
+                                            color: Warna.main,
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          Get.back(); 
+                                          isLoading.value = true;
+                                          await salesReportController
+                                              .sendSalesReport(
+                                                  dateController,
+                                                  itemSelectionController
+                                                      .selectedItems);
+                                          isLoading.value = false;
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                     );
                   },

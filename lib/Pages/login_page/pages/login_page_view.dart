@@ -5,6 +5,7 @@ import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
+import 'package:project_ta/Pages/login_page/pages/forgopassword.dart';
 import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/login_page/login_page_controller.dart';
@@ -100,7 +101,23 @@ class LoginPage extends StatelessWidget {
                       icon: Icons.lock,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 5),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(forgotPassword());
+                          },
+                          child: Text(
+                            'Lupa Password?',
+                            style: TextStyle(fontSize: 12, color: Warna.main),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 35),
                     ValueListenableBuilder<bool>(
                       valueListenable: isLoading,
                       builder: (context, loading, child) {
