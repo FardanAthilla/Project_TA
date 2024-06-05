@@ -5,7 +5,7 @@ import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
-import 'package:project_ta/Pages/login_page/pages/forgopassword.dart';
+import 'package:project_ta/Pages/login_page/pages/send_otp.dart';
 import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/login_page/login_page_controller.dart';
@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(forgotPassword());
+                            Get.to(SendOtp());
                           },
                           child: Text(
                             'Lupa Password?',
@@ -155,7 +155,7 @@ class LoginPage extends StatelessWidget {
                                           backgroundColor: Warna.main,
                                           colorText: Colors.white,
                                           margin: EdgeInsets.only(
-                                              bottom: 50.0), // Adjust the value as needed
+                                              bottom: 50.0), 
                                         );
                                       }
                                       storeController.searchItems(

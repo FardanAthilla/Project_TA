@@ -102,6 +102,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_pw_validator:
+    dependency: "direct main"
+    description:
+      name: flutter_pw_validator
+      sha256: "01960d4d701f6b972f3a2f324e202d840ecfe1b84e00522f92dece874b1c9b30"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -132,10 +140,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: "5b1726fee554d1cc9db1baef8061b126567ff0a1140a03ed7de936e62f2ab98b"
+      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.2.1"
   http:
     dependency: "direct main"
     description:
@@ -216,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  otp_timer_button:
+    dependency: "direct main"
+    description:
+      name: otp_timer_button
+      sha256: "2c1dae65db0147add42f52558f88ad71a4a29a612d891e81323ea01bac983dcf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   page_transition:
     dependency: transitive
     description:
@@ -304,6 +320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  pinput:
+    dependency: "direct main"
+    description:
+      name: pinput
+      sha256: "6d571e38a484f7515a52e89024ef416f11fa6171ac6f32303701374ab9890efa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   platform:
     dependency: transitive
     description:
@@ -389,6 +413,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smart_auth:
+    dependency: transitive
+    description:
+      name: smart_auth
+      sha256: "88aa8fe66e951c78a307f26d1c29672dce2e9eb3da2e12e853864d0e615a73ad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   source_span:
     dependency: transitive
     description:
@@ -445,6 +477,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  universal_platform:
+    dependency: transitive
+    description:
+      name: universal_platform
+      sha256: "64e16458a0ea9b99260ceb5467a214c1f298d647c659af1bff6d3bf82536b1ec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   vector_graphics:
     dependency: transitive
     description:
@@ -519,4 +559,4 @@ packages:
     version: "6.5.0"
 sdks:
   dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.19.2"
