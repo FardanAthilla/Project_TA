@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
 
-class ServiceReportPage extends StatelessWidget {
+class RekapServicePage extends StatelessWidget {
   final ServiceReportController controller = Get.put(ServiceReportController());
 
   Future<void> _refreshData() async {
@@ -19,58 +19,16 @@ class ServiceReportPage extends StatelessWidget {
           if (controller.isLoading.value) {
             return Center(child: CircularProgressIndicator());
           } else {
-            return RefreshIndicator(
-              onRefresh: _refreshData,
-              child: ListView.builder(
-                itemCount: controller.uncompletedServiceData.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => RekapServicePage());
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(12.0),
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 0.5,
-                                    offset: Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Laporan Rekap Service'),
-                                  Icon(Icons.chevron_right),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Text(
-                            'Service yang sedang berjalan:',
-                            style: TextStyle(
-                              color: Warna.b,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    var report = controller.uncompletedServiceData[index - 1];
+            var completedReports = controller.completedServiceData;
+            if (completedReports.isEmpty) {
+              return Center(child: Text("No completed service reports available."));
+            } else {
+              return RefreshIndicator(
+                onRefresh: _refreshData,
+                child: ListView.builder(
+                  itemCount: completedReports.length,
+                  itemBuilder: (context, index) {
+                    var report = completedReports[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Container(
@@ -141,9 +99,16 @@ class ServiceReportPage extends StatelessWidget {
                                     ),
                                     SizedBox(width: 8.0),
                                     Text(
-                                      'Order ID: ${report.serviceReportId}',
+                                      'Order ID: ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.serviceReportId}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 13,
                                       ),
                                     ),
@@ -215,28 +180,12 @@ class ServiceReportPage extends StatelessWidget {
                         ),
                       ),
                     );
-                  }
-                },
-              ),
-            );
+                  },
+                ),
+              );
+            }
           }
         }),
-      ),
-    );
-  }
-}
-
-class RekapServicePage extends StatelessWidget {
-  const RekapServicePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Laporan Rekap Service"),
-      ),
-      body: Center(
-        child: Text('Laporan Rekap Service (Sudah Selesai)'),
       ),
     );
   }

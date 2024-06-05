@@ -49,7 +49,7 @@ class EditProfilePage extends StatelessWidget {
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              //tar disiniiiiii image pickernya                          
+                              // Image picker code goes here
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
@@ -240,6 +240,9 @@ class EditProfilePage extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Warna.main,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       minimumSize: Size(double.infinity, 50),
                     ),
                     child: const Text(

@@ -7,7 +7,7 @@ import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rek
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/daftar_page/widget/custom_tabbar.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/rekap_service/laporan_service_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_service/rekap_service_view.dart';
 
 class RekapPenjualanPage extends StatelessWidget {
   final SalesReportController controller = Get.put(SalesReportController());
@@ -47,7 +47,7 @@ class RekapPenjualanPage extends StatelessWidget {
               ],
               tabViews: [
                 rekapMesinPage(context, controller),
-                ServiceReportPage(),
+                RekapServicePage(),
               ],
             ),
           );
