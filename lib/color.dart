@@ -13,4 +13,5 @@ class Warna {
   static Color hitam = const Color.fromRGBO(0, 0, 0, 1);
   static Color greynavbar = const Color(0xFFDAC0A3);
   static Color a = const Color(0xFF212A3E);
+  static Color b = Color.fromARGB(255, 107, 107, 107);
 }

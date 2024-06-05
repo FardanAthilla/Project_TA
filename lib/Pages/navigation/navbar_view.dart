@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/daftar_barang_view.dart';
-import 'package:project_ta/Pages/laporan_page/laporan_page_view.dart';
+import 'package:project_ta/Pages/laporan_page/laporan_penjualan_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';

@@ -8,6 +8,9 @@ class ServiceReportController extends GetxController {
   var serviceData = <ServiceReportModel>[].obs;
   var isLoading = false.obs;
 
+  List<ServiceReportModel> get uncompletedServiceData => serviceData.where((report) => report.status == 'Belum Selesai').toList();
+  List<ServiceReportModel> get completedServiceData => serviceData.where((report) => report.status == 'Sudah Selesai').toList();
+
   Future<void> fetchServiceReports() async {
     try {
       isLoading(true);
