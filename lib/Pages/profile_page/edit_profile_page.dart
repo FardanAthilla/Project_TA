@@ -13,7 +13,7 @@ class EditProfilePage extends StatelessWidget {
   EditProfilePage({super.key}) {
     final userData = profileController.userData!;
     nameController.text = userData['username'];
-    phoneController.text = '+62 ${userData['no_handphone']}'; // Added '+62'
+    phoneController.text = '+62 ${userData['no_handphone']}';
     addressController.text = userData['address'];
   }
 
@@ -35,12 +35,44 @@ class EditProfilePage extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 25),
-                    child: CircleAvatar(
-                      radius: screenWidth * 0.18,
-                      backgroundImage: NetworkImage(
-                        'https://rdo-app-o955y.ondigitalocean.app/' +
-                            profileController.userData!['image'],
-                      ),
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: screenWidth * 0.18,
+                          backgroundImage: NetworkImage(
+                            'https://rdo-app-o955y.ondigitalocean.app/' +
+                                profileController.userData!['image'],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              // Image picker code goes here
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Warna.main,
+                                size: screenWidth * 0.08,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Row(
@@ -105,8 +137,8 @@ class EditProfilePage extends StatelessWidget {
                               TextField(
                                 controller: phoneController,
                                 decoration: InputDecoration(
-                                  isDense: true, // Reduces height of TextField
-                                  contentPadding: EdgeInsets.only(bottom: 5), // Adjusts padding
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.only(bottom: 5),
                                   border: InputBorder.none,
                                 ),
                                 keyboardType: TextInputType.phone,
@@ -143,8 +175,8 @@ class EditProfilePage extends StatelessWidget {
                               TextField(
                                 controller: addressController,
                                 decoration: InputDecoration(
-                                  isDense: true, // Reduces height of TextField
-                                  contentPadding: EdgeInsets.only(bottom: 5), // Adjusts padding
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.only(bottom: 5),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -180,8 +212,8 @@ class EditProfilePage extends StatelessWidget {
                               TextField(
                                 controller: passwordController,
                                 decoration: InputDecoration(
-                                  isDense: true, // Reduces height of TextField
-                                  contentPadding: EdgeInsets.only(bottom: 5), // Adjusts padding
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.only(bottom: 5),
                                   border: InputBorder.none,
                                 ),
                                 obscureText: true,
@@ -208,6 +240,9 @@ class EditProfilePage extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Warna.main,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       minimumSize: Size(double.infinity, 50),
                     ),
                     child: const Text(

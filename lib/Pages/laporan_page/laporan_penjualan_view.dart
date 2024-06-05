@@ -45,7 +45,7 @@ class LaporanPage extends StatelessWidget {
             dateController: dateController,
             salesReportController: salesReportController,
           ),
-          const LaporanServicePage(),
+           ServiceReportPage(),
         ],
       ),
     );

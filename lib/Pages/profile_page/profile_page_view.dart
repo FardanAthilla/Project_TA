@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
@@ -29,11 +30,17 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+     return Scaffold(
       appBar: AppBar(
-        title: Align(
-          alignment: Alignment.center,
-          child: Text('Profile Page'),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'Assets/logo2.svg',
+              width: 30,
+              height: 30,
+            ),
+          ],
         ),
         actions: [
           IconButton(
