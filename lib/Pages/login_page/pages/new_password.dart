@@ -5,17 +5,11 @@ import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/Pages/login_page/pages/otp_verify.dart';
 import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
 import 'package:project_ta/color.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
-// ignore: must_be_immutable
 class NewPassword extends StatelessWidget {
   NewPassword({Key? key}) : super(key: key);
 
   final SendOtpController controller = Get.put(SendOtpController());
-  final GlobalKey<FlutterPwValidatorState> validatorKey =
-      GlobalKey<FlutterPwValidatorState>();
-  bool isPasswordValid = false;
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -93,24 +87,6 @@ class NewPassword extends StatelessWidget {
                       icon: Icons.lock,
                       isPassword: true,
                     ),
-                    const SizedBox(height: 40),
-                    FlutterPwValidator(
-                      key: validatorKey,
-                      controller: controller.passwordController,
-                      minLength: 8,
-                      uppercaseCharCount: 1,
-                      lowercaseCharCount: 1,
-                      numericCharCount: 1,
-                      specialCharCount: 0,
-                      width: 300,
-                      height: 125,
-                      onSuccess: () {
-                        isPasswordValid = true;
-                      },
-                      onFail: () {
-                        isPasswordValid = false;
-                      },
-                    ),
                     const SizedBox(height: 20),
                     Container(
                       width: double.infinity,
@@ -118,17 +94,7 @@ class NewPassword extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 0),
                       child: ElevatedButton(
                         onPressed: () {
-                          if (isPasswordValid) {
                             Get.to(() => OtpVerify());
-                          } else {
-                            Get.snackbar(
-                              'Gagal',
-                              'Gagal Mengubah Password',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Warna.danger,
-                              colorText: Colors.white,
-                            );
-                          }
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

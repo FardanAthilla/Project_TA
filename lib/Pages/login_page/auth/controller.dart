@@ -38,6 +38,7 @@ class SendOtpController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
 
   void sendOtp({bool reset = false}) async {
+    isLoading = true.obs;
     final url = 'https://rdo-app-o955y.ondigitalocean.app/otp';
     final response = await http.post(
       Uri.parse(url),
@@ -50,6 +51,7 @@ class SendOtpController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      isLoading = false.obs;
       Get.snackbar(
         'Berhasil Mengirim',
         'Otp Berhasil Dikirim',

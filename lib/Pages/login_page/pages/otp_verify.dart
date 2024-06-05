@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/color.dart';
@@ -94,18 +93,16 @@ class OtpVerify extends StatelessWidget {
                       controller: controller.otpController,
                     ),
                     const SizedBox(height: 20),
-                    OtpTimerButton(
-                      height: 50,
-                      onPressed: () {
-                        controller.sendOtp(reset: true);
-                      },
-                      text: const Text(
-                        'Kirim Ulang OTP',
-                        style: TextStyle(fontSize: 15),
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.sendOtp(reset: true);
+                        },
+                        child: const Text(
+                          "Kirim Ulang OTP",
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                      buttonType: ButtonType.text_button,
-                      backgroundColor: Colors.blue,
-                      duration: 120,
                     ),
                     const SizedBox(height: 40),
                     Obx(
