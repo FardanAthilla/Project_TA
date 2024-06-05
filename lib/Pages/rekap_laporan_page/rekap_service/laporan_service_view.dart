@@ -98,40 +98,81 @@ class ServiceReportPage extends StatelessWidget {
                                   ),
                                   SizedBox(width: 8.0),
                                   Text(
-                                    'Order ID: ${report.serviceReportId}',
+                                    'Order ID: ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${report.serviceReportId}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 13,
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 4.0),
-                              Text(
-                                'Person: ${report.personName}',
-                                style: TextStyle(
-                                  color: Warna.hitam,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Customer: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${report.personName}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 4.0),
-                              Text(
-                                'Machine: ${report.machineName}',
-                                style: TextStyle(
-                                  color: Warna.hitam,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Jenis mesin: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${report.machineName}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 4.0),
-                              Text(
-                                'Complaints: ${report.complaints}',
-                                style: TextStyle(
-                                  color: Warna.hitam,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Keluhan: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${report.complaints}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
