@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:project_ta/Pages/laporan_page/pages/detail_rekap_service.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
 
@@ -32,7 +33,7 @@ class ServiceReportPage extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => RekapServicePage());
+                              Get.to(() => DetailServicePage());
                             },
                             child: Container(
                               padding: const EdgeInsets.all(12.0),
@@ -51,7 +52,7 @@ class ServiceReportPage extends StatelessWidget {
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Laporan Rekap Service'),
+                                  Text('Laporan Service'),
                                   Icon(Icons.chevron_right),
                                 ],
                               ),
@@ -226,18 +227,5 @@ class ServiceReportPage extends StatelessWidget {
   }
 }
 
-class RekapServicePage extends StatelessWidget {
-  const RekapServicePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Laporan Rekap Service"),
-      ),
-      body: Center(
-        child: Text('Laporan Rekap Service (Sudah Selesai)'),
-      ),
-    );
-  }
-}
+
