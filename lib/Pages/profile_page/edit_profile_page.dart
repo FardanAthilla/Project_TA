@@ -1,5 +1,11 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project_ta/Pages/navigation/navbar_view.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
 
@@ -10,11 +16,74 @@ class EditProfilePage extends StatelessWidget {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final ImagePicker _picker = ImagePicker();
+  var _image = Rx<XFile?>(null);
+  final ValueNotifier<bool> isLoading = ValueNotifier(false);
+
   EditProfilePage({super.key}) {
     final userData = profileController.userData!;
     nameController.text = userData['username'];
-    phoneController.text = '+62 ${userData['no_handphone']}';
+    phoneController.text = userData['no_handphone'];
     addressController.text = userData['address'];
+  }
+
+  Future<void> _pickImage() async {
+    final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      _image.value = pickedImage;
+    }
+  }
+
+  Future<void> _saveChanges() async {
+    if (nameController.text.isEmpty ||
+        addressController.text.isEmpty ||
+        phoneController.text.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Semua Field harus diisi kecuali password',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Warna.danger,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    if (passwordController.text.isNotEmpty &&
+        (passwordController.text.length < 8 ||
+            !passwordController.text.contains(RegExp(r'[A-Z]')) ||
+            !passwordController.text.contains(RegExp(r'[0-9]')))) {
+      Get.snackbar(
+        'Error',
+        'Password harus memiliki minimal 8 karakter, satu huruf besar, satu angka',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Warna.danger,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    Map<String, dynamic> userData = {
+      'id': profileController.userData!['user_id'],
+      'username': nameController.text,
+      'address': addressController.text,
+      'no_handphone': phoneController.text,
+    };
+
+    if (passwordController.text.isNotEmpty) {
+      userData['password'] = passwordController.text;
+    }
+
+    isLoading.value = true;
+
+    await profileController.updateUser(userData);
+
+    if (_image.value != null) {
+      await profileController.updateUserPhoto(
+          profileController.userData!['user_id'], _image.value!);
+    }
+
+    isLoading.value = false;
+    Get.off(Navbar());
   }
 
   @override
@@ -37,20 +106,21 @@ class EditProfilePage extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 25),
                     child: Stack(
                       children: [
-                        CircleAvatar(
-                          radius: screenWidth * 0.18,
-                          backgroundImage: NetworkImage(
-                            'https://rdo-app-o955y.ondigitalocean.app/' +
-                                profileController.userData!['image'],
-                          ),
-                        ),
+                        Obx(() {
+                          return CircleAvatar(
+                            radius: screenWidth * 0.18,
+                            backgroundImage: _image.value == null
+                                ? NetworkImage(
+                                    'https://rdo-app-o955y.ondigitalocean.app/${profileController.userData!['image']}')
+                                : FileImage(File(_image.value!.path))
+                                    as ImageProvider,
+                          );
+                        }),
                         Positioned(
                           bottom: 0,
                           right: 0,
                           child: GestureDetector(
-                            onTap: () {
-                              // Image picker code goes here
-                            },
+                            onTap: _pickImage,
                             child: Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
@@ -226,32 +296,34 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   const Divider(),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final String password = passwordController.text.isEmpty ? "" : passwordController.text;
-                      await profileController.updateUserData(
-                        name: nameController.text,
-                        phone: phoneController.text,
-                        address: addressController.text,
-                        password: password,
+                  ValueListenableBuilder<bool>(
+                    valueListenable: isLoading,
+                    builder: (context, loading, child) {
+                      return ElevatedButton(
+                        onPressed: loading ? null : _saveChanges,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Warna.main,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          minimumSize: Size(double.infinity, 50),
+                        ),
+                        child: loading
+                            ? Text(
+                                "Sedang memuat",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white),
+                              )
+                            : Text(
+                                'Simpan',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                              ),
                       );
-                      await profileController.fetchUserData();
-                      Get.back();
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Warna.main,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      minimumSize: Size(double.infinity, 50),
-                    ),
-                    child: const Text(
-                      'Simpan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                      ),
-                    ),
                   ),
                 ],
               ),
