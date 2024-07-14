@@ -38,7 +38,7 @@ class StoreController extends GetxController {
   void fetchCategories() async {
     isLoading(true);
     final response = await http.get(
-        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/category/machine'));
+        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/category'));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body)['Data'];
       categories.value =

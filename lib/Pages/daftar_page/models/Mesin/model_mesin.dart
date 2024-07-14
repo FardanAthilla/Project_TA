@@ -19,7 +19,7 @@ class StoreItem {
       storeItemsName: json['store_items_name'],
       quantity: json['quantity'],
       price: json['price'],
-      categoryMachineId: json['category_machine_id'],
+      categoryMachineId: json['category_id'],
     );
   }
 }
@@ -35,8 +35,8 @@ class CategoryMachine {
 
   factory CategoryMachine.fromJson(Map<String, dynamic> json) {
     return CategoryMachine(
-      categoryMachineId: json['category_machine_id'],
-      categoryMachineName: json['category_machine_name'],
+      categoryMachineId: json['category_id'],
+      categoryMachineName: json['category_name'],
     );
   }
 }

@@ -19,7 +19,7 @@ class SparepartItem {
       sparepartItemsName: json['spare_part_name'],
       quantity: json['quantity'],
       price: json['price'],
-      categorySparepartId: json['category_spare_part_id'],
+      categorySparepartId: json['category_id'],
     );
   }
 }
@@ -35,8 +35,8 @@ class CategorySparepart {
 
   factory CategorySparepart.fromJson(Map<String, dynamic> json) {
     return CategorySparepart(
-      categorySparepartId: json['category_spare_part_id'],
-      categorySparepartName: json['category_spare_part_name'],
+      categorySparepartId: json['category_id'],
+      categorySparepartName: json['category_name'],
     );
   }
 }
