@@ -9,18 +9,6 @@ class SalesReportController extends GetxController {
   RxList salesData = [].obs;
   RxList filteredSalesData = [].obs;
   var isLoading = false.obs;
-
-  Future<void> fetchSalesReport() async {
-    final response = await http
-        .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
-
-    if (response.statusCode == 200) {
-      salesData.value = json.decode(response.body)['Data'];
-    } else {
-      throw Exception('Failed to load sales report');
-    }
-  }
-
   bool isSnackbarActive = false;
 
   Future<void> sendSalesReport(

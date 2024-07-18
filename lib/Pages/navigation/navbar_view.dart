@@ -8,7 +8,8 @@ import 'package:project_ta/Pages/laporan_page/laporan_penjualan_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/rekap_penjualan/rekap_penjualan_view.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/rekap_page.dart';
 import 'package:project_ta/color.dart';
 
 class Navbar extends StatelessWidget {
@@ -16,7 +17,7 @@ class Navbar extends StatelessWidget {
   final StoreController storeController = Get.put(StoreController());
   final SparepartController sparepartController = Get.put(SparepartController());
   final SalesReportController salesController = Get.put(SalesReportController());
-
+  final ServiceReportController serviceController = Get.put(ServiceReportController());
 
   Navbar({Key? key}) : super(key: key);
 
@@ -24,7 +25,7 @@ class Navbar extends StatelessWidget {
     return [
       DaftarMesin(),
       LaporanPage(),
-      RekapPenjualanPage(),
+      RekapLaporanPage(),
       ProfilePage(),
     ];
   }
@@ -118,13 +119,20 @@ class Navbar extends StatelessWidget {
                 onTap: (index) {
                   controller.onItemTapped(index);
                   if (index == 0) {
-                    storeController.searchItems(storeController.searchController.text);
-                    sparepartController.searchItems(sparepartController.searchController.text);
-                  } if (index == 1) {
-                      storeController.ItemSelect(storeController.searchControllerReport.text);
-                      sparepartController.SparePartSelect(sparepartController.searchControllerReport.text);
-                  } if (index == 2) {
-                      salesController.fetchSalesReports();
+                    storeController
+                        .searchItems(storeController.searchController.text);
+                    sparepartController
+                        .searchItems(sparepartController.searchController.text);
+                  }
+                  if (index == 1) {
+                    storeController.ItemSelect(
+                        storeController.searchControllerReport.text);
+                    sparepartController.SparePartSelect(
+                        sparepartController.searchControllerReport.text);
+                  }
+                  if (index == 2) {
+                    salesController.fetchSalesReports();
+                    serviceController.fetchServiceReports();
                   }
                 },
                 type: BottomNavigationBarType.fixed,
