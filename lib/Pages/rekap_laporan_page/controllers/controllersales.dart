@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'dart:convert';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
@@ -28,6 +29,7 @@ class SalesReportController extends GetxController {
       if (response.statusCode == 200) {
         selectedItems.clear();
         date.clear();
+        Get.find<ItemSelectionController>().resetAllQuantities();
 
         if (!isSnackbarActive) {
           isSnackbarActive = true;
@@ -99,5 +101,3 @@ class SalesReportController extends GetxController {
     }
   }
 }
-
-
