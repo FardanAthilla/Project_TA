@@ -19,7 +19,7 @@ class SalesReportController extends GetxController {
       final response = await http.post(
         Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'),
         body: jsonEncode({
-          "date": date.date.value,
+          "date": date.apiDate.value,
           "item": selectedItems,
         }),
       );
