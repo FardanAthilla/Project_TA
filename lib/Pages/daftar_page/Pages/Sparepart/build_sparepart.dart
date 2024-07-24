@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/Pages/Sparepart/filter_sparepart.dart';
 import 'package:project_ta/color.dart';
 
-Widget buildSparepartList(
-    BuildContext context, SparepartController sparepartController) {
+Widget buildSparepartList(BuildContext context, SparepartController sparepartController, StoreController storeController) {
   final FocusNode searchFocusNode = FocusNode();
   var isLoading = false.obs;
 
   Future<void> refreshItems() async {
     isLoading(true);
     sparepartController.searchItems(sparepartController.searchController.text);
+    sparepartController.fetchCategories();
+    storeController.fetchCategories();
     isLoading(false);
   }
 

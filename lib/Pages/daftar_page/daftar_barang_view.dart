@@ -39,8 +39,8 @@ class DaftarMesin extends StatelessWidget {
               Tab(text: 'Sparepart'),
             ],
             tabViews: [
-              buildMesinList(context, storeController),
-              buildSparepartList(context, sparepartController),
+              buildMesinList(context, storeController,sparepartController),
+              buildSparepartList(context, sparepartController,storeController),
             ],
           );
         }

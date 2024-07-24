@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/models/Mesin/model_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/Pages/Mesin/filter_mesin.dart';
 import 'package:project_ta/color.dart';
 
-Widget buildMesinList(BuildContext context, StoreController storeController) {
+Widget buildMesinList(BuildContext context, StoreController storeController,SparepartController sparepartController) {
   final FocusNode searchFocusNode = FocusNode();
   var isLoading = false.obs;
 
   Future<void> refreshItems() async {
     isLoading(true);
     storeController.searchItems(storeController.searchController.text);
+    storeController.fetchCategories();
+    sparepartController.fetchCategories();
     isLoading(false);
   }
 
