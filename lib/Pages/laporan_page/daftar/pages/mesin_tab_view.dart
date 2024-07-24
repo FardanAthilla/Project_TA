@@ -9,7 +9,8 @@ import 'package:project_ta/color.dart';
 class MesinTabView extends StatefulWidget {
   final ItemSelectionController itemSelectionController;
 
-  const MesinTabView({Key? key, required this.itemSelectionController}) : super(key: key);
+  const MesinTabView({Key? key, required this.itemSelectionController})
+      : super(key: key);
 
   @override
   _MesinTabViewState createState() => _MesinTabViewState();
@@ -69,7 +70,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                     (cat) => cat.categoryMachineId == item.categoryMachineId,
                     orElse: () => CategoryMachine(
                       categoryMachineId: 0,
-                      categoryMachineName: 'Unknown Category',
+                      categoryMachineName: 'Kategori Belum Ditemukan',
                     ),
                   );
                   return Column(
@@ -123,7 +124,10 @@ class _MesinTabViewState extends State<MesinTabView> {
                               ),
                             ),
                             item.quantity > 0
-                                ? widget.itemSelectionController.selectedQuantities[item.storeItemsId] == null
+                                ? widget.itemSelectionController
+                                            .selectedQuantities[
+                                        item.storeItemsId] ==
+                                    null
                                     ? IconButton(
                                         icon: const Icon(
                                           Icons.add,
@@ -131,8 +135,11 @@ class _MesinTabViewState extends State<MesinTabView> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            widget.itemSelectionController.updateQuantityMachine(item.storeItemsId, 1);
-                                            widget.itemSelectionController.showBottomBar.value = true;
+                                            widget.itemSelectionController
+                                                .updateQuantityMachine(
+                                                    item.storeItemsId, 1);
+                                            widget.itemSelectionController
+                                                .showBottomBar.value = true;
                                           });
                                         },
                                       )
@@ -146,31 +153,53 @@ class _MesinTabViewState extends State<MesinTabView> {
                                             ),
                                             onPressed: () {
                                               setState(() {
-                                                if (widget.itemSelectionController.selectedQuantities[item.storeItemsId]! > 1) {
-                                                  widget.itemSelectionController.updateQuantityMachine(item.storeItemsId,
-                                                      widget.itemSelectionController.selectedQuantities[item.storeItemsId]! - 1);
+                                                if (widget.itemSelectionController
+                                                            .selectedQuantities[
+                                                        item.storeItemsId]! >
+                                                    1) {
+                                                  widget.itemSelectionController
+                                                      .updateQuantityMachine(
+                                                          item.storeItemsId,
+                                                          widget.itemSelectionController
+                                                                  .selectedQuantities[
+                                                              item.storeItemsId]! -
+                                                              1);
                                                 } else {
-                                                  widget.itemSelectionController.removeQuantityMachine(item.storeItemsId);
-                                                  widget.itemSelectionController.deselectItem(
-                                                     SelectedItems(
-                                                       categoryItemsId: item.categoryMachineId,
-                                                       category: 'mesin',
-                                                       id: item.storeItemsId,
-                                                       item: item.storeItemsName,
-                                                       price: item.price,
-                                                       quantity: 0,
-                                                     ), 
-                                                     item.storeItemsId,
-                                                   );
-                                                  if (widget.itemSelectionController.selectedQuantities.isEmpty) {
-                                                    widget.itemSelectionController.showBottomBar.value = false;
+                                                  widget.itemSelectionController
+                                                      .removeQuantityMachine(
+                                                          item.storeItemsId);
+                                                  widget.itemSelectionController
+                                                      .deselectItem(
+                                                    SelectedItems(
+                                                      categoryItemsId: item
+                                                          .categoryMachineId,
+                                                      category: 'mesin',
+                                                      id: item.storeItemsId,
+                                                      item: item.storeItemsName,
+                                                      price: item.price,
+                                                      quantity: 0,
+                                                    ),
+                                                    item.storeItemsId,
+                                                  );
+                                                  if (widget
+                                                      .itemSelectionController
+                                                      .selectedQuantities
+                                                      .isEmpty) {
+                                                    widget
+                                                        .itemSelectionController
+                                                        .showBottomBar
+                                                        .value = false;
                                                   }
                                                 }
                                               });
                                             },
                                           ),
                                           Text(
-                                            widget.itemSelectionController.selectedQuantities[item.storeItemsId].toString(),
+                                            widget
+                                                .itemSelectionController
+                                                .selectedQuantities[
+                                                    item.storeItemsId]
+                                                .toString(),
                                             style: const TextStyle(
                                               fontSize: 12.0,
                                               fontWeight: FontWeight.bold,
@@ -178,12 +207,21 @@ class _MesinTabViewState extends State<MesinTabView> {
                                             ),
                                           ),
                                           IconButton(
-                                            icon: Icon(Icons.add, color: Warna.main),
+                                            icon: Icon(Icons.add,
+                                                color: Warna.main),
                                             onPressed: () {
                                               setState(() {
-                                                if (widget.itemSelectionController.selectedQuantities[item.storeItemsId]! < item.quantity) {
-                                                  widget.itemSelectionController.updateQuantityMachine(item.storeItemsId,
-                                                      widget.itemSelectionController.selectedQuantities[item.storeItemsId]! + 1);
+                                                if (widget.itemSelectionController
+                                                            .selectedQuantities[
+                                                        item.storeItemsId]! <
+                                                    item.quantity) {
+                                                  widget.itemSelectionController
+                                                      .updateQuantityMachine(
+                                                          item.storeItemsId,
+                                                          widget.itemSelectionController
+                                                                  .selectedQuantities[
+                                                              item.storeItemsId]! +
+                                                              1);
                                                 }
                                               });
                                             },
@@ -210,60 +248,87 @@ class _MesinTabViewState extends State<MesinTabView> {
         ],
       ),
       bottomNavigationBar: Obx(() {
-        return widget.itemSelectionController.showBottomBar.value
-            ? BottomAppBar(
-                color: Colors.blue,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(() {
-                       int totalItems= widget.itemSelectionController.selectedQuantities.values.fold(0, (prev, element) => prev + element);
+        return AnimatedSlide(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          offset: widget.itemSelectionController.showBottomBar.value
+              ? Offset.zero
+              : const Offset(0, 1), // Slide from bottom
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: widget.itemSelectionController.showBottomBar.value ? 1.0 : 0.0,
+            child: widget.itemSelectionController.showBottomBar.value
+                ? BottomAppBar(
+                    color: Colors.blue,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(() {
+                          int totalItems = widget
+                              .itemSelectionController.selectedQuantities.values
+                              .fold(0, (prev, element) => prev + element);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Total Barang: $totalItems',
-                                style: const TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.white,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 16.0, bottom: 16.0),
+                                child: Text(
+                                  'Total Barang: $totalItems',
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
                           );
                         }),
-                      ElevatedButton(
-                        onPressed: () {
-                          for (var item in storeController.storeItems) {
-                            if (widget.itemSelectionController.selectedQuantities.containsKey(item.storeItemsId)) {
-                              var selectedQuantity = widget.itemSelectionController.selectedQuantities[item.storeItemsId]!;
-                              var selectedItem = SelectedItems(
-                                categoryItemsId: item.categoryMachineId,
-                                category: "mesin",
-                                id: item.storeItemsId,
-                                item: item.storeItemsName,
-                                price: item.price,
-                                quantity: selectedQuantity,
-                              );
-                              widget.itemSelectionController.selectItem(selectedItem);
-                              Get.back();
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 16, top: 6, bottom: 6),
+                          child: SizedBox(
+                            width: 125,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                for (var item in storeController.storeItems) {
+                                  if (widget
+                                      .itemSelectionController.selectedQuantities
+                                      .containsKey(item.storeItemsId)) {
+                                    var selectedQuantity = widget
+                                        .itemSelectionController
+                                        .selectedQuantities[item.storeItemsId]!;
+                                    var selectedItem = SelectedItems(
+                                      categoryItemsId: item.categoryMachineId,
+                                      category: "mesin",
+                                      id: item.storeItemsId,
+                                      item: item.storeItemsName,
+                                      price: item.price,
+                                      quantity: selectedQuantity,
+                                    );
+                                    widget.itemSelectionController
+                                        .selectItem(selectedItem);
+                                    Get.back();
+                                  }
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                              ),
+                              child: Text(
+                                'Tambah',
+                                style: TextStyle(color: Warna.main),
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Text(
-                          'Tambah',
-                          style: TextStyle(color: Warna.main),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : const SizedBox.shrink();
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        );
       }),
     );
   }

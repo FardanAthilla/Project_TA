@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:project_ta/color.dart';
 
 class DateController extends GetxController {
-  var displayDate = ''.obs; // For displaying the date in the UI
-  var apiDate = ''.obs; // For storing the date in the format required by the API
+  var displayDate = ''.obs;
+  var apiDate = ''.obs;
 
   void setDate(DateTime picked) {
     displayDate.value = DateFormat('EEEE, dd MMMM yyyy', 'id_ID').format(picked);
