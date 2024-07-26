@@ -24,7 +24,7 @@ class RekapLaporanPage extends StatelessWidget {
       ),
       body: CustomTabBar(
         tabs: [
-          Tab(text: 'ㅤMesinㅤ'),
+          Tab(text: 'Penjualan'),
           Tab(text: 'Service'),
         ],
         tabViews: [

@@ -15,13 +15,17 @@ class RekapPenjualanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('id_ID', null);  
+    initializeDateFormatting('id_ID', null);
 
     return Scaffold(
       body: Obx(() {
-        if (controller.isLoading.value && controller.salesData.isEmpty) {
+        if (controller.isLoading.value) {
           return rekapShimmer.buildShimmer();
         } else {
+          if (controller.salesData.isEmpty) {
+            return Center(
+                child: Text("Belum Ada Laporan."));
+          }
           return ListView.builder(
             itemCount: controller.salesData.length,
             itemBuilder: (context, index) {
@@ -50,7 +54,8 @@ class RekapPenjualanPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date),
+                            DateFormat('EEEE, d MMMM y', 'id_ID')
+                                .format(report.date),
                             style: TextStyle(
                               color: Warna.hitam,
                               fontWeight: FontWeight.w800,
@@ -86,14 +91,14 @@ class RekapPenjualanPage extends StatelessWidget {
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-                                SizedBox(width: 16), 
+                                SizedBox(width: 16),
                                 Expanded(
                                   child: Text(item.itemName),
                                 ),
                                 Text(
                                   'x${item.quantity}',
                                   style: TextStyle(
-                                    color: Warna.main, 
+                                    color: Warna.main,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),

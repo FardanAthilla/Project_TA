@@ -1,47 +1,34 @@
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:project_ta/Pages/rekap_laporan_page/models/service_report_model.dart';
 import 'dart:convert';
-import 'package:project_ta/color.dart';
+import 'package:http/http.dart' as http;
 
 class ServiceReportController extends GetxController {
-  var serviceData = <ServiceReportModel>[].obs;
+  var serviceReports = <Datum>[].obs;
   var isLoading = false.obs;
 
-  List<ServiceReportModel> get uncompletedServiceData => serviceData.where((report) => report.status == 'Belum Selesai').toList();
-  List<ServiceReportModel> get completedServiceData => serviceData.where((report) => report.status == 'Sudah Selesai').toList();
+  @override
+  void onInit() {
+    super.onInit();
+    fetchServiceReports();
+  }
 
   Future<void> fetchServiceReports() async {
+    isLoading.value = true;
+
     try {
-      isLoading(true);
-      final response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service'));
+      final response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service/status/2'));
 
       if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-        Iterable serviceReportsJson = jsonResponse['Data'];
-        serviceData.assignAll(serviceReportsJson
-            .map((model) => ServiceReportModel.fromJson(model))
-            .toList());
+        List jsonResponse = json.decode(response.body)['Data'];
+        serviceReports.value = jsonResponse.map((report) => Datum.fromJson(report)).toList();
       } else {
         throw Exception('Failed to load service reports');
       }
     } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Failed to fetch service reports',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Warna.danger,
-        colorText: Warna.teksactive,
-      );
+      print(e);
     } finally {
-      isLoading(false);
+      isLoading.value = false;
     }
-  }
-
-  @override
-  void onInit() {
-    fetchServiceReports();
-    super.onInit();
   }
 }

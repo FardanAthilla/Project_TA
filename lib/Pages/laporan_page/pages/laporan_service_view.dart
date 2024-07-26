@@ -22,7 +22,7 @@ class ServiceReportPage extends StatelessWidget {
             return RefreshIndicator(
               onRefresh: _refreshData,
               child: ListView.builder(
-                itemCount: controller.uncompletedServiceData.length + 1,
+                itemCount: controller.serviceReports.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Padding(
@@ -70,7 +70,7 @@ class ServiceReportPage extends StatelessWidget {
                       ),
                     );
                   } else {
-                    var report = controller.uncompletedServiceData[index - 1];
+                    var report = controller.serviceReports[index - 1];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Container(
@@ -161,7 +161,7 @@ class ServiceReportPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${report.personName}',
+                                      '${report.name}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
