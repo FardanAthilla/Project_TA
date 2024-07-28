@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
-    as rekapShimmer;
 
 class ServiceReportPage extends StatelessWidget {
   final ServiceReportController _controller =
@@ -29,7 +28,7 @@ class ServiceReportPage extends StatelessWidget {
       child: Scaffold(
         body: Obx(() {
           if (_controller.isUserLoading.value) {
-            return rekapShimmer.buildShimmerService();
+            return buildShimmerService();
           } else {
             if (_controller.userSpecificReports.isEmpty) {
               return Padding(
