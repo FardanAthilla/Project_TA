@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'dart:convert';
 import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
@@ -9,18 +10,6 @@ class SalesReportController extends GetxController {
   RxList salesData = [].obs;
   RxList filteredSalesData = [].obs;
   var isLoading = false.obs;
-
-  Future<void> fetchSalesReport() async {
-    final response = await http
-        .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
-
-    if (response.statusCode == 200) {
-      salesData.value = json.decode(response.body)['Data'];
-    } else {
-      throw Exception('Failed to load sales report');
-    }
-  }
-
   bool isSnackbarActive = false;
 
   Future<void> sendSalesReport(
@@ -31,7 +20,7 @@ class SalesReportController extends GetxController {
       final response = await http.post(
         Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'),
         body: jsonEncode({
-          "date": date.date.value,
+          "date": date.apiDate.value,
           "item": selectedItems,
         }),
       );
@@ -40,6 +29,7 @@ class SalesReportController extends GetxController {
       if (response.statusCode == 200) {
         selectedItems.clear();
         date.clear();
+        Get.find<ItemSelectionController>().resetAllQuantities();
 
         if (!isSnackbarActive) {
           isSnackbarActive = true;
@@ -111,5 +101,3 @@ class SalesReportController extends GetxController {
     }
   }
 }
-
-

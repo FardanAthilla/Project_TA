@@ -4,14 +4,17 @@ import 'package:intl/intl.dart';
 import 'package:project_ta/color.dart';
 
 class DateController extends GetxController {
-  var date = ''.obs;
+  var displayDate = ''.obs;
+  var apiDate = ''.obs;
 
   void setDate(DateTime picked) {
-    date.value = DateFormat('yyyy-MM-dd').format(picked);
+    displayDate.value = DateFormat('EEEE, dd MMMM yyyy', 'id_ID').format(picked);
+    apiDate.value = DateFormat('yyyy-MM-dd').format(picked);
   }
 
   void clear() {
-    date.value = '';
+    displayDate.value = '';
+    apiDate.value = '';
   }
 }
 
@@ -37,6 +40,7 @@ class DateTextField extends StatelessWidget {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
+      locale: const Locale('id', 'ID'),
       builder: (BuildContext context, Widget? child) {
         return Center(
           child: Transform.scale(
@@ -79,7 +83,7 @@ class DateTextField extends StatelessWidget {
           Obx(() => TextFormField(
                 focusNode: focusNode,
                 readOnly: true,
-                controller: TextEditingController(text: controller.date.value),
+                controller: TextEditingController(text: controller.displayDate.value),
                 onTap: () => _selectDate(context),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(

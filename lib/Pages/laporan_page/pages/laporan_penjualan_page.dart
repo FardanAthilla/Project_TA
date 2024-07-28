@@ -307,8 +307,6 @@ class SalesTabView extends StatelessWidget {
                                                   dateController,
                                                   itemSelectionController
                                                       .selectedItems);
-                                                      itemSelectionController
-                                              .resetAllQuantities();
                                           isLoading.value = false;
                                         },
                                       ),
