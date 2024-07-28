@@ -17,7 +17,7 @@ class RekapServicePage extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         if (controller.isLoading.value) {
-          return rekapShimmer.buildShimmer();
+          return rekapShimmer.buildShimmerService();
         } else {
           var service = controller.serviceReports;
           if (service.isEmpty) {

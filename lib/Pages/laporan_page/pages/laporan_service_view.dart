@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
+    as rekapShimmer;
 
 class ServiceReportPage extends StatelessWidget {
-  final ServiceReportController controller = Get.put(ServiceReportController());
+  final ServiceReportController _controller =
+      Get.put(ServiceReportController());
+  final ProfileController profileController = Get.put(ProfileController());
+
+  ServiceReportPage({super.key}) {
+    final userId = profileController.userData?['user_id'] ?? 0;
+    _controller.fetchServiceReportsByUserId(userId);
+  }
 
   Future<void> _refreshData() async {
-    await controller.fetchServiceReports();
+    final userId = profileController.userData?['user_id'] ?? 0;
+    await _controller.fetchServiceReportsByUserId(userId);
   }
 
   @override
@@ -16,13 +28,51 @@ class ServiceReportPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Obx(() {
-          if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+          if (_controller.isUserLoading.value) {
+            return rekapShimmer.buildShimmerService();
           } else {
+            if (_controller.userSpecificReports.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => RekapServicePage());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 0.5,
+                              offset: Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Laporan Rekap Service'),
+                            Icon(Icons.chevron_right),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Expanded(child: Center(child: Text("Belum Ada Laporan.")))
+                  ],
+                ),
+              );
+            }
             return RefreshIndicator(
               onRefresh: _refreshData,
               child: ListView.builder(
-                itemCount: controller.serviceReports.length + 1,
+                itemCount: _controller.userSpecificReports.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Padding(
@@ -49,7 +99,8 @@ class ServiceReportPage extends StatelessWidget {
                                 ],
                               ),
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('Laporan Rekap Service'),
                                   Icon(Icons.chevron_right),
@@ -70,7 +121,7 @@ class ServiceReportPage extends StatelessWidget {
                       ),
                     );
                   } else {
-                    var report = controller.serviceReports[index - 1];
+                    var report = _controller.userSpecificReports[index - 1];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Container(
@@ -112,7 +163,7 @@ class ServiceReportPage extends StatelessWidget {
                                     border: Border.all(color: Warna.main),
                                   ),
                                   child: Text(
-                                    '${report.status}',
+                                    '${report.status.statusName}',
                                     style: TextStyle(
                                       color: Warna.hitam,
                                       fontWeight: FontWeight.w500,
@@ -131,7 +182,8 @@ class ServiceReportPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(100.0),
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
                                       child: Image.asset(
                                         'Assets/serviceicon4.png',
                                         width: 35,
@@ -151,7 +203,8 @@ class ServiceReportPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Customer: ',
@@ -171,7 +224,8 @@ class ServiceReportPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Jenis mesin: ',
@@ -191,7 +245,8 @@ class ServiceReportPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Keluhan: ',

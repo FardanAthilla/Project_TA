@@ -20,7 +20,7 @@ class RekapPenjualanPage extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         if (controller.isLoading.value) {
-          return rekapShimmer.buildShimmer();
+          return rekapShimmer.buildShimmerPenjualan();
         } else {
           if (controller.salesData.isEmpty) {
             return Center(
