@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
+import 'package:project_ta/Pages/laporan_page/form/form_page.dart';
+import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
@@ -11,6 +13,7 @@ class ServiceReportPage extends StatelessWidget {
   final ServiceReportController _controller =
       Get.put(ServiceReportController());
   final ProfileController profileController = Get.put(ProfileController());
+  final DateController dateController = Get.put(DateController());
 
   ServiceReportPage({super.key}) {
     final userId = profileController.userData?['user_id'] ?? 0;
@@ -37,7 +40,9 @@ class ServiceReportPage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => RekapServicePage());
+                        Get.to(() => FormLaporanService(
+                              dateController: dateController,
+                            ));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(12.0),
@@ -81,7 +86,9 @@ class ServiceReportPage extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => RekapServicePage());
+                              Get.to(() => FormLaporanService(
+                                    dateController: dateController,
+                                  ));
                             },
                             child: Container(
                               padding: const EdgeInsets.all(12.0),
@@ -275,24 +282,6 @@ class ServiceReportPage extends StatelessWidget {
             );
           }
         }),
-      ),
-    );
-  }
-}
-
-class RekapServicePage extends StatelessWidget {
-  const RekapServicePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Laporan Rekap Service"),
-        ),
-        body: Center(
-          child: Text('Laporan Rekap Service (Sudah Selesai)'),
-        ),
       ),
     );
   }
