@@ -285,12 +285,14 @@ class RekapServicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Laporan Rekap Service"),
-      ),
-      body: Center(
-        child: Text('Laporan Rekap Service (Sudah Selesai)'),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Laporan Rekap Service"),
+        ),
+        body: Center(
+          child: Text('Laporan Rekap Service (Sudah Selesai)'),
+        ),
       ),
     );
   }
