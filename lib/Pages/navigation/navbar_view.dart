@@ -134,7 +134,7 @@ class Navbar extends StatelessWidget {
                   }
                   if (index == 2) {
                     salesController.fetchSalesReports();
-                    serviceController.fetchServiceReports();
+                    serviceController.fetchServiceReportsByUserId(index);
                     profileController.fetchUserData();
 
                   }
