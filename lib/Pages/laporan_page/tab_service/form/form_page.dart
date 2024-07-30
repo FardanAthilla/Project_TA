@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_ta/Pages/laporan_page/form/form_controller.dart';
+import 'package:project_ta/Pages/laporan_page/tab_service/form/form_controller.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';

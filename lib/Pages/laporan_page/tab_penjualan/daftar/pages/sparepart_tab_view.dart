@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
-import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
+import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/color.dart';
 

@@ -83,7 +83,7 @@ class EditProfilePage extends StatelessWidget {
     }
 
     isLoading.value = false;
-    Get.off(Navbar());
+    Get.offAll(Navbar());
   }
 
   @override

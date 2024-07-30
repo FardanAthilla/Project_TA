@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
-import 'package:project_ta/Pages/laporan_page/form/form_page.dart';
+import 'package:project_ta/Pages/laporan_page/tab_service/form/form_page.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
