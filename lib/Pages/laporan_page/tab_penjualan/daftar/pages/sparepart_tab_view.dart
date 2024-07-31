@@ -64,15 +64,17 @@ class _SparepartTabViewState extends State<SparepartTabView> {
               }
               return ListView.builder(
                 itemCount: sparepartController.sparePartSelect.length,
-                itemBuilder: (context, index) {
-                  final item = sparepartController.sparePartSelect[index];
-                  final category = sparepartController.categories.firstWhere(
-                    (cat) => cat.categorySparepartId == item.sparepartItemsId,
-                    orElse: () => CategorySparepart(
-                      categorySparepartId: 0,
-                      categorySparepartName: 'Kategori Belum Ditemukan',
-                    ),
-                  );
+                    itemBuilder: (context, index) {
+                      final item = sparepartController.sparePartSelect[index];
+                      final category =
+                          sparepartController.categories.firstWhere(
+                        (cat) =>
+                            cat.categorySparepartId == item.categorySparepartId,
+                        orElse: () => CategorySparepart(
+                          categorySparepartId: 0,
+                          categorySparepartName: 'Kategori Belum Ditemukan',
+                        ),
+                      );
                   return Column(
                     children: [
                       Padding(

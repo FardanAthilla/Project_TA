@@ -29,7 +29,7 @@ class _SparepartTabViewState extends State<AddSparepartService> {
             child: SizedBox(
               height: 48,
               child: TextField(
-                controller: sparepartController.searchControllerReport,
+                controller: sparepartController.searchControllerService,
                 decoration: const InputDecoration(
                   hintText: 'Cari sekarang...',
                   border: OutlineInputBorder(
@@ -44,7 +44,7 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                   contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                 ),
                 onChanged: (query) {
-                  sparepartController.SparePartSelect(query);
+                  sparepartController.SparePartSelectService(query);
                 },
               ),
             ),
@@ -64,15 +64,17 @@ class _SparepartTabViewState extends State<AddSparepartService> {
               }
               return ListView.builder(
                 itemCount: sparepartController.sparePartSelect.length,
-                itemBuilder: (context, index) {
-                  final item = sparepartController.sparePartSelect[index];
-                  final category = sparepartController.categories.firstWhere(
-                    (cat) => cat.categorySparepartId == item.sparepartItemsId,
-                    orElse: () => CategorySparepart(
-                      categorySparepartId: 0,
-                      categorySparepartName: 'Kategori Belum Ditemukan',
-                    ),
-                  );
+                    itemBuilder: (context, index) {
+                      final item = sparepartController.sparePartSelect[index];
+                      final category =
+                          sparepartController.categories.firstWhere(
+                        (cat) =>
+                            cat.categorySparepartId == item.categorySparepartId,
+                        orElse: () => CategorySparepart(
+                          categorySparepartId: 0,
+                          categorySparepartName: 'Kategori Belum Ditemukan',
+                        ),
+                      );
                   return Column(
                     children: [
                       Padding(
