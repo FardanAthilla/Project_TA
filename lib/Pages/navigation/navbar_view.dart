@@ -6,6 +6,7 @@ import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.da
 import 'package:project_ta/Pages/daftar_page/daftar_barang_view.dart';
 import 'package:project_ta/Pages/laporan_page/laporan_penjualan_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
+import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
@@ -18,6 +19,7 @@ class Navbar extends StatelessWidget {
   final SparepartController sparepartController = Get.put(SparepartController());
   final SalesReportController salesController = Get.put(SalesReportController());
   final ServiceReportController serviceController = Get.put(ServiceReportController());
+  final ProfileController profileController = Get.put(ProfileController());
 
   Navbar({Key? key}) : super(key: key);
 
@@ -132,7 +134,9 @@ class Navbar extends StatelessWidget {
                   }
                   if (index == 2) {
                     salesController.fetchSalesReports();
-                    serviceController.fetchServiceReports();
+                    serviceController.fetchServiceReportsByUserId(index);
+                    profileController.fetchUserData();
+
                   }
                 },
                 type: BottomNavigationBarType.fixed,

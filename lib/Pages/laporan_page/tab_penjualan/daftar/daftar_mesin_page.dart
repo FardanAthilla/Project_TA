@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_ta/Pages/laporan_page/daftar/itemselection.dart';
-import 'package:project_ta/Pages/laporan_page/daftar/pages/mesin_tab_view.dart';
-import 'package:project_ta/Pages/laporan_page/daftar/pages/sparepart_tab_view.dart';
+import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
+import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/pages/mesin_tab_view.dart';
+import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/pages/sparepart_tab_view.dart';
 import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 
 class DaftarMesinPage extends StatelessWidget {

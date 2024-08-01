@@ -1,34 +1,31 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
-import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'dart:convert';
-import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart';
 import 'package:project_ta/color.dart';
 
-class SalesReportController extends GetxController {
-  RxList salesData = [].obs;
-  RxList filteredSalesData = [].obs;
+class ServiceReportController extends GetxController {
   var isLoading = false.obs;
   bool isSnackbarActive = false;
 
-  Future<void> sendSalesReport(
-      DateController date, List<dynamic> selectedItems) async {
+  Future<void> sendEditService(
+    double id, List<dynamic> selectedItems, double totalPrice, String complaints) async {
     isLoading(true);
 
     try {
-      final response = await http.post(
-        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'),
+      final response = await http.put(
+        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service'),
         body: jsonEncode({
-          "date": date.apiDate.value,
+          "id": id,
           "item": selectedItems,
+          "total_price": totalPrice,
+          "complaints": complaints
         }),
       );
       isLoading(false);
 
       if (response.statusCode == 200) {
         selectedItems.clear();
-        date.clear();
         Get.find<ItemSelectionController>().resetAllQuantities();
 
         if (!isSnackbarActive) {
@@ -73,31 +70,6 @@ class SalesReportController extends GetxController {
       Future.delayed(Duration(seconds: 5), () {
         isSnackbarActive = false;
       });
-    }
-  }
-
-  @override
-  void onInit() {
-    fetchSalesReports();
-    super.onInit();
-  }
-
-  void fetchSalesReports() async {
-    try {
-      isLoading(true);
-      var response = await http
-          .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
-      if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-        Iterable salesReportsJson = jsonResponse['Data'];
-        salesData.assignAll(salesReportsJson
-            .map((model) => SalesReport.fromJson(model))
-            .toList());
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-      }
-    } finally {
-      isLoading(false);
     }
   }
 }

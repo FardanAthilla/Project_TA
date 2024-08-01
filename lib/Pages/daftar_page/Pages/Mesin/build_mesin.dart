@@ -117,7 +117,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
                             cat.categoryMachineId == item.categoryMachineId,
                         orElse: () => CategoryMachine(
                           categoryMachineId: 0,
-                          categoryMachineName: 'Unknown Category',
+                          categoryMachineName: 'Kategori Belum Ditemukan',
                         ),
                       );
                       return Column(

@@ -118,7 +118,7 @@ Widget buildSparepartList(BuildContext context,
                             cat.categorySparepartId == item.categorySparepartId,
                         orElse: () => CategorySparepart(
                           categorySparepartId: 0,
-                          categorySparepartName: 'Unknown Category',
+                          categorySparepartName: 'Kategori Belum Ditemukan',
                         ),
                       );
                       return Column(

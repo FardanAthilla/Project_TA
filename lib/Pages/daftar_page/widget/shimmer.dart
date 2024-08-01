@@ -97,7 +97,7 @@ Widget buildShimmerService() {
     child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(20.0),
           child: Row(
             children: [
               Expanded(
@@ -113,7 +113,6 @@ Widget buildShimmerService() {
                   ),
                 ),
               ),
-              const SizedBox(width: 12)
             ],
           ),
         ),

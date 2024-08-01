@@ -13,6 +13,8 @@ class SparepartController extends GetxController {
   var isLoading = false.obs;
   final TextEditingController searchController = TextEditingController();
   final TextEditingController searchControllerReport = TextEditingController();
+  final TextEditingController searchControllerService = TextEditingController();
+
 
 
   @override
@@ -66,6 +68,18 @@ class SparepartController extends GetxController {
   }
 
   void SparePartSelect(String query) async {
+    final response = await http.get(Uri.parse(
+        'https://rdo-app-o955y.ondigitalocean.app/search/sparePart?name=$query&categories='));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      sparePartSelect.value =
+          data.map((item) => SparepartItem.fromJson(item)).toList();
+    } else {
+      sparePartSelect.value = [];
+    }
+  }
+
+    void SparePartSelectService(String query) async {
     final response = await http.get(Uri.parse(
         'https://rdo-app-o955y.ondigitalocean.app/search/sparePart?name=$query&categories='));
     if (response.statusCode == 200) {
