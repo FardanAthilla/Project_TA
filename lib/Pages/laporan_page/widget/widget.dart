@@ -153,12 +153,14 @@ class EditableTextField extends StatelessWidget {
   final TextEditingController controller;
   final int maxLines;
   final int maxLength;
+  final TextInputType inputType;
 
   EditableTextField({
     required this.title,
     required this.controller,
     this.maxLines = 1,
     required this.maxLength,
+    this.inputType = TextInputType.text,
   });
 
   @override
@@ -204,9 +206,8 @@ class EditableTextField extends StatelessWidget {
       ],
     );
   }
-  
 
-   void _showBottomSheet(BuildContext context) {
+  void _showBottomSheet(BuildContext context) {
     Get.bottomSheet(
       Container(
         padding: EdgeInsets.all(16.0),
@@ -238,6 +239,7 @@ class EditableTextField extends StatelessWidget {
               const SizedBox(height: 20),
               TextField(
                 controller: controller,
+                keyboardType: inputType,
                 decoration: InputDecoration(
                   fillColor: Warna.background,
                   filled: true,
@@ -298,6 +300,56 @@ class EditableTextField extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ReadOnlyTextField extends StatelessWidget {
+  final String title;
+  final TextEditingController controller;
+  final int maxLines;
+
+  ReadOnlyTextField({
+    required this.title,
+    required this.controller,
+    this.maxLines = 1,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 5),
+        TextFormField(
+          controller: controller,
+          readOnly: true,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              borderSide: BorderSide(color: Warna.mainblue),
+            ),
+            labelStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Warna.main,
+            ),
+          ),
+          maxLines: maxLines,
+          minLines: maxLines,
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
 }

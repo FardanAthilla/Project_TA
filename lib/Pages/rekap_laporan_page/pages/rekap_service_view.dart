@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rekapShimmer;
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
+    as rekapShimmer;
 
 class RekapServicePage extends StatelessWidget {
   final ServiceReportController controller = Get.put(ServiceReportController());
@@ -168,11 +169,19 @@ class RekapServicePage extends StatelessWidget {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  Text(
-                                    '${report.complaints}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                                  Flexible(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                      child: Text(
+                                        '${report.complaints}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
                                     ),
                                   ),
                                 ],
