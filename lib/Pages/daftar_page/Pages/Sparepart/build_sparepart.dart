@@ -55,7 +55,7 @@ Widget buildSparepartList(BuildContext context,
                           prefixIcon: Icon(Icons.search),
                           contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                         ),
-                        onChanged: (query) {
+                        onSubmitted: (query) {
                           sparepartController.searchItems(query);
                         },
                       ),
@@ -121,6 +121,9 @@ Widget buildSparepartList(BuildContext context,
                           categorySparepartName: 'Kategori Belum Ditemukan',
                         ),
                       );
+
+                      final isOutOfStock = item.quantity == 0;
+
                       return Column(
                         children: [
                           Padding(
@@ -134,12 +137,19 @@ Widget buildSparepartList(BuildContext context,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  child: Image.asset(
-                                    'Assets/iconsparepart.png',
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.contain,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: ColorFiltered(
+                                    colorFilter: isOutOfStock
+                                        ? ColorFilter.mode(
+                                            Colors.grey, BlendMode.saturation)
+                                        : ColorFilter.mode(Colors.transparent,
+                                            BlendMode.multiply),
+                                    child: Image.asset(
+                                      'Assets/iconsparepart.png',
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 16),
@@ -153,7 +163,9 @@ Widget buildSparepartList(BuildContext context,
                                         item.sparepartItemsName,
                                         style: TextStyle(
                                           fontSize: 15,
-                                          color: Warna.hitam,
+                                          color: isOutOfStock
+                                              ? Colors.grey
+                                              : Warna.hitam,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -161,7 +173,9 @@ Widget buildSparepartList(BuildContext context,
                                       Text(
                                         category.categorySparepartName,
                                         style: TextStyle(
-                                          color: Warna.card,
+                                          color: isOutOfStock
+                                              ? Colors.grey
+                                              : Warna.card,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w100,
                                         ),
@@ -171,7 +185,9 @@ Widget buildSparepartList(BuildContext context,
                                         'Rp.${item.price}',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Warna.teks,
+                                          color: isOutOfStock
+                                              ? Colors.grey
+                                              : Warna.teks,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -185,7 +201,9 @@ Widget buildSparepartList(BuildContext context,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.normal,
-                                      color: Warna.hitam,
+                                      color: isOutOfStock
+                                          ? Colors.grey
+                                          : Warna.hitam,
                                     ),
                                   ),
                                 ),

@@ -48,7 +48,7 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                     prefixIcon: Icon(Icons.search),
                     contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                   ),
-                  onChanged: (query) {
+                  onSubmitted: (query) {
                     sparepartController.SparePartSelectService(query);
                   },
                 ),
@@ -79,6 +79,9 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                         categorySparepartName: 'Kategori Belum Ditemukan',
                       ),
                     );
+
+                    final isOutOfStock = item.quantity == 0;
+
                     return Column(
                       children: [
                         Padding(
@@ -88,11 +91,18 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12.0),
-                                child: Image.asset(
-                                  'Assets/iconsparepart.png',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.contain,
+                                child: ColorFiltered(
+                                  colorFilter: isOutOfStock
+                                      ? ColorFilter.mode(
+                                          Colors.grey, BlendMode.saturation)
+                                      : ColorFilter.mode(Colors.transparent,
+                                          BlendMode.multiply),
+                                  child: Image.asset(
+                                    'Assets/iconsparepart.png',
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 16),
@@ -103,8 +113,10 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                                     Text(
                                       item.sparepartItemsName,
                                       style: TextStyle(
-                                        fontSize: 13,
-                                        color: Warna.hitam,
+                                        fontSize: 15,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.hitam,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -112,7 +124,9 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                                     Text(
                                       category.categorySparepartName,
                                       style: TextStyle(
-                                        color: Warna.card,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.card,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w100,
                                       ),
@@ -122,134 +136,133 @@ class _SparepartTabViewState extends State<AddSparepartService> {
                                       'Rp.${item.price}',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Warna.teks,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.teks,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              item.quantity > 0
-                                  ? widget.itemSelectionServiceController
-                                                  .selectedQuantitiesSparepartService[
-                                              item.sparepartItemsId] ==
-                                          null
-                                      ? IconButton(
-                                          icon: const Icon(
-                                            Icons.add,
-                                            size: 20,
+                              if (item.quantity > 0) ...[
+                                widget.itemSelectionServiceController
+                                                .selectedQuantitiesSparepartService[
+                                            item.sparepartItemsId] ==
+                                        null
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            widget
+                                                .itemSelectionServiceController
+                                                .updateQuantitySparepartService(
+                                                    item.sparepartItemsId, 1);
+                                            widget
+                                                .itemSelectionServiceController
+                                                .showBottomBarSparepartService
+                                                .value = true;
+                                          });
+                                        },
+                                      )
+                                    : Row(
+                                        children: [
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.remove,
+                                              color: Warna.danger,
+                                              size: 20,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (widget.itemSelectionServiceController
+                                                            .selectedQuantitiesSparepartService[
+                                                        item.sparepartItemsId]! >
+                                                    1) {
+                                                  widget
+                                                      .itemSelectionServiceController
+                                                      .updateQuantitySparepartService(
+                                                          item.sparepartItemsId,
+                                                          widget.itemSelectionServiceController
+                                                                      .selectedQuantitiesSparepartService[
+                                                                  item.sparepartItemsId]! -
+                                                              1);
+                                                } else {
+                                                  widget
+                                                      .itemSelectionServiceController
+                                                      .removeQuantitySparepartService(
+                                                          item.sparepartItemsId);
+                                                  widget
+                                                      .itemSelectionServiceController
+                                                      .deselectItemSparepartService(
+                                                    SelectedItems(
+                                                      categoryItemsId: item
+                                                          .categorySparepartId,
+                                                      category: 'spare_part',
+                                                      id: item.sparepartItemsId,
+                                                      item: item
+                                                          .sparepartItemsName,
+                                                      price: item.price,
+                                                      quantity: 0,
+                                                    ),
+                                                    item.sparepartItemsId,
+                                                  );
+                                                  if (widget
+                                                      .itemSelectionServiceController
+                                                      .selectedQuantitiesSparepartService
+                                                      .isEmpty) {
+                                                    widget
+                                                        .itemSelectionServiceController
+                                                        .showBottomBarSparepartService
+                                                        .value = false;
+                                                  }
+                                                }
+                                              });
+                                            },
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              widget
-                                                  .itemSelectionServiceController
-                                                  .updateQuantitySparepartService(
-                                                      item.sparepartItemsId, 1);
-                                              widget
-                                                  .itemSelectionServiceController
-                                                  .showBottomBarSparepartService
-                                                  .value = true;
-                                            });
-                                          },
-                                        )
-                                      : Row(
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.remove,
-                                                color: Warna.danger,
-                                                size: 20,
-                                              ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.itemSelectionServiceController
-                                                              .selectedQuantitiesSparepartService[
-                                                          item.sparepartItemsId]! >
-                                                      1) {
-                                                    widget
-                                                        .itemSelectionServiceController
-                                                        .updateQuantitySparepartService(
-                                                            item
-                                                                .sparepartItemsId,
-                                                            widget.itemSelectionServiceController
-                                                                        .selectedQuantitiesSparepartService[
-                                                                    item.sparepartItemsId]! -
-                                                                1);
-                                                  } else {
-                                                    widget
-                                                        .itemSelectionServiceController
-                                                        .removeQuantitySparepartService(
-                                                            item.sparepartItemsId);
-                                                    widget
-                                                        .itemSelectionServiceController
-                                                        .deselectItemSparepartService(
-                                                      SelectedItems(
-                                                        categoryItemsId: item
-                                                            .categorySparepartId,
-                                                        category: 'spare_part',
-                                                        id: item
-                                                            .sparepartItemsId,
-                                                        item: item
-                                                            .sparepartItemsName,
-                                                        price: item.price,
-                                                        quantity: 0,
-                                                      ),
-                                                      item.sparepartItemsId,
-                                                    );
-
-                                                    if (widget
-                                                        .itemSelectionServiceController
-                                                        .selectedQuantitiesSparepartService
-                                                        .isEmpty) {
-                                                      widget
-                                                          .itemSelectionServiceController
-                                                          .showBottomBarSparepartService
-                                                          .value = false;
-                                                    }
-                                                  }
-                                                });
-                                              },
+                                          Text(
+                                            widget
+                                                .itemSelectionServiceController
+                                                .selectedQuantitiesSparepartService[
+                                                    item.sparepartItemsId]
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
                                             ),
-                                            Text(
-                                              widget
-                                                  .itemSelectionServiceController
-                                                  .selectedQuantitiesSparepartService[
-                                                      item.sparepartItemsId]
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.add,
-                                                  color: Warna.main),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (widget.itemSelectionServiceController
-                                                              .selectedQuantitiesSparepartService[
-                                                          item.sparepartItemsId]! <
-                                                      item.quantity) {
-                                                    widget
-                                                        .itemSelectionServiceController
-                                                        .updateQuantitySparepartService(
-                                                            item
-                                                                .sparepartItemsId,
-                                                            widget.itemSelectionServiceController
-                                                                        .selectedQuantitiesSparepartService[
-                                                                    item.sparepartItemsId]! +
-                                                                1);
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        )
-                                  : const Text(
-                                      'Stok Habis',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.add,
+                                                color: Warna.main),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (widget.itemSelectionServiceController
+                                                            .selectedQuantitiesSparepartService[
+                                                        item.sparepartItemsId]! <
+                                                    item.quantity) {
+                                                  widget
+                                                      .itemSelectionServiceController
+                                                      .updateQuantitySparepartService(
+                                                          item.sparepartItemsId,
+                                                          widget.itemSelectionServiceController
+                                                                      .selectedQuantitiesSparepartService[
+                                                                  item.sparepartItemsId]! +
+                                                              1);
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                              ] else
+                                const Text(
+                                  'Stok Habis',
+                                  style: TextStyle(fontSize: 12),
+                                ),
                             ],
                           ),
                         ),

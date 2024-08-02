@@ -256,7 +256,7 @@ class EditableTextField extends StatelessWidget {
                 ),
                 maxLines: maxLines,
                 maxLength: maxLength,
-                onChanged: (value) {
+                onSubmitted: (value) {
                   if (value.length > maxLength) {
                     controller.text = value.substring(0, maxLength);
                     controller.selection = TextSelection.fromPosition(
