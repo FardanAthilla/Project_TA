@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -191,6 +191,7 @@ class ProfilePage extends StatelessWidget {
                           sparepartController.searchController.clear();
                           storeController.searchControllerReport.clear();
                           sparepartController.searchControllerReport.clear();
+                          sparepartController.searchControllerService.clear();
                           dateController.clear();
                         },
                         style: ElevatedButton.styleFrom(

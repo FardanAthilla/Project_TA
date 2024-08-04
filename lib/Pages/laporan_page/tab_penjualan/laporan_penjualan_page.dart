@@ -16,6 +16,7 @@ class SalesTabView extends StatelessWidget {
   final DateController dateController;
   final SalesReportController salesReportController;
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final SalesReportController salesController = Get.put(SalesReportController());
 
   SalesTabView({
     required this.itemSelectionController,
@@ -302,12 +303,12 @@ class SalesTabView extends StatelessWidget {
                                         onPressed: () async {
                                           Get.back();
                                           isLoading.value = true;
-                                          await salesReportController
-                                              .sendSalesReport(
+                                          await salesReportController.sendSalesReport(
                                                   dateController,
-                                                  itemSelectionController
-                                                      .selectedItems);
+                                                  itemSelectionController.selectedItems);
                                           isLoading.value = false;
+                                                              salesController.fetchSalesReports();
+
                                         },
                                       ),
                                     ],

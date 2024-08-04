@@ -25,6 +25,7 @@ class ServiceReportPage extends StatelessWidget {
   }
 
   Future<void> _refreshData() async {
+    
     final userId = profileController.userData?['user_id'] ?? 0;
     await _controller.fetchServiceReportsByUserId(userId);
   }
@@ -192,7 +193,7 @@ class ServiceReportPage extends StatelessWidget {
                                       style: TextStyle(
                                         color: Warna.hitam,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 14,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ),

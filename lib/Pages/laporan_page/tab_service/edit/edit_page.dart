@@ -28,109 +28,111 @@ class EditPage extends StatelessWidget {
     machineNameController.text = report.machineName ?? '';
   }
 
-
-void _showInputDetails(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text('Input Details'),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Report ID: ${report.serviceReportId}'),
-              SizedBox(height: 8),
-              Text('Nama Pelanggan: ${nameController.text}'),
-              SizedBox(height: 8),
-              Text('Nama Mesin: ${machineNameController.text}'),
-              SizedBox(height: 8),
-              Text('Biaya Perbaikan: ${priceController.text}'),
-              SizedBox(height: 8),
-              Text('Keluhan: ${complainController.text}'),
-              SizedBox(height: 16),
-              Text('Barang Yang Dipilih:', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: itemSelectionController.selectedItemsSparepartService.map((entry) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text('${entry.item} - Rp.${entry.price} x ${entry.quantity}'),
-                  );
-                }).toList(),
-              ),
-            ],
+  void _showInputDetails(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Input Details'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Report ID: ${report.serviceReportId}'),
+                SizedBox(height: 8),
+                Text('Nama Pelanggan: ${nameController.text}'),
+                SizedBox(height: 8),
+                Text('Nama Mesin: ${machineNameController.text}'),
+                SizedBox(height: 8),
+                Text('Biaya Perbaikan: ${priceController.text}'),
+                SizedBox(height: 8),
+                Text('Keluhan: ${complainController.text}'),
+                SizedBox(height: 16),
+                Text('Barang Yang Dipilih:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: itemSelectionController
+                      .selectedItemsSparepartService
+                      .map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Text(
+                          '${entry.item} - Rp.${entry.price} x ${entry.quantity}'),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Close'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await _sendDataToApi();
-              Navigator.of(context).pop();
-            },
-            child: Text('Submit'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-Future<void> _sendDataToApi() async {
-  final url = 'https://rdo-app-o955y.ondigitalocean.app/service';
-
-  final Map<String, dynamic> data = {
-    "id": report.serviceReportId,
-    "complaints": complainController.text,
-    "total_price": _calculateTotalPrice(),
-    "item": itemSelectionController.selectedItemsSparepartService.map((entry) {
-      return {
-        "id": entry.id,
-        "item": entry.item,
-        "price": entry.price,
-        "category": entry.category,
-        "category_items_id": entry.categoryItemsId,
-        "quantity": entry.quantity,
-      };
-    }).toList(),
-  };
-
-  try {
-    final response = await http.put(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _sendDataToApi();
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
       },
-      body: json.encode(data),
     );
+  }
 
-    if (response.statusCode == 200) {
-      print('Data berhasil dikirim!');
-    } else {
-      print('Gagal mengirim data: ${response.body}');
+  Future<void> _sendDataToApi() async {
+    final url = 'https://rdo-app-o955y.ondigitalocean.app/service';
+
+    final Map<String, dynamic> data = {
+      "id": report.serviceReportId,
+      "complaints": complainController.text,
+      "total_price": _calculateTotalPrice(),
+      "item":
+          itemSelectionController.selectedItemsSparepartService.map((entry) {
+        return {
+          "id": entry.id,
+          "item": entry.item,
+          "price": entry.price,
+          "category": entry.category,
+          "category_items_id": entry.categoryItemsId,
+          "quantity": entry.quantity,
+        };
+      }).toList(),
+    };
+
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(data),
+      );
+
+      if (response.statusCode == 200) {
+        print('Data berhasil dikirim!');
+      } else {
+        print('Gagal mengirim data: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
-  } catch (e) {
-    print('Error: $e');
   }
-}
 
-int _calculateTotalPrice() {
-  int total = 0;
-  for (var entry in itemSelectionController.selectedItemsSparepartService) {
-    total += entry.price * entry.quantity;
+  int _calculateTotalPrice() {
+    int total = 0;
+    for (var entry in itemSelectionController.selectedItemsSparepartService) {
+      total += entry.price * entry.quantity;
+    }
+    return total;
   }
-  return total;
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -159,12 +161,14 @@ int _calculateTotalPrice() {
                   controller: priceController,
                   maxLength: 20,
                   inputType: TextInputType.number,
+                  subtitle: "Masukkan Biaya",
                 ),
                 EditableTextField(
                   title: 'Keluhan Yang Di Alami',
                   controller: complainController,
                   maxLines: 4,
                   maxLength: 120,
+                  subtitle: "Keluhan Yang Dialami",
                 ),
                 GestureDetector(
                   onTap: () {
@@ -173,6 +177,7 @@ int _calculateTotalPrice() {
                     Get.to(() => AddSparepartService(
                         itemSelectionServiceController:
                             itemSelectionServiceController));
+                            
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
@@ -281,10 +286,10 @@ int _calculateTotalPrice() {
                                               SelectedItems(
                                                 categoryItemsId:
                                                     entry.categoryItemsId,
-                                                category: entry.category ==
-                                                        "mesin"
-                                                    ? "mesin"
-                                                    : "spare_part",
+                                                category:
+                                                    entry.category == "mesin"
+                                                        ? "mesin"
+                                                        : "spare_part",
                                                 price: entry.price,
                                                 id: entry.id,
                                                 item: item,

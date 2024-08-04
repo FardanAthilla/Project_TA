@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
@@ -55,7 +56,7 @@ Widget buildSparepartList(BuildContext context,
                           prefixIcon: Icon(Icons.search),
                           contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                         ),
-                        onChanged: (query) {
+                        onSubmitted: (query) {
                           sparepartController.searchItems(query);
                         },
                       ),
@@ -98,13 +99,27 @@ Widget buildSparepartList(BuildContext context,
                 onRefresh: refreshItems,
                 child: Obx(() {
                   if (sparepartController.filteredItems.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'Barang tidak ditemukan',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 25.0),
+                            child: Lottie.asset(
+                              'Assets/kotak.json',
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const Text(
+                            'Barang tidak ditemukan',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
@@ -121,20 +136,32 @@ Widget buildSparepartList(BuildContext context,
                           categorySparepartName: 'Kategori Belum Ditemukan',
                         ),
                       );
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12.0,
-                              right: 12.0,
-                              top: 8.0,
-                              bottom: 8.0,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12.0),
+
+                      final isOutOfStock = item.quantity == 0;
+
+                      return Opacity(
+                        opacity: isOutOfStock ? 0.5 : 1.0,
+                        child: Container(
+                          padding: EdgeInsets.all(12.0),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 12.0),
+                          decoration: BoxDecoration(
+                            color: isOutOfStock
+                                ? Colors.grey.shade200
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: ColorFiltered(
+                                  colorFilter: isOutOfStock
+                                      ? ColorFilter.mode(
+                                          Colors.grey, BlendMode.saturation)
+                                      : ColorFilter.mode(Colors.transparent,
+                                          BlendMode.multiply),
                                   child: Image.asset(
                                     'Assets/iconsparepart.png',
                                     width: 80,
@@ -142,61 +169,64 @@ Widget buildSparepartList(BuildContext context,
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item.sparepartItemsName,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Warna.hitam,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.sparepartItemsName,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.hitam,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        category.categorySparepartName,
-                                        style: TextStyle(
-                                          color: Warna.card,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w100,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'Rp.${item.price}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Warna.teks,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${item.quantity} Stok',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.normal,
-                                      color: Warna.hitam,
                                     ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      category.categorySparepartName,
+                                      style: TextStyle(
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.card,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w100,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Rp.${item.price}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.teks,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  '${item.quantity} Stok',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                    color: isOutOfStock
+                                        ? Colors.grey
+                                        : Warna.hitam,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          const Divider(
-                            indent: 15,
-                            endIndent: 15,
-                          ),
-                        ],
+                        ),
                       );
                     },
                   );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/models/Mesin/model_mesin.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
@@ -43,7 +44,7 @@ class _MesinTabViewState extends State<MesinTabView> {
                   prefixIcon: Icon(Icons.search),
                   contentPadding: EdgeInsets.symmetric(vertical: 14.0),
                 ),
-                onChanged: (query) {
+                onSubmitted: (query) {
                   storeController.ItemSelect(query);
                 },
               ),
@@ -52,13 +53,27 @@ class _MesinTabViewState extends State<MesinTabView> {
           Expanded(
             child: Obx(() {
               if (storeController.itemSelect.isEmpty) {
-                return const Center(
-                  child: Text(
-                    'Barang tidak ditemukan',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25.0),
+                        child: Lottie.asset(
+                          'Assets/kotak.json',
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        'Barang tidak ditemukan',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }
@@ -73,15 +88,32 @@ class _MesinTabViewState extends State<MesinTabView> {
                       categoryMachineName: 'Kategori Belum Ditemukan',
                     ),
                   );
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
+
+                  final isOutOfStock = item.quantity == 0;
+
+                  return Opacity(
+                    opacity: isOutOfStock ? 0.5 : 1.0, // Mengatur transparansi
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 12.0),
+                      decoration: BoxDecoration(
+                        color: isOutOfStock
+                            ? Colors.grey.shade200
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: ColorFiltered(
+                              colorFilter: isOutOfStock
+                                  ? ColorFilter.mode(
+                                      Colors.grey, BlendMode.saturation)
+                                  : ColorFilter.mode(
+                                      Colors.transparent, BlendMode.multiply),
                               child: Image.asset(
                                 'Assets/iconlistmesin3.png',
                                 width: 80,
@@ -89,157 +121,148 @@ class _MesinTabViewState extends State<MesinTabView> {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.storeItemsName,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Warna.hitam,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.storeItemsName,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: isOutOfStock
+                                        ? Colors.grey
+                                        : Warna.hitam,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    category.categoryMachineName,
-                                    style: TextStyle(
-                                      color: Warna.card,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w100,
-                                    ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  category.categoryMachineName,
+                                  style: TextStyle(
+                                    color:
+                                        isOutOfStock ? Colors.grey : Warna.card,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w100,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Rp.${item.price}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Warna.teks,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Rp.${item.price}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color:
+                                        isOutOfStock ? Colors.grey : Warna.teks,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            item.quantity > 0
-                                ? widget.itemSelectionController
-                                            .selectedQuantities[
+                          ),
+                          if (item.quantity > 0) ...[
+                            widget.itemSelectionController.selectedQuantities[
                                         item.storeItemsId] ==
                                     null
-                                    ? IconButton(
-                                        icon: const Icon(
-                                          Icons.add,
-                                          size: 20,
-                                        ),
+                                ? IconButton(
+                                    icon: const Icon(Icons.add, size: 20),
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.itemSelectionController
+                                            .updateQuantityMachine(
+                                                item.storeItemsId, 1);
+                                        widget.itemSelectionController
+                                            .showBottomBar.value = true;
+                                      });
+                                    },
+                                  )
+                                : Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove,
+                                            color: Warna.danger, size: 20),
                                         onPressed: () {
                                           setState(() {
-                                            widget.itemSelectionController
-                                                .updateQuantityMachine(
-                                                    item.storeItemsId, 1);
-                                            widget.itemSelectionController
-                                                .showBottomBar.value = true;
-                                          });
-                                        },
-                                      )
-                                    : Row(
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.remove,
-                                              color: Warna.danger,
-                                              size: 20,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                if (widget.itemSelectionController
-                                                            .selectedQuantities[
-                                                        item.storeItemsId]! >
-                                                    1) {
-                                                  widget.itemSelectionController
-                                                      .updateQuantityMachine(
-                                                          item.storeItemsId,
-                                                          widget.itemSelectionController
+                                            if (widget.itemSelectionController
+                                                        .selectedQuantities[
+                                                    item.storeItemsId]! >
+                                                1) {
+                                              widget.itemSelectionController
+                                                  .updateQuantityMachine(
+                                                      item.storeItemsId,
+                                                      widget.itemSelectionController
                                                                   .selectedQuantities[
                                                               item.storeItemsId]! -
-                                                              1);
-                                                } else {
-                                                  widget.itemSelectionController
-                                                      .removeQuantityMachine(
-                                                          item.storeItemsId);
-                                                  widget.itemSelectionController
-                                                      .deselectItem(
-                                                    SelectedItems(
-                                                      categoryItemsId: item
-                                                          .categoryMachineId,
-                                                      category: 'mesin',
-                                                      id: item.storeItemsId,
-                                                      item: item.storeItemsName,
-                                                      price: item.price,
-                                                      quantity: 0,
-                                                    ),
-                                                    item.storeItemsId,
-                                                  );
-                                                  if (widget
-                                                      .itemSelectionController
-                                                      .selectedQuantities
-                                                      .isEmpty) {
-                                                    widget
-                                                        .itemSelectionController
-                                                        .showBottomBar
-                                                        .value = false;
-                                                  }
-                                                }
-                                              });
-                                            },
-                                          ),
-                                          Text(
-                                            widget
-                                                .itemSelectionController
-                                                .selectedQuantities[
-                                                    item.storeItemsId]
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.add,
-                                                color: Warna.main),
-                                            onPressed: () {
-                                              setState(() {
-                                                if (widget.itemSelectionController
-                                                            .selectedQuantities[
-                                                        item.storeItemsId]! <
-                                                    item.quantity) {
-                                                  widget.itemSelectionController
-                                                      .updateQuantityMachine(
-                                                          item.storeItemsId,
-                                                          widget.itemSelectionController
+                                                          1);
+                                            } else {
+                                              widget.itemSelectionController
+                                                  .removeQuantityMachine(
+                                                      item.storeItemsId);
+                                              widget.itemSelectionController
+                                                  .deselectItem(
+                                                SelectedItems(
+                                                  categoryItemsId:
+                                                      item.categoryMachineId,
+                                                  category: 'mesin',
+                                                  id: item.storeItemsId,
+                                                  item: item.storeItemsName,
+                                                  price: item.price,
+                                                  quantity: 0,
+                                                ),
+                                                item.storeItemsId,
+                                              );
+                                              if (widget.itemSelectionController
+                                                  .selectedQuantities.isEmpty) {
+                                                widget
+                                                    .itemSelectionController
+                                                    .showBottomBar
+                                                    .value = false;
+                                              }
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        widget
+                                            .itemSelectionController
+                                            .selectedQuantities[
+                                                item.storeItemsId]
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87),
+                                      ),
+                                      IconButton(
+                                        icon:
+                                            Icon(Icons.add, color: Warna.main),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (widget.itemSelectionController
+                                                        .selectedQuantities[
+                                                    item.storeItemsId]! <
+                                                item.quantity) {
+                                              widget.itemSelectionController
+                                                  .updateQuantityMachine(
+                                                      item.storeItemsId,
+                                                      widget.itemSelectionController
                                                                   .selectedQuantities[
                                                               item.storeItemsId]! +
-                                                              1);
-                                                }
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      )
-                                : const Text(
-                                    'Stok Habis',
-                                    style: TextStyle(fontSize: 12),
+                                                          1);
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
-                          ],
-                        ),
+                          ] else
+                            const Text(
+                              'Stok Habis',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                        ],
                       ),
-                      const Divider(
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                    ],
+                    ),
                   );
                 },
               );
@@ -253,10 +276,11 @@ class _MesinTabViewState extends State<MesinTabView> {
           curve: Curves.easeInOut,
           offset: widget.itemSelectionController.showBottomBar.value
               ? Offset.zero
-              : const Offset(0, 1), // Slide from bottom
+              : const Offset(0, 1),
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
-            opacity: widget.itemSelectionController.showBottomBar.value ? 1.0 : 0.0,
+            opacity:
+                widget.itemSelectionController.showBottomBar.value ? 1.0 : 0.0,
             child: widget.itemSelectionController.showBottomBar.value
                 ? BottomAppBar(
                     color: Colors.blue,
@@ -285,15 +309,15 @@ class _MesinTabViewState extends State<MesinTabView> {
                           );
                         }),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(right: 16, top: 6, bottom: 6),
+                          padding: const EdgeInsets.only(
+                              right: 16, top: 6, bottom: 6),
                           child: SizedBox(
                             width: 125,
                             child: ElevatedButton(
                               onPressed: () {
                                 for (var item in storeController.storeItems) {
-                                  if (widget
-                                      .itemSelectionController.selectedQuantities
+                                  if (widget.itemSelectionController
+                                      .selectedQuantities
                                       .containsKey(item.storeItemsId)) {
                                     var selectedQuantity = widget
                                         .itemSelectionController
