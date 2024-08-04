@@ -76,186 +76,178 @@ class _MesinTabViewState extends State<MesinTabView> {
 
                   final isOutOfStock = item.quantity == 0;
 
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: ColorFiltered(
-                                colorFilter: isOutOfStock
-                                    ? ColorFilter.mode(
-                                        Colors.grey, BlendMode.saturation)
-                                    : ColorFilter.mode(
-                                        Colors.transparent, BlendMode.multiply),
-                                child: Image.asset(
-                                  'Assets/iconlistmesin3.png',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.contain,
+                  return Opacity(
+                    opacity: isOutOfStock ? 0.5 : 1.0, // Mengatur transparansi
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 12.0),
+                      decoration: BoxDecoration(
+                        color: isOutOfStock
+                            ? Colors.grey.shade200
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: ColorFiltered(
+                              colorFilter: isOutOfStock
+                                  ? ColorFilter.mode(
+                                      Colors.grey, BlendMode.saturation)
+                                  : ColorFilter.mode(
+                                      Colors.transparent, BlendMode.multiply),
+                              child: Image.asset(
+                                'Assets/iconlistmesin3.png',
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.storeItemsName,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: isOutOfStock
+                                        ? Colors.grey
+                                        : Warna.hitam,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  category.categoryMachineName,
+                                  style: TextStyle(
+                                    color:
+                                        isOutOfStock ? Colors.grey : Warna.card,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Rp.${item.price}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color:
+                                        isOutOfStock ? Colors.grey : Warna.teks,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.storeItemsName,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: isOutOfStock
-                                          ? Colors.grey
-                                          : Warna.hitam,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    category.categoryMachineName,
-                                    style: TextStyle(
-                                      color: isOutOfStock
-                                          ? Colors.grey
-                                          : Warna.card,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Rp.${item.price}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: isOutOfStock
-                                          ? Colors.grey
-                                          : Warna.teks,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (item.quantity > 0) ...[
-                              widget.itemSelectionController.selectedQuantities[
-                                          item.storeItemsId] ==
-                                      null
-                                  ? IconButton(
-                                      icon: const Icon(
-                                        Icons.add,
-                                        size: 20,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          widget.itemSelectionController
-                                              .updateQuantityMachine(
-                                                  item.storeItemsId, 1);
-                                          widget.itemSelectionController
-                                              .showBottomBar.value = true;
-                                        });
-                                      },
-                                    )
-                                  : Row(
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.remove,
-                                            color: Warna.danger,
-                                            size: 20,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
+                          ),
+                          if (item.quantity > 0) ...[
+                            widget.itemSelectionController.selectedQuantities[
+                                        item.storeItemsId] ==
+                                    null
+                                ? IconButton(
+                                    icon: const Icon(Icons.add, size: 20),
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.itemSelectionController
+                                            .updateQuantityMachine(
+                                                item.storeItemsId, 1);
+                                        widget.itemSelectionController
+                                            .showBottomBar.value = true;
+                                      });
+                                    },
+                                  )
+                                : Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove,
+                                            color: Warna.danger, size: 20),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (widget.itemSelectionController
+                                                        .selectedQuantities[
+                                                    item.storeItemsId]! >
+                                                1) {
+                                              widget.itemSelectionController
+                                                  .updateQuantityMachine(
+                                                      item.storeItemsId,
+                                                      widget.itemSelectionController
+                                                                  .selectedQuantities[
+                                                              item.storeItemsId]! -
+                                                          1);
+                                            } else {
+                                              widget.itemSelectionController
+                                                  .removeQuantityMachine(
+                                                      item.storeItemsId);
+                                              widget.itemSelectionController
+                                                  .deselectItem(
+                                                SelectedItems(
+                                                  categoryItemsId:
+                                                      item.categoryMachineId,
+                                                  category: 'mesin',
+                                                  id: item.storeItemsId,
+                                                  item: item.storeItemsName,
+                                                  price: item.price,
+                                                  quantity: 0,
+                                                ),
+                                                item.storeItemsId,
+                                              );
                                               if (widget.itemSelectionController
-                                                          .selectedQuantities[
-                                                      item.storeItemsId]! >
-                                                  1) {
-                                                widget.itemSelectionController
-                                                    .updateQuantityMachine(
-                                                        item.storeItemsId,
-                                                        widget.itemSelectionController
-                                                                    .selectedQuantities[
-                                                                item.storeItemsId]! -
-                                                            1);
-                                              } else {
-                                                widget.itemSelectionController
-                                                    .removeQuantityMachine(
-                                                        item.storeItemsId);
-                                                widget.itemSelectionController
-                                                    .deselectItem(
-                                                  SelectedItems(
-                                                    categoryItemsId:
-                                                        item.categoryMachineId,
-                                                    category: 'mesin',
-                                                    id: item.storeItemsId,
-                                                    item: item.storeItemsName,
-                                                    price: item.price,
-                                                    quantity: 0,
-                                                  ),
-                                                  item.storeItemsId,
-                                                );
-                                                if (widget
+                                                  .selectedQuantities.isEmpty) {
+                                                widget
                                                     .itemSelectionController
-                                                    .selectedQuantities
-                                                    .isEmpty) {
-                                                  widget
-                                                      .itemSelectionController
-                                                      .showBottomBar
-                                                      .value = false;
-                                                }
+                                                    .showBottomBar
+                                                    .value = false;
                                               }
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          widget
-                                              .itemSelectionController
-                                              .selectedQuantities[
-                                                  item.storeItemsId]
-                                              .toString(),
-                                          style: const TextStyle(
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Text(
+                                        widget
+                                            .itemSelectionController
+                                            .selectedQuantities[
+                                                item.storeItemsId]
+                                            .toString(),
+                                        style: const TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.add,
-                                              color: Warna.main),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (widget.itemSelectionController
-                                                          .selectedQuantities[
-                                                      item.storeItemsId]! <
-                                                  item.quantity) {
-                                                widget.itemSelectionController
-                                                    .updateQuantityMachine(
-                                                        item.storeItemsId,
-                                                        widget.itemSelectionController
-                                                                    .selectedQuantities[
-                                                                item.storeItemsId]! +
-                                                            1);
-                                              }
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                            ] else
-                              const Text(
-                                'Stok Habis',
-                                style: TextStyle(fontSize: 12),
-                              ),
-                          ],
-                        ),
+                                            color: Colors.black87),
+                                      ),
+                                      IconButton(
+                                        icon:
+                                            Icon(Icons.add, color: Warna.main),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (widget.itemSelectionController
+                                                        .selectedQuantities[
+                                                    item.storeItemsId]! <
+                                                item.quantity) {
+                                              widget.itemSelectionController
+                                                  .updateQuantityMachine(
+                                                      item.storeItemsId,
+                                                      widget.itemSelectionController
+                                                                  .selectedQuantities[
+                                                              item.storeItemsId]! +
+                                                          1);
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                          ] else
+                            const Text(
+                              'Stok Habis',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                        ],
                       ),
-                      const Divider(
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                    ],
+                    ),
                   );
                 },
               );

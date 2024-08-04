@@ -124,97 +124,94 @@ Widget buildSparepartList(BuildContext context,
 
                       final isOutOfStock = item.quantity == 0;
 
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12.0,
-                              right: 12.0,
-                              top: 8.0,
-                              bottom: 8.0,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  child: ColorFiltered(
-                                    colorFilter: isOutOfStock
-                                        ? ColorFilter.mode(
-                                            Colors.grey, BlendMode.saturation)
-                                        : ColorFilter.mode(Colors.transparent,
-                                            BlendMode.multiply),
-                                    child: Image.asset(
-                                      'Assets/iconsparepart.png',
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item.sparepartItemsName,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: isOutOfStock
-                                              ? Colors.grey
-                                              : Warna.hitam,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        category.categorySparepartName,
-                                        style: TextStyle(
-                                          color: isOutOfStock
-                                              ? Colors.grey
-                                              : Warna.card,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w100,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'Rp.${item.price}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: isOutOfStock
-                                              ? Colors.grey
-                                              : Warna.teks,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${item.quantity} Stok',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.normal,
-                                      color: isOutOfStock
-                                          ? Colors.grey
-                                          : Warna.hitam,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                      return Opacity(
+                        opacity: isOutOfStock ? 0.5 : 1.0,
+                        child: Container(
+                          padding: EdgeInsets.all(12.0),
+                          margin: EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 12.0),
+                          decoration: BoxDecoration(
+                            color: isOutOfStock
+                                ? Colors.grey.shade200
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          const Divider(
-                            indent: 15,
-                            endIndent: 15,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: ColorFiltered(
+                                  colorFilter: isOutOfStock
+                                      ? ColorFilter.mode(
+                                          Colors.grey, BlendMode.saturation)
+                                      : ColorFilter.mode(Colors.transparent,
+                                          BlendMode.multiply),
+                                  child: Image.asset(
+                                    'Assets/iconsparepart.png',
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.sparepartItemsName,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.hitam,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      category.categorySparepartName,
+                                      style: TextStyle(
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.card,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w100,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Rp.${item.price}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: isOutOfStock
+                                            ? Colors.grey
+                                            : Warna.teks,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  '${item.quantity} Stok',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                    color: isOutOfStock
+                                        ? Colors.grey
+                                        : Warna.hitam,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       );
                     },
                   );

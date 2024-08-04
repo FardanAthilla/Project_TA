@@ -63,180 +63,153 @@ class _SparepartTabViewState extends State<SparepartTabView> {
                 );
               }
               return ListView.builder(
-      itemCount: sparepartController.sparePartSelect.length,
-      itemBuilder: (context, index) {
-        final item = sparepartController.sparePartSelect[index];
-        final category = sparepartController.categories.firstWhere(
-          (cat) => cat.categorySparepartId == item.categorySparepartId,
-          orElse: () => CategorySparepart(
-            categorySparepartId: 0,
-            categorySparepartName: 'Kategori Belum Ditemukan',
-          ),
-        );
+  itemCount: sparepartController.sparePartSelect.length,
+  itemBuilder: (context, index) {
+    final item = sparepartController.sparePartSelect[index];
+    final category = sparepartController.categories.firstWhere(
+      (cat) => cat.categorySparepartId == item.categorySparepartId,
+      orElse: () => CategorySparepart(
+        categorySparepartId: 0,
+        categorySparepartName: 'Kategori Belum Ditemukan',
+      ),
+    );
 
-        final isOutOfStock = item.quantity == 0;
+    final isOutOfStock = item.quantity == 0;
 
-        return Column(
+    return Opacity(
+      opacity: isOutOfStock ? 0.5 : 1.0, // Mengatur transparansi
+      child: Container(
+        padding: const EdgeInsets.all(12.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        decoration: BoxDecoration(
+          color: isOutOfStock ? Colors.grey.shade200 : Colors.transparent,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: ColorFiltered(
+                colorFilter: isOutOfStock
+                    ? const ColorFilter.mode(Colors.grey, BlendMode.saturation)
+                    : const ColorFilter.mode(Colors.transparent, BlendMode.multiply),
+                child: Image.asset(
+                  'Assets/iconsparepart.png',
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: ColorFiltered(
-                      colorFilter: isOutOfStock
-                          ? ColorFilter.mode(Colors.grey, BlendMode.saturation)
-                          : ColorFilter.mode(Colors.transparent, BlendMode.multiply),
-                      child: Image.asset(
-                        'Assets/iconsparepart.png',
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.contain,
-                      ),
+                  Text(
+                    item.sparepartItemsName,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: isOutOfStock ? Colors.grey : Warna.hitam,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.sparepartItemsName,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: isOutOfStock ? Colors.grey : Warna.hitam,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          category.categorySparepartName,
-                          style: TextStyle(
-                            color: isOutOfStock ? Colors.grey : Warna.card,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w100,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Rp.${item.price}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: isOutOfStock ? Colors.grey : Warna.teks,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: 8),
+                  Text(
+                    category.categorySparepartName,
+                    style: TextStyle(
+                      color: isOutOfStock ? Colors.grey : Warna.card,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w100,
                     ),
                   ),
-                  if (item.quantity > 0) ...[
-                    widget.itemSelectionController
-                                .selectedQuantitiesSparepart[item.sparepartItemsId] ==
-                            null
-                        ? IconButton(
-                            icon: const Icon(
-                              Icons.add,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                widget.itemSelectionController
-                                    .updateQuantitySparepart(item.sparepartItemsId, 1);
-                                widget.itemSelectionController.showBottomBarSparepart.value = true;
-                              });
-                            },
-                          )
-                        : Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: Warna.danger,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (widget.itemSelectionController
-                                            .selectedQuantitiesSparepart[item.sparepartItemsId]! >
-                                        1) {
-                                      widget.itemSelectionController
-                                          .updateQuantitySparepart(
-                                              item.sparepartItemsId,
-                                              widget.itemSelectionController
-                                                      .selectedQuantitiesSparepart[
-                                                  item.sparepartItemsId]! -
-                                                  1);
-                                    } else {
-                                      widget.itemSelectionController
-                                          .removeQuantitySparepart(item.sparepartItemsId);
-                                      widget.itemSelectionController.deselectItem(
-                                        SelectedItems(
-                                          categoryItemsId: item.categorySparepartId,
-                                          category: 'spare_part',
-                                          id: item.sparepartItemsId,
-                                          item: item.sparepartItemsName,
-                                          price: item.price,
-                                          quantity: 0,
-                                        ),
-                                        item.sparepartItemsId,
-                                      );
-                                      if (widget.itemSelectionController
-                                          .selectedQuantitiesSparepart.isEmpty) {
-                                        widget.itemSelectionController
-                                            .showBottomBarSparepart.value = false;
-                                      }
-                                    }
-                                  });
-                                },
-                              ),
-                              Text(
-                                widget.itemSelectionController
-                                    .selectedQuantitiesSparepart[item.sparepartItemsId]
-                                    .toString(),
-                                style: const TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.add, color: Warna.main),
-                                onPressed: () {
-                                  setState(() {
-                                    if (widget.itemSelectionController
-                                            .selectedQuantitiesSparepart[item.sparepartItemsId]! <
-                                        item.quantity) {
-                                      widget.itemSelectionController
-                                          .updateQuantitySparepart(
-                                              item.sparepartItemsId,
-                                              widget.itemSelectionController
-                                                      .selectedQuantitiesSparepart[
-                                                  item.sparepartItemsId]! +
-                                                  1);
-                                    }
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                  ] else
-                    const Text(
-                      'Stok Habis',
-                      style: TextStyle(fontSize: 12),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Rp.${item.price}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isOutOfStock ? Colors.grey : Warna.teks,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ],
               ),
             ),
-            const Divider(
-              indent: 15,
-              endIndent: 15,
-            ),
+            if (item.quantity > 0) ...[
+              widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId] ==
+                      null
+                  ? IconButton(
+                      icon: const Icon(Icons.add, size: 20),
+                      onPressed: () {
+                        setState(() {
+                          widget.itemSelectionController.updateQuantitySparepart(item.sparepartItemsId, 1);
+                          widget.itemSelectionController.showBottomBarSparepart.value = true;
+                        });
+                      },
+                    )
+                  : Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.remove, color: Warna.danger, size: 20),
+                          onPressed: () {
+                            setState(() {
+                              if (widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! > 1) {
+                                widget.itemSelectionController.updateQuantitySparepart(
+                                  item.sparepartItemsId,
+                                  widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! - 1,
+                                );
+                              } else {
+                                widget.itemSelectionController.removeQuantitySparepart(item.sparepartItemsId);
+                                widget.itemSelectionController.deselectItem(
+                                  SelectedItems(
+                                    categoryItemsId: item.categorySparepartId,
+                                    category: 'spare_part',
+                                    id: item.sparepartItemsId,
+                                    item: item.sparepartItemsName,
+                                    price: item.price,
+                                    quantity: 0,
+                                  ),
+                                  item.sparepartItemsId,
+                                );
+                                if (widget.itemSelectionController.selectedQuantitiesSparepart.isEmpty) {
+                                  widget.itemSelectionController.showBottomBarSparepart.value = false;
+                                }
+                              }
+                            });
+                          },
+                        ),
+                        Text(
+                          widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId].toString(),
+                          style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.black87),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.add, color: Warna.main),
+                          onPressed: () {
+                            setState(() {
+                              if (widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! < item.quantity) {
+                                widget.itemSelectionController.updateQuantitySparepart(
+                                  item.sparepartItemsId,
+                                  widget.itemSelectionController.selectedQuantitiesSparepart[item.sparepartItemsId]! + 1,
+                                );
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+            ] else
+              const Text(
+                'Stok Habis',
+                style: TextStyle(fontSize: 12),
+              ),
           ],
-        );
-      },
+        ),
+      ),
     );
+  },
+);
+
             }),
           ),
         ],

@@ -24,6 +24,7 @@ class SparepartController extends GetxController {
     fetchCategories();
     searchItems("");
     SparePartSelect("");
+    SparePartSelectService("");
   }
 
   void fetchStoreItems() async {
