@@ -8,14 +8,14 @@ class SparepartController extends GetxController {
   var storeItems = <SparepartItem>[].obs;
   var filteredItems = <SparepartItem>[].obs;
   var sparePartSelect = <SparepartItem>[].obs;
+  var sparePartSelectService = <SparepartItem>[].obs;
+
   var categories = <CategorySparepart>[].obs;
   var selectedCategories = <int>[].obs;
   var isLoading = false.obs;
   final TextEditingController searchController = TextEditingController();
   final TextEditingController searchControllerReport = TextEditingController();
   final TextEditingController searchControllerService = TextEditingController();
-
-
 
   @override
   void onInit() {
@@ -85,10 +85,10 @@ class SparepartController extends GetxController {
         'https://rdo-app-o955y.ondigitalocean.app/search/sparePart?name=$query&categories='));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      sparePartSelect.value =
+      sparePartSelectService.value =
           data.map((item) => SparepartItem.fromJson(item)).toList();
     } else {
-      sparePartSelect.value = [];
+      sparePartSelectService.value = [];
     }
   }
 }

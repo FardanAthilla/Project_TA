@@ -61,8 +61,8 @@ class _MesinTabViewState extends State<MesinTabView> {
                         padding: const EdgeInsets.only(right: 25.0),
                         child: Lottie.asset(
                           'Assets/kotak.json',
-                          width: 150,
-                          height: 150,
+                          width: 120,
+                          height: 120,
                           fit: BoxFit.cover,
                         ),
                       ),
