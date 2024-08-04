@@ -8,7 +8,8 @@ class DateController extends GetxController {
   var apiDate = ''.obs;
 
   void setDate(DateTime picked) {
-    displayDate.value = DateFormat('EEEE, dd MMMM yyyy', 'id_ID').format(picked);
+    displayDate.value =
+        DateFormat('EEEE, dd MMMM yyyy', 'id_ID').format(picked);
     apiDate.value = DateFormat('yyyy-MM-dd').format(picked);
   }
 
@@ -83,7 +84,8 @@ class DateTextField extends StatelessWidget {
           Obx(() => TextFormField(
                 focusNode: focusNode,
                 readOnly: true,
-                controller: TextEditingController(text: controller.displayDate.value),
+                controller:
+                    TextEditingController(text: controller.displayDate.value),
                 onTap: () => _selectDate(context),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -150,6 +152,7 @@ class BottomBarButton extends StatelessWidget {
 
 class EditableTextField extends StatelessWidget {
   final String title;
+  final String subtitle;
   final TextEditingController controller;
   final int maxLines;
   final int maxLength;
@@ -157,6 +160,7 @@ class EditableTextField extends StatelessWidget {
 
   EditableTextField({
     required this.title,
+    required this.subtitle,
     required this.controller,
     this.maxLines = 1,
     required this.maxLength,
@@ -223,7 +227,7 @@ class EditableTextField extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Masukkan Data',
+                    subtitle,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -286,7 +290,8 @@ class EditableTextField extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                       textStyle: TextStyle(fontSize: 16),
                     ),
                     child: Text(

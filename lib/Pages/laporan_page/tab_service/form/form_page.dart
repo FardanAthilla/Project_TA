@@ -47,17 +47,18 @@ class FormLaporanService extends StatelessWidget {
                     title: 'Nama Orang Pemilik Mesin',
                     controller: nameController,
                     maxLength: 20,
+                    subtitle: "Masukkan Nama Pelanggan",
                   ),
                   EditableTextField(
                     title: 'Nama Mesin Yang Di Service',
                     controller: machineNameController,
-                    maxLength: 20,
+                    maxLength: 20,subtitle: "Masukkan Nama Mesin",
                   ),
                   EditableTextField(
                     title: 'Keluhan Yang Di Alami',
                     controller: complaintsController,
                     maxLines: 4,
-                    maxLength: 120,
+                    maxLength: 120,subtitle: "Keluhan Yang Dialami",
                   ),
                   SizedBox(height: 20),
                   Row(

@@ -127,6 +127,7 @@ class Navbar extends StatelessWidget {
                   if (index == 1) {
                     storeController.ItemSelect(storeController.searchControllerReport.text);
                     sparepartController.SparePartSelect(sparepartController.searchControllerReport.text);
+                    sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
                   }
                   if (index == 2) {
                     salesController.fetchSalesReports();
