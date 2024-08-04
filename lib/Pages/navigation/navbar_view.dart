@@ -8,8 +8,6 @@ import 'package:project_ta/Pages/laporan_page/laporan_penjualan_view.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_page_view.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/rekap_page.dart';
 import 'package:project_ta/color.dart';
 
@@ -17,8 +15,6 @@ class Navbar extends StatelessWidget {
   final NavbarController controller = Get.put(NavbarController());
   final StoreController storeController = Get.put(StoreController());
   final SparepartController sparepartController = Get.put(SparepartController());
-  final SalesReportController salesController = Get.put(SalesReportController());
-  final ServiceReportController serviceController = Get.put(ServiceReportController());
   final ProfileController profileController = Get.put(ProfileController());
 
   Navbar({Key? key}) : super(key: key);
@@ -126,12 +122,9 @@ class Navbar extends StatelessWidget {
                   }
                   if (index == 1) {
                     storeController.ItemSelect(storeController.searchControllerReport.text);
+                    profileController.fetchUserData();
                     sparepartController.SparePartSelect(sparepartController.searchControllerReport.text);
                     sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
-                  }
-                  if (index == 2) {
-                    salesController.fetchSalesReports();
-                    profileController.fetchUserData();
                   }
                 },
                 type: BottomNavigationBarType.fixed,
