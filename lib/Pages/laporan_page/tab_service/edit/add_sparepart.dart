@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/models/Sparepart/model_sparepart.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
@@ -58,15 +59,29 @@ class _SparepartTabViewState extends State<AddSparepartService> {
             Expanded(
               child: Obx(() {
                 if (sparepartController.sparePartSelect.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'Barang tidak ditemukan',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
+                  return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 25.0),
+                            child: Lottie.asset(
+                              'Assets/kotak.json',
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const Text(
+                            'Barang tidak ditemukan',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  );
+                    );
                 }
                 return ListView.builder(
                   itemCount: sparepartController.sparePartSelect.length,
@@ -85,7 +100,7 @@ class _SparepartTabViewState extends State<AddSparepartService> {
 
                     return Opacity(
                       opacity:
-                          isOutOfStock ? 0.5 : 1.0, // Mengatur transparansi
+                          isOutOfStock ? 0.5 : 1.0,
                       child: Container(
                         padding: const EdgeInsets.all(12.0),
                         margin: const EdgeInsets.symmetric(

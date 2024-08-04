@@ -121,22 +121,16 @@ class Navbar extends StatelessWidget {
                 onTap: (index) {
                   controller.onItemTapped(index);
                   if (index == 0) {
-                    storeController
-                        .searchItems(storeController.searchController.text);
-                    sparepartController
-                        .searchItems(sparepartController.searchController.text);
+                    storeController.searchItems(storeController.searchController.text);
+                    sparepartController.searchItems(sparepartController.searchController.text);
                   }
                   if (index == 1) {
-                    storeController.ItemSelect(
-                        storeController.searchControllerReport.text);
-                    sparepartController.SparePartSelect(
-                        sparepartController.searchControllerReport.text);
+                    storeController.ItemSelect(storeController.searchControllerReport.text);
+                    sparepartController.SparePartSelect(sparepartController.searchControllerReport.text);
                   }
                   if (index == 2) {
                     salesController.fetchSalesReports();
-                    serviceController.fetchServiceReportsByUserId(index);
                     profileController.fetchUserData();
-
                   }
                 },
                 type: BottomNavigationBarType.fixed,

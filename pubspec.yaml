@@ -21,6 +21,7 @@
     image_picker: ^1.1.2
     pinput:
     flutter_localization: ^0.2.0
+    lottie:
 
   dev_dependencies:
     flutter_test:

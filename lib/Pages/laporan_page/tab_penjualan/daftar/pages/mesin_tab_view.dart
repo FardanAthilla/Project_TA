@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/models/Mesin/model_mesin.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
@@ -52,13 +53,27 @@ class _MesinTabViewState extends State<MesinTabView> {
           Expanded(
             child: Obx(() {
               if (storeController.itemSelect.isEmpty) {
-                return const Center(
-                  child: Text(
-                    'Barang tidak ditemukan',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25.0),
+                        child: Lottie.asset(
+                          'Assets/kotak.json',
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        'Barang tidak ditemukan',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }
