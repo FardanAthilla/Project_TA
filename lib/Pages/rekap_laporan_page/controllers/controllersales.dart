@@ -7,25 +7,24 @@ import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart
 import 'package:project_ta/color.dart';
 
 class SalesReportController extends GetxController {
-  RxList salesData = <SalesReport>[].obs; // Menentukan tipe secara eksplisit
-  RxList filteredSalesData = <SalesReport>[].obs; // Menentukan tipe secara eksplisit
+  RxList salesData = <SalesReport>[].obs; 
+  RxList filteredSalesData = <SalesReport>[].obs;
   var isLoading = false.obs;
   bool isSnackbarActive = false;
 
   Future<void> sendSalesReport(DateController date, List<dynamic> selectedItems) async {
-    isLoading.value = true; // Set isLoading ke true
+    isLoading.value = true; 
 
     try {
       final response = await http.post(
         Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'),
-        headers: {"Content-Type": "application/json"}, // Tambahkan headers
+        headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "date": date.apiDate.value,
           "item": selectedItems,
         }),
       );
 
-      // Set isLoading ke false setelah mendapatkan respons
       isLoading.value = false;
 
       if (response.statusCode == 200) {
