@@ -1,75 +1,111 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
-import 'dart:convert';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
 
-class ServiceReportController extends GetxController {
-  var isLoading = false.obs;
-  bool isSnackbarActive = false;
 
-  Future<void> sendEditService(
-    double id, List<dynamic> selectedItems, double totalPrice, String complaints) async {
-    isLoading(true);
+class EditPageController extends GetxController {
+  final ItemSelectionController itemSelectionController;
+  final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final dynamic report;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController machineNameController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController complainController = TextEditingController();
+  final ServiceReportController serviceController = Get.put(ServiceReportController());
+
+
+  EditPageController({
+    required this.report,
+    required this.itemSelectionController,
+  }) {
+    complainController.text = report.complaints ?? '';
+    nameController.text = report.name ?? '';
+    machineNameController.text = report.machineName ?? '';
+  }
+
+  Future<void> sendDataToApi(int userId) async {
+    final url = 'https://rdo-app-o955y.ondigitalocean.app/service';
+
+    final Map<String, dynamic> data = {
+      "id": report.serviceReportId,
+      "complaints": complainController.text,
+      "total_price": calculateTotalPrice(),
+      "item": itemSelectionController.selectedItemsSparepartService.map((entry) {
+        return {
+          "id": entry.id,
+          "item": entry.item,
+          "price": entry.price,
+          "category": entry.category,
+          "category_items_id": entry.categoryItemsId,
+          "quantity": entry.quantity,
+        };
+      }).toList(),
+    };
 
     try {
       final response = await http.put(
-        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service'),
-        body: jsonEncode({
-          "id": id,
-          "item": selectedItems,
-          "total_price": totalPrice,
-          "complaints": complaints
-        }),
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(data),
       );
-      isLoading(false);
 
       if (response.statusCode == 200) {
-        selectedItems.clear();
-        Get.find<ItemSelectionController>().resetAllQuantities();
-
-        if (!isSnackbarActive) {
-          isSnackbarActive = true;
-          Get.snackbar(
-            'Berhasil',
-            'Laporan berhasil dikirim',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Warna.main,
-            colorText: Warna.teksactive,
-          );
-        }
-      } else {
-        print('${response.body}');
-        if (!isSnackbarActive) {
-          isSnackbarActive = true;
-          Get.snackbar(
-            'Gagal Mengirim',
-            'Terjadi kesalahan. Silahkan isi semua datanya',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Warna.danger,
-            colorText: Warna.teksactive,
-          );
-        }
-        print(response.body);
-      }
-    } catch (e) {
-      isLoading(false);
-      print('Error: $e');
-      if (!isSnackbarActive) {
-        isSnackbarActive = true;
+        serviceController.fetchServiceReportsByUserId(userId);
+        Get.back();
         Get.snackbar(
-          'Gagal Mengirim',
-          'Terjadi kesalahan. Silahkan coba lagi.',
+          'Berhasil',
+          'Data berhasil dikirim!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Warna.main,
+          colorText: Warna.teksactive,
+        );
+        print('Data berhasil dikirim!');
+      } else {
+        Get.snackbar(
+          'Gagal',
+          'Gagal mengirim data: ${response.body}',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Warna.danger,
           colorText: Warna.teksactive,
         );
+        print('Gagal mengirim data: ${response.body}');
       }
-    } finally {
-      isLoading(false);
-      Future.delayed(Duration(seconds: 5), () {
-        isSnackbarActive = false;
-      });
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Warna.danger,
+        colorText: Warna.teksactive,
+      );
+      print('Error: $e');
     }
+  }
+
+  int calculateTotalPrice() {
+    int total = 0;
+    for (var entry in itemSelectionController.selectedItemsSparepartService) {
+      total += entry.price * entry.quantity;
+    }
+    return total;
+  }
+
+  bool isFormValid() {
+    return nameController.text.isNotEmpty &&
+        machineNameController.text.isNotEmpty &&
+        priceController.text.isNotEmpty &&
+        complainController.text.isNotEmpty &&
+        itemSelectionController.selectedItemsSparepartService.isNotEmpty;
+  }
+
+  void resetForm() {
+    itemSelectionController.resetAllQuantitiesService();
+    itemSelectionController.selectedItemsSparepartService.clear();
   }
 }

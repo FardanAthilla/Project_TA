@@ -1,141 +1,35 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
+import 'package:project_ta/Pages/laporan_page/tab_service/edit/edit_controller.dart';
+import 'package:project_ta/Pages/profile_page/profile_controller.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/laporan_page/tab_service/edit/add_sparepart.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
-import 'package:project_ta/color.dart';
-import 'package:http/http.dart' as http;
 
 class EditPage extends StatelessWidget {
-  final ItemSelectionController itemSelectionController;
+  final EditPageController controller;
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final dynamic report;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController machineNameController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController complainController = TextEditingController();
+  final ServiceReportController serviceController = Get.put(ServiceReportController());
+  final ProfileController profileController = Get.put(ProfileController());
+  final SparepartController sparepartController = Get.put(SparepartController());
+
 
   EditPage({
     super.key,
-    required this.report,
-    required this.itemSelectionController,
-  }) {
-    complainController.text = report.complaints ?? '';
-    nameController.text = report.name ?? '';
-    machineNameController.text = report.machineName ?? '';
-  }
-
-  void _showInputDetails(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Input Details'),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Report ID: ${report.serviceReportId}'),
-                SizedBox(height: 8),
-                Text('Nama Pelanggan: ${nameController.text}'),
-                SizedBox(height: 8),
-                Text('Nama Mesin: ${machineNameController.text}'),
-                SizedBox(height: 8),
-                Text('Biaya Perbaikan: ${priceController.text}'),
-                SizedBox(height: 8),
-                Text('Keluhan: ${complainController.text}'),
-                SizedBox(height: 16),
-                Text('Barang Yang Dipilih:',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: itemSelectionController
-                      .selectedItemsSparepartService
-                      .map((entry) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Text(
-                          '${entry.item} - Rp.${entry.price} x ${entry.quantity}'),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
-            ),
-            TextButton(
-              onPressed: () async {
-                await _sendDataToApi();
-                Navigator.of(context).pop();
-              },
-              child: Text('Submit'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _sendDataToApi() async {
-    final url = 'https://rdo-app-o955y.ondigitalocean.app/service';
-
-    final Map<String, dynamic> data = {
-      "id": report.serviceReportId,
-      "complaints": complainController.text,
-      "total_price": _calculateTotalPrice(),
-      "item":
-          itemSelectionController.selectedItemsSparepartService.map((entry) {
-        return {
-          "id": entry.id,
-          "item": entry.item,
-          "price": entry.price,
-          "category": entry.category,
-          "category_items_id": entry.categoryItemsId,
-          "quantity": entry.quantity,
-        };
-      }).toList(),
-    };
-
-    try {
-      final response = await http.put(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(data),
-      );
-
-      if (response.statusCode == 200) {
-        print('Data berhasil dikirim!');
-      } else {
-        print('Gagal mengirim data: ${response.body}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
-  int _calculateTotalPrice() {
-    int total = 0;
-    for (var entry in itemSelectionController.selectedItemsSparepartService) {
-      total += entry.price * entry.quantity;
-    }
-    return total;
-  }
+    required dynamic report,
+    required ItemSelectionController itemSelectionController,
+  }) : controller = Get.put(EditPageController(
+          report: report,
+          itemSelectionController: itemSelectionController,
+        ));
 
   @override
   Widget build(BuildContext context) {
+    final userId = profileController.userData?['user_id'] ?? 0;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -148,36 +42,33 @@ class EditPage extends StatelessWidget {
               children: [
                 ReadOnlyTextField(
                   title: 'Nama Pelanggan',
-                  controller: nameController,
+                  controller: controller.nameController,
                   maxLines: 1,
                 ),
                 ReadOnlyTextField(
                   title: 'Nama Mesin Yang Diperbaiki',
-                  controller: machineNameController,
+                  controller: controller.machineNameController,
                   maxLines: 1,
                 ),
                 EditableTextField(
                   title: 'Biaya Perbaikan',
-                  controller: priceController,
+                  controller: controller.priceController,
                   maxLength: 20,
                   inputType: TextInputType.number,
                   subtitle: "Masukkan Biaya",
                 ),
                 EditableTextField(
                   title: 'Keluhan Yang Di Alami',
-                  controller: complainController,
+                  controller: controller.complainController,
                   maxLines: 4,
                   maxLength: 120,
                   subtitle: "Keluhan Yang Dialami",
                 ),
                 GestureDetector(
                   onTap: () {
-                    final itemSelectionServiceController =
-                        Get.find<ItemSelectionController>();
-                    Get.to(() => AddSparepartService(
-                        itemSelectionServiceController:
-                            itemSelectionServiceController));
-                            
+                    final itemSelectionServiceController = Get.find<ItemSelectionController>();
+                    Get.to(() => AddSparepartService(itemSelectionServiceController: itemSelectionServiceController));
+                    sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
@@ -204,13 +95,13 @@ class EditPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Obx(() {
-                  if (itemSelectionController
-                      .selectedItemsSparepartService.isEmpty) {
+                  if (controller.itemSelectionController.selectedItemsSparepartService.isEmpty) {
                     return const SizedBox.shrink();
                   } else {
                     return Column(
                       children: [
-                        ...itemSelectionController.selectedItemsSparepartService
+                        ...controller.itemSelectionController
+                            .selectedItemsSparepartService
                             .map((entry) {
                           final item = entry.item;
                           final quantity = entry.quantity;
@@ -281,7 +172,7 @@ class EditPage extends StatelessWidget {
                                       color: Warna.danger,
                                     ),
                                     onPressed: () {
-                                      itemSelectionController
+                                      controller.itemSelectionController
                                           .deselectItemSparepartService(
                                               SelectedItems(
                                                 categoryItemsId:
@@ -308,10 +199,150 @@ class EditPage extends StatelessWidget {
                     );
                   }
                 }),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => _showInputDetails(context),
-                  child: Text('Show Input Details'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    BottomBarButton(
+                      text: 'Bersihkan',
+                      backgroundColor: Colors.white,
+                      textColor: Warna.danger,
+                      borderColor: Warna.danger,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Konfirmasi',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: Text(
+                                'Apakah Anda yakin untuk membersihkannya?',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Batal',
+                                    style: TextStyle(
+                                      color: Warna.main,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Ya',
+                                    style: TextStyle(
+                                      color: Warna.main,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    controller.resetForm();
+                                    Get.back();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 10),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: controller.isLoading,
+                      builder: (context, value, child) {
+                        return BottomBarButton(
+                          text: value ? 'Mengirim...' : 'Kirim',
+                          backgroundColor: Warna.main,
+                          textColor: Colors.white,
+                          borderColor: value
+                              ? Color.fromARGB(151, 203, 203, 203)
+                              : Warna.main,
+                          onPressed: value
+                              ? null
+                              : () async {
+                                  if (controller.isFormValid()) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            'Konfirmasi',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          content: Text(
+                                            'Apakah Anda yakin untuk mengirimkan laporan penjualan?',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text(
+                                                'Batal',
+                                                style: TextStyle(
+                                                  color: Warna.main,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text(
+                                                'Ya',
+                                                style: TextStyle(
+                                                  color: Warna.main,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                Get.back();
+                                                controller.isLoading.value = true;
+                                                await controller.sendDataToApi(userId);
+                                                controller.resetForm();
+                                                controller.isLoading.value = false;
+                                                serviceController.fetchServiceReports();
+                                                
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    Get.snackbar(
+                                      'Error',
+                                      'Semua data harus diisi',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                      snackPosition: SnackPosition.BOTTOM,
+                                    );
+                                  }
+                                },
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

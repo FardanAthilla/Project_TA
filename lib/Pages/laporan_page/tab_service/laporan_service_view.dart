@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
 import 'package:project_ta/Pages/daftar_page/widget/shimmer.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/tab_service/edit/edit_page.dart';
@@ -12,12 +13,12 @@ import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
 
 class ServiceReportPage extends StatelessWidget {
-  final ServiceReportController _controller =
-      Get.put(ServiceReportController());
+  final ServiceReportController _controller = Get.put(ServiceReportController());
   final ProfileController profileController = Get.put(ProfileController());
   final DateController dateController = Get.put(DateController());
-  final ItemSelectionController itemSelectionController =
-      Get.put(ItemSelectionController());
+  final ItemSelectionController itemSelectionController = Get.put(ItemSelectionController());
+  final SparepartController sparepartController = Get.put(SparepartController());
+
 
   ServiceReportPage({super.key}) {
     final userId = profileController.userData?['user_id'] ?? 0;
@@ -142,6 +143,7 @@ class ServiceReportPage extends StatelessWidget {
                     var report = _controller.userSpecificReports[index - 1];
                     return GestureDetector(
                       onTap: () {
+                       sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
                         Get.to(() => EditPage(
                               report: report,
                               itemSelectionController: itemSelectionController,
