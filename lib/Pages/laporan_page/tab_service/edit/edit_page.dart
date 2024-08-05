@@ -33,6 +33,7 @@ class EditPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Warna.background,
           title: const Text('Edit Laporan Service'),
         ),
         body: SingleChildScrollView(
@@ -331,7 +332,7 @@ class EditPage extends StatelessWidget {
                                     );
                                   } else {
                                     Get.snackbar(
-                                      'Error',
+                                      'Gagal mengirim',
                                       'Semua data harus diisi',
                                       backgroundColor: Colors.red,
                                       colorText: Colors.white,
