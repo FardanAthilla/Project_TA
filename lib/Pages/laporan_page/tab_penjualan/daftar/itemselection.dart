@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 
 class ItemSelectionController extends GetxController {
-  var selectedItems = <SelectedItems>[].obs; 
+  var selectedItems = <SelectedItems>[].obs;
   var selectedQuantities = <int, int>{}.obs;
   var showBottomBar = false.obs;
 
@@ -75,7 +75,8 @@ class ItemSelectionController extends GetxController {
   }
 
   void deselectItemSparepartService(SelectedItems item, int itemId) {
-    selectedItemsSparepartService.removeWhere((selected) => selected.id == itemId);
+    selectedItemsSparepartService
+        .removeWhere((selected) => selected.id == itemId);
     selectedQuantitiesSparepartService.remove(itemId);
     if (selectedQuantitiesSparepartService.isEmpty) {
       showBottomBarSparepartService.value = false;
@@ -86,9 +87,13 @@ class ItemSelectionController extends GetxController {
     selectedQuantities.clear();
     selectedQuantitiesSparepart.clear();
     selectedItems.clear();
-    selectedQuantitiesSparepartService.clear();
     showBottomBar.value = false;
     showBottomBarSparepart.value = false;
+  }
+
+  void resetAllQuantitiesService() {
     showBottomBarSparepartService.value = false;
+    selectedQuantitiesSparepartService.clear();
+    selectedItemsSparepartService.clear();
   }
 }
