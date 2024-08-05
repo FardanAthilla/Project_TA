@@ -8,7 +8,7 @@ import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection
 import 'package:project_ta/Pages/laporan_page/tab_service/edit/edit_page.dart';
 import 'package:project_ta/Pages/laporan_page/tab_service/form/form_page.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
 

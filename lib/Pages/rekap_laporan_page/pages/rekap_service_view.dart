@@ -1,28 +1,87 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:lottie/lottie.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/fetchservice.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
     as rekapShimmer;
 
 class RekapServicePage extends StatelessWidget {
-  final ServiceReportController controller = Get.put(ServiceReportController());
+  final ServiceController controller = Get.put(ServiceController());
 
   Future<void> _refreshData() async {
-    await controller.fetchServiceReports();
+    controller.fetchServiceReports();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        surfaceTintColor: Warna.background,
+        title: Obx(() {
+          return DropdownButtonHideUnderline(
+            child: DropdownButton2<String>(
+              isExpanded: true,
+              value: controller.selectedPeriod.value,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  controller.selectedPeriod.value = newValue;
+                  controller.fetchServiceReports();
+                }
+              },
+              items: <String>['Hari ini', '7 hari lalu', 'Bulan lalu']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              buttonStyleData: ButtonStyleData(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                ),
+              ),
+              dropdownStyleData: DropdownStyleData(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.zero,
+              ),
+            ),
+          );
+        }),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return rekapShimmer.buildShimmerService();
         } else {
-          var service = controller.serviceReports;
+          var service = controller.serviceData;
           if (service.isEmpty) {
-            return Center(child: Text("Belum Ada Laporan."));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'Assets/report.json',
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
+                  const Text(
+                    'Belum ada laporan',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else {
             return RefreshIndicator(
               onRefresh: _refreshData,

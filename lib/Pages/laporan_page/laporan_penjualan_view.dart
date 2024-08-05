@@ -8,7 +8,7 @@ import 'package:project_ta/Pages/laporan_page/tab_service/laporan_service_view.d
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/laporan_penjualan_page.dart';
 import 'package:project_ta/Pages/laporan_page/widget/custom_tabbar.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllersales.dart';
 
 class LaporanPage extends StatelessWidget {
   final ItemSelectionController itemSelectionController = Get.put(ItemSelectionController());

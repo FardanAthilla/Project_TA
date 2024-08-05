@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
-
 
 class EditPageController extends GetxController {
   final ItemSelectionController itemSelectionController;
@@ -15,8 +14,8 @@ class EditPageController extends GetxController {
   final TextEditingController machineNameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController complainController = TextEditingController();
-  final ServiceReportController serviceController = Get.put(ServiceReportController());
-
+  final ServiceReportController serviceController =
+      Get.put(ServiceReportController());
 
   EditPageController({
     required this.report,
@@ -34,7 +33,8 @@ class EditPageController extends GetxController {
       "id": report.serviceReportId,
       "complaints": complainController.text,
       "total_price": calculateTotalPrice(),
-      "item": itemSelectionController.selectedItemsSparepartService.map((entry) {
+      "item":
+          itemSelectionController.selectedItemsSparepartService.map((entry) {
         return {
           "id": entry.id,
           "item": entry.item,
@@ -78,13 +78,13 @@ class EditPageController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Error: $e',
+        'Gagal mengirim data',
+        'Gagal mengirim data: $e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Warna.danger,
         colorText: Warna.teksactive,
       );
-      print('Error: $e');
+      print('Gagal mengirim data: $e');
     }
   }
 
@@ -100,8 +100,7 @@ class EditPageController extends GetxController {
     return nameController.text.isNotEmpty &&
         machineNameController.text.isNotEmpty &&
         priceController.text.isNotEmpty &&
-        complainController.text.isNotEmpty &&
-        itemSelectionController.selectedItemsSparepartService.isNotEmpty;
+        complainController.text.isNotEmpty;
   }
 
   void resetForm() {

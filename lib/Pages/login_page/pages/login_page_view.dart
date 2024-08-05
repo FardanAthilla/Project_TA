@@ -7,6 +7,7 @@ import 'package:project_ta/Pages/login_page/auth/controller.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
 import 'package:project_ta/Pages/login_page/pages/send_otp.dart';
 import 'package:project_ta/Pages/login_page/widgets/textfield.dart';
+import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/login_page/login_page_controller.dart';
 
@@ -18,8 +19,9 @@ class LoginPage extends StatelessWidget {
     final controller = Get.put(LoginPageController());
     final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
     final StoreController storeController = Get.put(StoreController());
-    final SparepartController sparepartController =
-        Get.put(SparepartController());
+    final SparepartController sparepartController = Get.put(SparepartController());
+    final ProfileController profileController = Get.put(ProfileController());
+
     bool isSnackbarActive = false;
 
     double height = MediaQuery.of(context).size.height;
@@ -156,6 +158,8 @@ class LoginPage extends StatelessWidget {
                                           colorText: Colors.white,
                                         );
                                       }
+                                      profileController.fetchUserData();
+
                                       storeController.searchItems(
                                           storeController
                                               .searchController.text);

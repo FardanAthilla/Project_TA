@@ -5,7 +5,7 @@ import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/tab_service/edit/edit_controller.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllerservice.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/laporan_page/tab_service/edit/add_sparepart.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
@@ -33,6 +33,7 @@ class EditPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Warna.background,
           title: const Text('Edit Laporan Service'),
         ),
         body: SingleChildScrollView(
@@ -331,7 +332,7 @@ class EditPage extends StatelessWidget {
                                     );
                                   } else {
                                     Get.snackbar(
-                                      'Error',
+                                      'Gagal mengirim',
                                       'Semua data harus diisi',
                                       backgroundColor: Colors.red,
                                       colorText: Colors.white,

@@ -26,25 +26,29 @@ class StoreController extends GetxController {
 
   void fetchStoreItems() async {
     isLoading(true);
-    final response = await http
-        .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/store/items'));
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body)['Data'];
-      storeItems.value = data.map((item) => StoreItem.fromJson(item)).toList();
+    try {
+      final response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/store/items'));
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body)['Data'];
+        storeItems.value = data.map((item) => StoreItem.fromJson(item)).toList();
+        filteredItems.value = storeItems;
+      }
+    } finally {
+      isLoading(false);
     }
-    isLoading(false);
   }
 
   void fetchCategories() async {
     isLoading(true);
-    final response = await http.get(
-        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/category'));
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body)['Data'];
-      categories.value =
-          data.map((item) => CategoryMachine.fromJson(item)).toList();
+    try {
+      final response = await http.get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/category'));
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body)['Data'];
+        categories.value = data.map((item) => CategoryMachine.fromJson(item)).toList();
+      }
+    } finally {
+      isLoading(false);
     }
-    isLoading(false);
   }
 
   void clearSelectedCategories() {
@@ -53,17 +57,20 @@ class StoreController extends GetxController {
   }
 
   void searchItems(String query) async {
-    final response = await http.get(Uri.parse(
-        'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories=${selectedCategories.join(',')}'));
+    if (query.isEmpty && selectedCategories.isEmpty) {
+      filteredItems.value = storeItems;
+      return;
+    }
+
+    final url = 'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories=${selectedCategories.join(',')}';
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      filteredItems.value =
-          data.map((item) => StoreItem.fromJson(item)).toList();
+      filteredItems.value = data.map((item) => StoreItem.fromJson(item)).toList();
     } else {
       filteredItems.value = [];
     }
   }
-
   void ItemSelect(String query) async {
     final response = await http.get(Uri.parse(
         'https://rdo-app-o955y.ondigitalocean.app/search/machine?name=$query&categories='));

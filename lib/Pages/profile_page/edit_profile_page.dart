@@ -93,6 +93,7 @@ class EditProfilePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Warna.background,
           title: const Text('Edit Profile'),
         ),
         body: SingleChildScrollView(
