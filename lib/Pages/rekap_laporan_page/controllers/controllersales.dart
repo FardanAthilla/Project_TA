@@ -7,24 +7,26 @@ import 'package:project_ta/Pages/rekap_laporan_page/models/salesreportmodel.dart
 import 'package:project_ta/color.dart';
 
 class SalesReportController extends GetxController {
-  RxList salesData = [].obs;
-  RxList filteredSalesData = [].obs;
+  RxList salesData = <SalesReport>[].obs; // Menentukan tipe secara eksplisit
+  RxList filteredSalesData = <SalesReport>[].obs; // Menentukan tipe secara eksplisit
   var isLoading = false.obs;
   bool isSnackbarActive = false;
 
-  Future<void> sendSalesReport(
-      DateController date, List<dynamic> selectedItems) async {
-    isLoading(true);
+  Future<void> sendSalesReport(DateController date, List<dynamic> selectedItems) async {
+    isLoading.value = true; // Set isLoading ke true
 
     try {
       final response = await http.post(
         Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'),
+        headers: {"Content-Type": "application/json"}, // Tambahkan headers
         body: jsonEncode({
           "date": date.apiDate.value,
           "item": selectedItems,
         }),
       );
-      isLoading(false);
+
+      // Set isLoading ke false setelah mendapatkan respons
+      isLoading.value = false;
 
       if (response.statusCode == 200) {
         selectedItems.clear();
@@ -56,7 +58,7 @@ class SalesReportController extends GetxController {
         print(response.body);
       }
     } catch (e) {
-      isLoading(false);
+      isLoading.value = false;
       print('Error: $e');
       if (!isSnackbarActive) {
         isSnackbarActive = true;
@@ -69,7 +71,7 @@ class SalesReportController extends GetxController {
         );
       }
     } finally {
-      isLoading(false);
+      isLoading.value = false;
       Future.delayed(Duration(seconds: 5), () {
         isSnackbarActive = false;
       });
@@ -84,7 +86,7 @@ class SalesReportController extends GetxController {
 
   void fetchSalesReports() async {
     try {
-      isLoading(true);
+      isLoading.value = true;
       var response = await http
           .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
       if (response.statusCode == 200) {
@@ -97,7 +99,7 @@ class SalesReportController extends GetxController {
         print('Request failed with status: ${response.statusCode}.');
       }
     } finally {
-      isLoading(false);
+      isLoading.value = false;
     }
   }
 }
