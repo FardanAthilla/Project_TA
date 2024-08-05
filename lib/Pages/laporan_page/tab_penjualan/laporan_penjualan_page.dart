@@ -6,7 +6,7 @@ import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/daftar_mesin_
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/models/model_selection_item.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllersales.dart';
 import 'package:project_ta/color.dart';
 
 class SalesTabView extends StatelessWidget {
@@ -307,8 +307,6 @@ class SalesTabView extends StatelessWidget {
                                                   dateController,
                                                   itemSelectionController.selectedItems);
                                           isLoading.value = false;
-                                                              salesController.fetchSalesReports();
-
                                         },
                                       ),
                                     ],

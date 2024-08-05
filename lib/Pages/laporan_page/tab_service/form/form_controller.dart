@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllerservice.dart';
+import 'package:project_ta/Pages/laporan_page/controllers/controllerservice.dart';
 import 'dart:convert';
 
 import 'package:project_ta/color.dart';

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rekapShimmer;
+import 'package:project_ta/Pages/rekap_laporan_page/controllers/fetchsales.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/controllers/controllersales.dart';
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
+    as rekapShimmer;
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class RekapPenjualanPage extends StatelessWidget {
-  final SalesReportController controller = Get.put(SalesReportController());
+  final SalesController controller = Get.put(SalesController());
 
   Future<void> _refreshData() async {
     controller.fetchSalesReports();
@@ -18,13 +20,52 @@ class RekapPenjualanPage extends StatelessWidget {
     initializeDateFormatting('id_ID', null);
 
     return Scaffold(
+      appBar: AppBar(
+        surfaceTintColor: Warna.background,
+        title: Obx(() {
+          return DropdownButtonHideUnderline(
+            child: DropdownButton2<String>(
+              isExpanded: true,
+              value: controller.selectedPeriod.value,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  controller.selectedPeriod.value = newValue;
+                  controller.fetchSalesReports();
+                }
+              },
+              items: <String>['Hari ini', '7 hari lalu', 'Bulan lalu']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              buttonStyleData: ButtonStyleData(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                ),
+              ),
+              dropdownStyleData: DropdownStyleData(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.zero,
+              ),
+            ),
+          );
+        }),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return rekapShimmer.buildShimmerPenjualan();
         } else {
           if (controller.salesData.isEmpty) {
-            return Center(
-                child: Text("Belum Ada Laporan."));
+            return const Center(
+              child: Text("Belum Ada Laporan."),
+            );
           }
           return RefreshIndicator(
             onRefresh: _refreshData,
@@ -35,8 +76,8 @@ class RekapPenjualanPage extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Container(
-                    margin: EdgeInsets.all(8.0),
-                    padding: EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
@@ -45,7 +86,7 @@ class RekapPenjualanPage extends StatelessWidget {
                           color: Colors.black.withOpacity(0.1),
                           spreadRadius: 1,
                           blurRadius: 2,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
@@ -66,49 +107,53 @@ class RekapPenjualanPage extends StatelessWidget {
                             ),
                             Text(
                               'Order ID: ${report.salesReportId}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 3),
-                        Divider(),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 3),
+                        const Divider(),
+                        const SizedBox(height: 8.0),
                         Column(
-                          children: report.salesReportItems.map<Widget>((item) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    child: Image.asset(
-                                      item.category == "mesin"
-                                          ? 'Assets/iconlistmesin3.png'
-                                          : 'Assets/iconsparepart.png',
-                                      width: 35,
-                                      height: 35,
-                                      fit: BoxFit.contain,
+                          children: report.salesReportItems.isEmpty
+                              ? []
+                              : report.salesReportItems.map<Widget>((item) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          child: Image.asset(
+                                            item.category == "mesin"
+                                                ? 'Assets/iconlistmesin3.png'
+                                                : 'Assets/iconsparepart.png',
+                                            width: 35,
+                                            height: 35,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: Text(item.itemName),
+                                        ),
+                                        Text(
+                                          'x${item.quantity}',
+                                          style: TextStyle(
+                                            color: Warna.main,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: Text(item.itemName),
-                                  ),
-                                  Text(
-                                    'x${item.quantity}',
-                                    style: TextStyle(
-                                      color: Warna.main,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
+                                  );
+                                }).toList(),
                         ),
                       ],
                     ),

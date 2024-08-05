@@ -76,29 +76,4 @@ class SalesReportController extends GetxController {
       });
     }
   }
-
-  @override
-  void onInit() {
-    fetchSalesReports();
-    super.onInit();
-  }
-
-  void fetchSalesReports() async {
-    try {
-      isLoading.value = true;
-      var response = await http
-          .get(Uri.parse('https://rdo-app-o955y.ondigitalocean.app/sales'));
-      if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-        Iterable salesReportsJson = jsonResponse['Data'];
-        salesData.assignAll(salesReportsJson
-            .map((model) => SalesReport.fromJson(model))
-            .toList());
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-      }
-    } finally {
-      isLoading.value = false;
-    }
-  }
 }
