@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/fetchsales.dart';
 import 'package:project_ta/color.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
@@ -63,8 +64,25 @@ class RekapPenjualanPage extends StatelessWidget {
           return rekapShimmer.buildShimmerPenjualan();
         } else {
           if (controller.salesData.isEmpty) {
-            return const Center(
-              child: Text("Belum Ada Laporan."),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'Assets/report.json',
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
+                  const Text(
+                    'Belum ada laporan',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             );
           }
           return RefreshIndicator(
