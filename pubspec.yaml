@@ -22,6 +22,7 @@
     pinput:
     flutter_localization: ^0.2.0
     lottie:
+    fluttertoast:
 
   dev_dependencies:
     flutter_test:

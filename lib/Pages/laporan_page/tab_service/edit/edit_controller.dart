@@ -78,13 +78,13 @@ class EditPageController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Error: $e',
+        'Gagal mengirim data',
+        'Gagal mengirim data: $e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Warna.danger,
         colorText: Warna.teksactive,
       );
-      print('Error: $e');
+      print('Gagal mengirim data: $e');
     }
   }
 

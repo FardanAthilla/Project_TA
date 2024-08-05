@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
@@ -19,6 +22,30 @@ class SparepartTabView extends StatefulWidget {
 
 class _SparepartTabViewState extends State<SparepartTabView> {
   final SparepartController sparepartController = Get.find();
+  bool _isToastVisible = false;
+  Timer? _toastTimer;
+
+  void _showToast(String message) {
+    if (!_isToastVisible) {
+      setState(() {
+        _isToastVisible = true;
+      });
+      Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Color.fromARGB(255, 239, 239, 239),
+          textColor: Warna.main,
+          fontSize: 16.0);
+
+      _toastTimer?.cancel();
+      _toastTimer = Timer(Duration(seconds: 2), () {
+        setState(() {
+          _isToastVisible = false;
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +120,7 @@ class _SparepartTabViewState extends State<SparepartTabView> {
                   final isOutOfStock = item.quantity == 0;
 
                   return Opacity(
-                    opacity: isOutOfStock ? 0.5 : 1.0, // Mengatur transparansi
+                    opacity: isOutOfStock ? 0.5 : 1.0,
                     child: Container(
                       padding: const EdgeInsets.all(12.0),
                       margin: const EdgeInsets.symmetric(
@@ -257,6 +284,9 @@ class _SparepartTabViewState extends State<SparepartTabView> {
                                                         item.sparepartItemsId]! +
                                                     1,
                                               );
+                                            } else {
+                                              _showToast(
+                                                  "Jumlah maksimal untuk sparepart ini ${item.quantity}");
                                             }
                                           });
                                         },

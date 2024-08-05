@@ -50,7 +50,7 @@ class ServiceController extends GetxController {
       }
     } catch (e) {
       isLoading(false);
-      print('Error: $request');
+      print('Gagal mengirim data: $request');
       if (!isSnackbarActive) {
         isSnackbarActive = true;
         Get.snackbar(
