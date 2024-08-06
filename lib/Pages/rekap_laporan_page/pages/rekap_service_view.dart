@@ -9,7 +9,7 @@ import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
     as rekapShimmer;
 
 class RekapServicePage extends StatelessWidget {
-  final ServiceController controller = Get.put(ServiceController());
+  final FetchServiceController controller = Get.put(FetchServiceController());
 
   Future<void> _refreshData() async {
     controller.fetchServiceReports();
