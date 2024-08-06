@@ -79,6 +79,7 @@ class ServiceReportsItem {
 class Datum {
     int serviceReportId;
     DateTime date;
+    DateTime? dateEnd;
     String name;
     String machineName;
     String complaints;
@@ -92,6 +93,7 @@ class Datum {
     Datum({
         required this.serviceReportId,
         required this.date,
+        this.dateEnd,
         required this.name,
         required this.machineName,
         required this.complaints,
@@ -106,6 +108,7 @@ class Datum {
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         serviceReportId: json["service_report_id"],
         date: DateTime.parse(json["date"]),
+        dateEnd: json["date_end"] != null ? DateTime.parse(json["date_end"]) : null,
         name: json["name"],
         machineName: json["machine_name"],
         complaints: json["complaints"],
@@ -122,6 +125,7 @@ class Datum {
     Map<String, dynamic> toJson() => {
         "service_report_id": serviceReportId,
         "date": date.toIso8601String(),
+        "date_end": dateEnd?.toIso8601String(),
         "name": name,
         "machine_name": machineName,
         "complaints": complaints,
