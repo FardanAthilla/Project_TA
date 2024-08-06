@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project_ta/Pages/rekap_laporan_page/models/service_report_model.dart';
 
-class ServiceController extends GetxController {
+class FetchServiceController extends GetxController {
   var serviceData = <Datum>[].obs;
   var isLoading = true.obs;
   var selectedPeriod = 'Hari ini'.obs;
