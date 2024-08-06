@@ -18,6 +18,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
     storeController.searchItems(storeController.searchController.text);
     storeController.fetchCategories();
     sparepartController.fetchCategories();
+    storeController.fetchStoreItems();
     isLoading(false);
   }
 

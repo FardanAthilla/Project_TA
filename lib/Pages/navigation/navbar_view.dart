@@ -118,6 +118,7 @@ class Navbar extends StatelessWidget {
                   controller.onItemTapped(index);
                   if (index == 0) {
                     storeController.searchItems(storeController.searchController.text);
+                    storeController.fetchStoreItems();
                     sparepartController.searchItems(sparepartController.searchController.text);
                   }
                   if (index == 1) {
