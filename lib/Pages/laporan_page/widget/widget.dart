@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_ta/color.dart';
@@ -244,6 +245,9 @@ class EditableTextField extends StatelessWidget {
               TextField(
                 controller: controller,
                 keyboardType: inputType,
+                inputFormatters: inputType == TextInputType.number
+                    ? [ThousandsSeparatorInputFormatter()]
+                    : null,
                 decoration: InputDecoration(
                   fillColor: Warna.background,
                   filled: true,
@@ -290,8 +294,8 @@ class EditableTextField extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
                       textStyle: TextStyle(fontSize: 16),
                     ),
                     child: Text(
@@ -309,6 +313,25 @@ class EditableTextField extends StatelessWidget {
   }
 }
 
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat("#,##0", "id_ID");
+
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    String newText = newValue.text.replaceAll('.', '');
+    if (newText.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    int value = int.parse(newText);
+    String formattedText = _formatter.format(value);
+
+    return newValue.copyWith(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
 class ReadOnlyTextField extends StatelessWidget {
   final String title;
   final TextEditingController controller;

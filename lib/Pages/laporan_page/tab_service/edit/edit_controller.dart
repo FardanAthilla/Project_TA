@@ -32,7 +32,8 @@ class EditPageController extends GetxController {
     final Map<String, dynamic> data = {
       "id": report.serviceReportId,
       "complaints": complainController.text,
-      "total_price": calculateTotalPrice(),
+      "total_price": int.parse(priceController.text
+          .replaceAll('.', '')),
       "item":
           itemSelectionController.selectedItemsSparepartService.map((entry) {
         return {
