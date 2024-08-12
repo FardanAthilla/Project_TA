@@ -120,6 +120,8 @@ class Navbar extends StatelessWidget {
                     storeController.searchItems(storeController.searchController.text);
                     storeController.fetchStoreItems();
                     sparepartController.searchItems(sparepartController.searchController.text);
+                    sparepartController.fetchStoreItems();
+
                   }
                   if (index == 1) {
                     storeController.ItemSelect(storeController.searchControllerReport.text);

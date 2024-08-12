@@ -41,7 +41,7 @@ class DateTextField extends StatelessWidget {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
       locale: const Locale('id', 'ID'),
       builder: (BuildContext context, Widget? child) {
         return Center(
@@ -294,8 +294,8 @@ class EditableTextField extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                       textStyle: TextStyle(fontSize: 16),
                     ),
                     child: Text(
@@ -317,7 +317,8 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
   final NumberFormat _formatter = NumberFormat("#,##0", "id_ID");
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text.replaceAll('.', '');
     if (newText.isEmpty) {
       return newValue.copyWith(text: '');
@@ -332,6 +333,7 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
     );
   }
 }
+
 class ReadOnlyTextField extends StatelessWidget {
   final String title;
   final TextEditingController controller;
