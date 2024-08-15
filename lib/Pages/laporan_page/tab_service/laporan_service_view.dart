@@ -221,7 +221,7 @@ class ServiceReportPage extends StatelessWidget {
                                       ),
                                       SizedBox(width: 8.0),
                                       Text(
-                                        'Order ID: ${report.serviceReportId}',
+                                        'No Service: ${report.serviceReportId}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 13,

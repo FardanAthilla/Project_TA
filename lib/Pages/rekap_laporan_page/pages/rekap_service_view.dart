@@ -217,7 +217,7 @@ class RekapServicePage extends StatelessWidget {
                                     ),
                                     SizedBox(width: 8.0),
                                     Text(
-                                      'Order ID: ',
+                                      'No Service: ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 13,
