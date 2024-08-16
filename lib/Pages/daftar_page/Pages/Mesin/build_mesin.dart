@@ -27,7 +27,8 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
       searchFocusNode.unfocus();
     },
     child: Obx(() {
-      if (storeController.isLoading.value) {
+      if (storeController.isLoading.value ||
+          storeController.categories.isEmpty) {
         return buildShimmer();
       } else {
         return Column(

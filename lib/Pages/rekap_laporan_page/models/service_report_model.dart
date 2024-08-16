@@ -86,6 +86,7 @@ class Datum {
     int totalPrice;
     int statusId;
     int userId;
+    String? image; // Add the image property
     Status status;
     User user;
     List<ServiceReportsItem> serviceReportsItems;
@@ -100,6 +101,7 @@ class Datum {
         required this.totalPrice,
         required this.statusId,
         required this.userId,
+        this.image, 
         required this.status,
         required this.user,
         required this.serviceReportsItems,
@@ -115,6 +117,7 @@ class Datum {
         totalPrice: json["total_price"],
         statusId: json["status_id"],
         userId: json["user_id"],
+        image: json["image"], 
         status: Status.fromJson(json["Status"]),
         user: User.fromJson(json["User"]),
         serviceReportsItems: json["ServiceReportsItems"] != null 
@@ -132,6 +135,7 @@ class Datum {
         "total_price": totalPrice,
         "status_id": statusId,
         "user_id": userId,
+        "image": image,
         "Status": status.toJson(),
         "User": user.toJson(),
         "ServiceReportsItems": List<dynamic>.from(serviceReportsItems.map((x) => x.toJson())),

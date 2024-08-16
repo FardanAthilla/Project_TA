@@ -6,7 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/fetchservice.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/service_report_model.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rekapShimmer;
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
+    as rekapShimmer;
 
 class RekapServicePage extends StatelessWidget {
   final FetchServiceController controller = Get.put(FetchServiceController());
@@ -15,7 +16,7 @@ class RekapServicePage extends StatelessWidget {
     controller.fetchServiceReports();
   }
 
- void _showDetailsPopup(BuildContext context, Datum report) {
+  void _showDetailsPopup(BuildContext context, Datum report) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -24,9 +25,21 @@ class RekapServicePage extends StatelessWidget {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
+                if (report.image != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Image.network(
+                      report.image!,
+                      height: 150,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 Text('User: ${report.user.username}'),
-                Text('Tanggal: ${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}'),
-                Text('Tanggal Selesai: ${report.dateEnd != null ? DateFormat('EEEE, d MMMM y', 'id_ID').format(report.dateEnd!) : 'N/A'}'),
+                Text(
+                    'Tanggal: ${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}'),
+                Text(
+                    'Tanggal Selesai: ${report.dateEnd != null ? DateFormat('EEEE, d MMMM y', 'id_ID').format(report.dateEnd!) : 'N/A'}'),
                 Text('Customer: ${report.name}'),
                 Text('Jenis Mesin: ${report.machineName}'),
                 Text('Keluhan: ${report.complaints}'),
@@ -34,33 +47,33 @@ class RekapServicePage extends StatelessWidget {
                 Text('Status: ${report.status.statusName}'),
                 SizedBox(height: 10),
                 Text(
-                'Items:',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                  'Items:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 report.serviceReportsItems.isNotEmpty
-                ? Column(
-                    children: report.serviceReportsItems.map((item) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: Text(
-                          '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      );
-                    }).toList(),
-                  )
-                  : Text(
-                    'Tidak membutuhkan sparepart',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-            ],
+                    ? Column(
+                        children: report.serviceReportsItems.map((item) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Text(
+                              '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
+                              style: TextStyle(color: Colors.grey[700]),
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    : Text(
+                        'Tidak membutuhkan sparepart',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+              ],
+            ),
           ),
-        ),
           actions: <Widget>[
             TextButton(
               child: Text('Tutup'),
               onPressed: () {
-              Get.back();
+                Get.back();
               },
             ),
           ],
@@ -207,7 +220,8 @@ class RekapServicePage extends StatelessWidget {
                                 Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(100.0),
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
                                       child: Image.asset(
                                         'Assets/serviceicon4.png',
                                         width: 35,
@@ -234,7 +248,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Customer: ',
@@ -254,7 +269,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Jenis mesin: ',
@@ -274,7 +290,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Keluhan: ',
@@ -285,7 +302,8 @@ class RekapServicePage extends StatelessWidget {
                                     ),
                                     Flexible(
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
                                         child: Text(
                                           '${report.complaints}',
                                           style: TextStyle(

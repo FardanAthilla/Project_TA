@@ -16,6 +16,7 @@ class EditPageController extends GetxController {
   final TextEditingController complainController = TextEditingController();
   final ServiceReportController serviceController =
       Get.put(ServiceReportController());
+  RxString imageUrl = ''.obs;
 
   EditPageController({
     required this.report,
@@ -24,6 +25,7 @@ class EditPageController extends GetxController {
     complainController.text = report.complaints ?? '';
     nameController.text = report.name ?? '';
     machineNameController.text = report.machineName ?? '';
+    imageUrl.value = report.image ?? '';
   }
 
   Future<void> sendDataToApi(int userId) async {
@@ -32,8 +34,7 @@ class EditPageController extends GetxController {
     final Map<String, dynamic> data = {
       "id": report.serviceReportId,
       "complaints": complainController.text,
-      "total_price": int.parse(priceController.text
-          .replaceAll('.', '')),
+      "total_price": int.parse(priceController.text.replaceAll('.', '')),
       "item":
           itemSelectionController.selectedItemsSparepartService.map((entry) {
         return {
