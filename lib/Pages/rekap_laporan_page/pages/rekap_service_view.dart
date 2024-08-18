@@ -20,65 +20,163 @@ class RekapServicePage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Detail Laporan Service'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                if (report.image != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Image.network(
-                      report.image!,
-                      height: 150,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                Text('User: ${report.user.username}'),
-                Text(
-                    'Tanggal: ${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}'),
-                Text(
-                    'Tanggal Selesai: ${report.dateEnd != null ? DateFormat('EEEE, d MMMM y', 'id_ID').format(report.dateEnd!) : 'N/A'}'),
-                Text('Customer: ${report.name}'),
-                Text('Jenis Mesin: ${report.machineName}'),
-                Text('Keluhan: ${report.complaints}'),
-                Text('Total Harga: ${report.totalPrice}'),
-                Text('Status: ${report.status.statusName}'),
-                SizedBox(height: 10),
-                Text(
-                  'Items:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 2,
                 ),
-                report.serviceReportsItems.isNotEmpty
-                    ? Column(
-                        children: report.serviceReportsItems.map((item) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Text(
-                              '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
-                              style: TextStyle(color: Colors.grey[700]),
-                            ),
-                          );
-                        }).toList(),
-                      )
-                    : Text(
-                        'Tidak membutuhkan sparepart',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
               ],
             ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Tutup'),
-              onPressed: () {
-                Get.back();
-              },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (report.image != null)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          report.image!,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  Text(
+                    'Detail Laporan Service',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 1,
+                  ),
+                  SizedBox(height: 10),
+                  _buildDetailRow('User', report.user.username),
+                  _buildDetailRow(
+                      'Mulai',
+                      DateFormat('EEEE, d MMMM y', 'id_ID')
+                          .format(report.date)),
+                  _buildDetailRow(
+                      'Selesai',
+                      report.dateEnd != null
+                          ? DateFormat('EEEE, d MMMM y', 'id_ID')
+                              .format(report.dateEnd!)
+                          : 'N/A'),
+                  _buildDetailRow('Customer', report.name),
+                  _buildDetailRow('Jenis Mesin', report.machineName),
+                  _buildDetailRow('Keluhan', report.complaints),
+                  Text('Total Harga: ${report.totalPrice.toString()}'),
+                  _buildDetailRow('Status', report.status.statusName),
+                  SizedBox(height: 20),
+                  Text(
+                    'Items:',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  report.serviceReportsItems.isNotEmpty
+                      ? Column(
+                          children: report.serviceReportsItems.map((item) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Text(
+                                '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      : Text(
+                          'Tidak membutuhkan sparepart',
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        'Tutup',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         );
       },
+    );
+  }
+
+  Widget _buildDetailRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: [
+          Text(
+            '$title: ',
+            style: TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -144,6 +242,33 @@ class RekapServicePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15, left: 90, right: 90),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        _refreshData();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Warna.main,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(double.infinity, 40),
+                      ),
+                      icon: Icon(
+                        Icons.replay_outlined,
+                        color: Warna.white,
+                      ),
+                      label: Text(
+                        "Segarkan",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Warna.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

@@ -81,6 +81,32 @@ class RekapPenjualanPage extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15,left: 90,right: 90),
+                    child: ElevatedButton.icon(
+                        onPressed: () async {
+                          _refreshData();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Warna.main,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          minimumSize: Size(double.infinity, 40),
+                        ),
+                        icon: Icon(
+                          Icons.replay_outlined,
+                          color: Warna.white,
+                        ),
+                        label: Text(
+                          "Segarkan",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Warna.white,
+                          ),
+                        ),
+                      ),
+                  ),
                 ],
               ),
             );

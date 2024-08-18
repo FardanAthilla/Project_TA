@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -13,12 +14,14 @@ import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/color.dart';
 
 class ServiceReportPage extends StatelessWidget {
-  final ServiceReportController _controller = Get.put(ServiceReportController());
+  final ServiceReportController _controller =
+      Get.put(ServiceReportController());
   final ProfileController profileController = Get.put(ProfileController());
   final DateController dateController = Get.put(DateController());
-  final ItemSelectionController itemSelectionController = Get.put(ItemSelectionController());
-  final SparepartController sparepartController = Get.put(SparepartController());
-
+  final ItemSelectionController itemSelectionController =
+      Get.put(ItemSelectionController());
+  final SparepartController sparepartController =
+      Get.put(SparepartController());
 
   ServiceReportPage({super.key}) {
     final userId = profileController.userData?['user_id'] ?? 0;
@@ -26,7 +29,6 @@ class ServiceReportPage extends StatelessWidget {
   }
 
   Future<void> _refreshData() async {
-    
     final userId = profileController.userData?['user_id'] ?? 0;
     await _controller.fetchServiceReportsByUserId(userId);
   }
@@ -74,7 +76,43 @@ class ServiceReportPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 15),
-                    Expanded(child: Center(child: Text("Belum Ada Laporan.")))
+                    Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Belum Ada Laporan."),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 15, left: 90, right: 90),
+                              child: ElevatedButton.icon(
+                                onPressed: () async {
+                                  _refreshData();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Warna.main,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  minimumSize: Size(double.infinity, 40),
+                                ),
+                                icon: Icon(
+                                  Icons.replay_outlined,
+                                  color: Warna.white,
+                                ),
+                                label: Text(
+                                  "Segarkan",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Warna.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -143,7 +181,8 @@ class ServiceReportPage extends StatelessWidget {
                     var report = _controller.userSpecificReports[index - 1];
                     return GestureDetector(
                       onTap: () {
-                       sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
+                        sparepartController.SparePartSelectService(
+                            sparepartController.searchControllerService.text);
                         Get.to(() => EditPage(
                               report: report,
                               itemSelectionController: itemSelectionController,
