@@ -6,7 +6,7 @@ import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.da
 import 'package:project_ta/Pages/laporan_page/tab_penjualan/daftar/itemselection.dart';
 import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 import 'package:project_ta/Pages/login_page/auth/token.dart';
-import 'package:project_ta/Pages/profile_page/edit_profile_page.dart';
+// import 'package:project_ta/Pages/profile_page/edit_profile_page.dart';
 import 'package:project_ta/Pages/profile_page/profile_controller.dart';
 import 'package:project_ta/Pages/navigation/navbar_controller.dart';
 import 'package:project_ta/color.dart';
@@ -42,14 +42,14 @@ class ProfilePage extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Get.to(EditProfilePage());
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.edit),
+        //     onPressed: () {
+        //       Get.to(EditProfilePage());
+        //     },
+        //   ),
+        // ],
       ),
       body: RefreshIndicator(
         onRefresh: _refreshData,

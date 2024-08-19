@@ -13,10 +13,11 @@ import 'package:project_ta/Pages/laporan_page/widget/widget.dart';
 class EditPage extends StatelessWidget {
   final EditPageController controller;
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final ServiceReportController serviceController = Get.put(ServiceReportController());
+  final ServiceReportController serviceController =
+      Get.put(ServiceReportController());
   final ProfileController profileController = Get.put(ProfileController());
-  final SparepartController sparepartController = Get.put(SparepartController());
-
+  final SparepartController sparepartController =
+      Get.put(SparepartController());
 
   EditPage({
     super.key,
@@ -40,7 +41,54 @@ class EditPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  'Foto mesin yang di service',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Obx(() {
+                  return Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey.withOpacity(0.5),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: controller.imageUrl.value.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              controller.imageUrl.value,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Pilih foto",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  );
+                }),
+                const SizedBox(height: 10),
                 ReadOnlyTextField(
                   title: 'Nama Pelanggan',
                   controller: controller.nameController,
@@ -67,9 +115,13 @@ class EditPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    final itemSelectionServiceController = Get.find<ItemSelectionController>();
-                    Get.to(() => AddSparepartService(itemSelectionServiceController: itemSelectionServiceController));
-                    sparepartController.SparePartSelectService(sparepartController.searchControllerService.text);
+                    final itemSelectionServiceController =
+                        Get.find<ItemSelectionController>();
+                    Get.to(() => AddSparepartService(
+                        itemSelectionServiceController:
+                            itemSelectionServiceController));
+                    sparepartController.SparePartSelectService(
+                        sparepartController.searchControllerService.text);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
@@ -96,7 +148,8 @@ class EditPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Obx(() {
-                  if (controller.itemSelectionController.selectedItemsSparepartService.isEmpty) {
+                  if (controller.itemSelectionController
+                      .selectedItemsSparepartService.isEmpty) {
                     return const SizedBox.shrink();
                   } else {
                     return Column(
@@ -318,12 +371,15 @@ class EditPage extends StatelessWidget {
                                               ),
                                               onPressed: () async {
                                                 Get.back();
-                                                controller.isLoading.value = true;
-                                                await controller.sendDataToApi(userId);
+                                                controller.isLoading.value =
+                                                    true;
+                                                await controller
+                                                    .sendDataToApi(userId);
                                                 controller.resetForm();
-                                                controller.isLoading.value = false;
-                                                serviceController.fetchServiceReports();
-                                                
+                                                controller.isLoading.value =
+                                                    false;
+                                                serviceController
+                                                    .fetchServiceReports();
                                               },
                                             ),
                                           ],

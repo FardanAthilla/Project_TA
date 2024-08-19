@@ -27,7 +27,8 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
       searchFocusNode.unfocus();
     },
     child: Obx(() {
-      if (storeController.isLoading.value) {
+      if (storeController.isLoading.value ||
+          storeController.categories.isEmpty) {
         return buildShimmer();
       } else {
         return Column(
@@ -101,26 +102,52 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
                 child: Obx(() {
                   if (storeController.filteredItems.isEmpty) {
                     return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 25.0),
-                            child: Lottie.asset(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset(
                               'Assets/kotak.json',
-                              width: 150,
-                              height: 150,
+                              width: 120,
+                              height: 120,
                               fit: BoxFit.cover,
                             ),
-                          ),
-                          const Text(
-                            'Barang tidak ditemukan',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
+                            const Text(
+                              'Barang tidak ditemukan',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 15, left: 90, right: 90),
+                              child: ElevatedButton.icon(
+                                onPressed: () async {
+                                  refreshItems();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Warna.main,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  minimumSize: Size(double.infinity, 40),
+                                ),
+                                icon: Icon(
+                                  Icons.replay_outlined,
+                                  color: Warna.white,
+                                ),
+                                label: Text(
+                                  "Segarkan",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Warna.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }

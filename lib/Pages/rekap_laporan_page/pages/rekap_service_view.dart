@@ -6,7 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/controllers/fetchservice.dart';
 import 'package:project_ta/Pages/rekap_laporan_page/models/service_report_model.dart';
 import 'package:project_ta/color.dart';
-import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart' as rekapShimmer;
+import 'package:project_ta/Pages/rekap_laporan_page/widgets/shimmer.dart'
+    as rekapShimmer;
 
 class RekapServicePage extends StatelessWidget {
   final FetchServiceController controller = Get.put(FetchServiceController());
@@ -15,57 +16,182 @@ class RekapServicePage extends StatelessWidget {
     controller.fetchServiceReports();
   }
 
- void _showDetailsPopup(BuildContext context, Datum report) {
+  void _showDetailsPopup(BuildContext context, Datum report) {
+    int sparePartsTotalPrice = report.serviceReportsItems.fold(0, (sum, item) {
+      return sum + (item.price * item.quantity);
+    });
+
+    final formatter = NumberFormat('#,##0', 'id_ID');
+
+    int totalPrice = report.totalPrice + sparePartsTotalPrice;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Detail Laporan Service'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('User: ${report.user.username}'),
-                Text('Tanggal: ${DateFormat('EEEE, d MMMM y', 'id_ID').format(report.date)}'),
-                Text('Tanggal Selesai: ${report.dateEnd != null ? DateFormat('EEEE, d MMMM y', 'id_ID').format(report.dateEnd!) : 'N/A'}'),
-                Text('Customer: ${report.name}'),
-                Text('Jenis Mesin: ${report.machineName}'),
-                Text('Keluhan: ${report.complaints}'),
-                Text('Total Harga: ${report.totalPrice}'),
-                Text('Status: ${report.status.statusName}'),
-                SizedBox(height: 10),
-                Text(
-                'Items:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                report.serviceReportsItems.isNotEmpty
-                ? Column(
-                    children: report.serviceReportsItems.map((item) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: Text(
-                          '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      );
-                    }).toList(),
-                  )
-                  : Text(
-                    'Tidak membutuhkan sparepart',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-            ],
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
-        ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Tutup'),
-              onPressed: () {
-              Get.back();
-              },
+          backgroundColor: Colors.white,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
-          ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (report.image != null)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          report.image!,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  Text(
+                    'Detail Laporan Service',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 1,
+                  ),
+                  SizedBox(height: 10),
+                  _buildDetailRow('Pengguna', report.user.username),
+                  _buildDetailRow(
+                      'Mulai',
+                      DateFormat('EEEE, d MMMM y', 'id_ID')
+                          .format(report.date)),
+                  _buildDetailRow(
+                      'Selesai',
+                      report.dateEnd != null
+                          ? DateFormat('EEEE, d MMMM y', 'id_ID')
+                              .format(report.dateEnd!)
+                          : 'N/A'),
+                  _buildDetailRow('Pelanggan', report.name),
+                  _buildDetailRow('Nama Mesin', report.machineName),
+                  _buildDetailRow('Keluhan', report.complaints),
+                  _buildDetailRow('Harga Service',
+                      'Rp. ${formatter.format(report.totalPrice)}'),
+                  _buildDetailRow(
+                      'Total Harga', 'Rp. ${formatter.format(totalPrice)}'),
+                  SizedBox(height: 20),
+                  Text(
+                    'Tambahan Sparepart:',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  report.serviceReportsItems.isNotEmpty
+                      ? Column(
+                          children: report.serviceReportsItems.map((item) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Text(
+                                '${item.itemName} \nJumlah ${item.quantity}, Harga Rp. ${formatter.format(item.price * item.quantity)}',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      : Text(
+                          'Tidak membutuhkan sparepart',
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        Get.back();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Warna.danger,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                      icon: Icon(
+                        Icons.logout,
+                        color: Warna.white,
+                      ),
+                      label: Text(
+                        "Kembali",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Warna.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
+    );
+  }
+
+  Widget _buildDetailRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$title: ',
+            style: const TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Flexible(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -131,6 +257,33 @@ class RekapServicePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15, left: 90, right: 90),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        _refreshData();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Warna.main,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(double.infinity, 40),
+                      ),
+                      icon: Icon(
+                        Icons.replay_outlined,
+                        color: Warna.white,
+                      ),
+                      label: Text(
+                        "Segarkan",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Warna.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -207,7 +360,8 @@ class RekapServicePage extends StatelessWidget {
                                 Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(100.0),
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
                                       child: Image.asset(
                                         'Assets/serviceicon4.png',
                                         width: 35,
@@ -217,7 +371,7 @@ class RekapServicePage extends StatelessWidget {
                                     ),
                                     SizedBox(width: 8.0),
                                     Text(
-                                      'Order ID: ',
+                                      'No Service: ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 13,
@@ -234,7 +388,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Customer: ',
@@ -254,7 +409,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Jenis mesin: ',
@@ -274,7 +430,8 @@ class RekapServicePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 4.0),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Keluhan: ',
@@ -285,7 +442,8 @@ class RekapServicePage extends StatelessWidget {
                                     ),
                                     Flexible(
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
                                         child: Text(
                                           '${report.complaints}',
                                           style: TextStyle(

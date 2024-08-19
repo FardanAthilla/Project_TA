@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_ta/Pages/laporan_page/controllers/controllerservice.dart';
-import 'dart:convert';
-
 import 'package:project_ta/color.dart';
 
 class ServiceController extends GetxController {
@@ -14,13 +12,21 @@ class ServiceController extends GetxController {
     isLoading.value = true;
 
     try {
-      final response = await http.post(
-        Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(request),
-      );
+      var uri = Uri.parse('https://rdo-app-o955y.ondigitalocean.app/service');
+      var requestMultipart = http.MultipartRequest('POST', uri);
+
+      requestMultipart.fields['date'] = request['date'];
+      requestMultipart.fields['name'] = request['name'];
+      requestMultipart.fields['user_id'] = request['user_id'].toString();
+      requestMultipart.fields['machine_name'] = request['machine_name'];
+      requestMultipart.fields['complaints'] = request['complaints'];
+
+      if (request['image'] != null) {
+        requestMultipart.files.add(await http.MultipartFile.fromPath('image', request['image']));
+      }
+
+      var streamedResponse = await requestMultipart.send();
+      var response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode == 200) {
         serviceController.fetchServiceReportsByUserId(userId);
