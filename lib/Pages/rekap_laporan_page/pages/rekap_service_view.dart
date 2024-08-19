@@ -17,6 +17,14 @@ class RekapServicePage extends StatelessWidget {
   }
 
   void _showDetailsPopup(BuildContext context, Datum report) {
+    int sparePartsTotalPrice = report.serviceReportsItems.fold(0, (sum, item) {
+      return sum + (item.price * item.quantity);
+    });
+
+    final formatter = NumberFormat('#,##0', 'id_ID');
+
+    int totalPrice = report.totalPrice + sparePartsTotalPrice;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -69,7 +77,7 @@ class RekapServicePage extends StatelessWidget {
                     'Detail Laporan Service',
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -78,7 +86,7 @@ class RekapServicePage extends StatelessWidget {
                     thickness: 1,
                   ),
                   SizedBox(height: 10),
-                  _buildDetailRow('User', report.user.username),
+                  _buildDetailRow('Pengguna', report.user.username),
                   _buildDetailRow(
                       'Mulai',
                       DateFormat('EEEE, d MMMM y', 'id_ID')
@@ -89,21 +97,22 @@ class RekapServicePage extends StatelessWidget {
                           ? DateFormat('EEEE, d MMMM y', 'id_ID')
                               .format(report.dateEnd!)
                           : 'N/A'),
-                  _buildDetailRow('Customer', report.name),
-                  _buildDetailRow('Jenis Mesin', report.machineName),
+                  _buildDetailRow('Pelanggan', report.name),
+                  _buildDetailRow('Nama Mesin', report.machineName),
                   _buildDetailRow('Keluhan', report.complaints),
-                  Text('Total Harga: ${report.totalPrice.toString()}'),
-                  _buildDetailRow('Status', report.status.statusName),
+                  _buildDetailRow('Harga Service',
+                      'Rp. ${formatter.format(report.totalPrice)}'),
+                  _buildDetailRow(
+                      'Total Harga', 'Rp. ${formatter.format(totalPrice)}'),
                   SizedBox(height: 20),
                   Text(
-                    'Items:',
+                    'Tambahan Sparepart:',
                     style: TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 10),
                   report.serviceReportsItems.isNotEmpty
                       ? Column(
                           children: report.serviceReportsItems.map((item) {
@@ -111,7 +120,7 @@ class RekapServicePage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 5.0),
                               child: Text(
-                                '${item.itemName} (Quantity: ${item.quantity}, Price: ${item.price})',
+                                '${item.itemName} \nJumlah ${item.quantity}, Harga Rp. ${formatter.format(item.price * item.quantity)}',
                                 style: TextStyle(
                                   color: Colors.black54,
                                 ),
@@ -125,25 +134,28 @@ class RekapServicePage extends StatelessWidget {
                         ),
                   SizedBox(height: 20),
                   Center(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        'Tutup',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: () {
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
                         Get.back();
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Warna.danger,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                      icon: Icon(
+                        Icons.logout,
+                        color: Warna.white,
+                      ),
+                      label: Text(
+                        "Kembali",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Warna.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -159,20 +171,23 @@ class RekapServicePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '$title: ',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black87,
               fontWeight: FontWeight.bold,
             ),
           ),
-          Expanded(
+          Flexible(
             child: Text(
               value,
               style: TextStyle(
                 color: Colors.black54,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
             ),
           ),
         ],
