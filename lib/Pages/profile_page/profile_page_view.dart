@@ -178,20 +178,74 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 10),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        await removeToken();
-                        profileController.resetUserData();
-                        itemSelectionController.resetAllQuantities();
-                        itemSelectionController.selectedItems.clear();
-                        Get.offAllNamed('/splash');
-                        navbarController.resetIndex();
-                        storeController.clearSelectedCategories();
-                        sparepartController.clearSelectedCategories();
-                        storeController.searchController.clear();
-                        sparepartController.searchController.clear();
-                        storeController.searchControllerReport.clear();
-                        sparepartController.searchControllerReport.clear();
-                        sparepartController.searchControllerService.clear();
-                        dateController.clear();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Konfirmasi',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: Text(
+                                'Apakah Anda yakin untuk keluar?',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Batal',
+                                    style: TextStyle(
+                                      color: Warna.main,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Ya',
+                                    style: TextStyle(
+                                      color: Warna.main,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    removeToken();
+                                    profileController.resetUserData();
+                                    itemSelectionController
+                                        .resetAllQuantities();
+                                    itemSelectionController.selectedItems
+                                        .clear();
+                                    Get.offAllNamed('/splash');
+                                    navbarController.resetIndex();
+                                    storeController.clearSelectedCategories();
+                                    sparepartController
+                                        .clearSelectedCategories();
+                                    storeController.searchController.clear();
+                                    sparepartController.searchController
+                                        .clear();
+                                    storeController.searchControllerReport
+                                        .clear();
+                                    sparepartController.searchControllerReport
+                                        .clear();
+                                    sparepartController.searchControllerService
+                                        .clear();
+                                    dateController.clear();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Warna.danger,
