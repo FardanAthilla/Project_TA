@@ -23,11 +23,14 @@ class SalesController extends GetxController {
         case 'Hari ini':
           data = await fetchSalesData(days: 1);
           break;
-        case '7 hari lalu': 
+        case '7 hari lalu':
           data = await fetchSalesData(days: 7);
           break;
         case 'Bulan lalu':
           data = await fetchSalesData(months: 1);
+          break;
+        case 'Tahun lalu':
+          data = await fetchSalesData(years: 1);
           break;
         default:
           data = await fetchSalesData();
@@ -43,7 +46,8 @@ class SalesController extends GetxController {
 
   Future<List<SalesReport>> fetchSalesData(
       {int days = 0, int months = 0, int years = 0}) async {
-    final url = 'https://rdo-app-o955y.ondigitalocean.app/sales/day/last?days=$days&months=$months&years=$years';
+    final url =
+        'https://rdo-app-o955y.ondigitalocean.app/sales/day/last?days=$days&months=$months&years=$years';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

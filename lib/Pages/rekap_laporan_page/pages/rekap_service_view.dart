@@ -187,7 +187,7 @@ class RekapServicePage extends StatelessWidget {
                 color: Colors.black54,
               ),
               overflow: TextOverflow.ellipsis,
-              maxLines: 4,
+              maxLines: 8,
             ),
           ),
         ],
@@ -211,7 +211,7 @@ class RekapServicePage extends StatelessWidget {
                   controller.fetchServiceReports();
                 }
               },
-              items: <String>['Hari ini', '7 hari lalu', 'Bulan lalu']
+              items: <String>['Hari ini', '7 hari lalu', 'Bulan lalu','Tahun lalu']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
