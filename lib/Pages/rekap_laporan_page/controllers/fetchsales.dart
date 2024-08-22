@@ -23,7 +23,7 @@ class SalesController extends GetxController {
         case 'Hari ini':
           data = await fetchSalesData(days: 1);
           break;
-        case '7 hari lalu':
+        case 'Minggu lalu':
           data = await fetchSalesData(days: 7);
           break;
         case 'Bulan lalu':

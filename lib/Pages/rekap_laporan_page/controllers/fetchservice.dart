@@ -23,7 +23,7 @@ class FetchServiceController extends GetxController {
         case 'Hari ini':
           data = await fetchServiceData(days: 1);
           break;
-        case '7 hari lalu':
+        case 'Minggu lalu':
           data = await fetchServiceData(days: 7);
           break;
         case 'Bulan lalu':
