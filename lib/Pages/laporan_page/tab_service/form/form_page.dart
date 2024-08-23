@@ -46,14 +46,41 @@ class FormLaporanService extends StatelessWidget {
                   children: [
                     const Text(
                       'Foto mesin yang di service',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         final ImagePicker picker = ImagePicker();
-                        selectedImage.value =
-                            await picker.pickImage(source: ImageSource.gallery);
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: Icon(Icons.photo_library),
+                                  title: Text('Pilih dari Galeri'),
+                                  onTap: () async {
+                                    selectedImage.value = await picker
+                                        .pickImage(source: ImageSource.gallery);
+                                    Get.back();
+                                  },
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.camera_alt),
+                                  title: Text('Ambil Foto'),
+                                  onTap: () async {
+                                    selectedImage.value = await picker
+                                        .pickImage(source: ImageSource.camera);
+                                    Get.back();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Obx(() {
                         return Container(
@@ -81,9 +108,13 @@ class FormLaporanService extends StatelessWidget {
                                         size: 50,
                                         color: Colors.grey,
                                       ),
-                                      SizedBox(height: 10),Text("Pilih foto",style: TextStyle(
-                                        color: Colors.grey,
-                                      ),)
+                                      SizedBox(height: 10),
+                                      Text(
+                                        "Pilih foto",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -197,9 +228,11 @@ class FormLaporanService extends StatelessWidget {
                                       if (nameController.text.isEmpty ||
                                           machineNameController.text.isEmpty ||
                                           complaintsController.text.isEmpty ||
-                                          dateController.apiDate.value.isEmpty ||
+                                          dateController
+                                              .apiDate.value.isEmpty ||
                                           selectedImage.value == null) {
-                                        if (!serviceController.isSnackbarActive) {
+                                        if (!serviceController
+                                            .isSnackbarActive) {
                                           serviceController.isSnackbarActive =
                                               true;
                                           Get.snackbar(
@@ -217,7 +250,7 @@ class FormLaporanService extends StatelessWidget {
                                         }
                                         return;
                                       }
-          
+
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -271,11 +304,12 @@ class FormLaporanService extends StatelessWidget {
                                                         machineNameController
                                                             .text,
                                                     'complaints':
-                                                        complaintsController.text,
-                                                    'image':
-                                                        selectedImage.value?.path,
+                                                        complaintsController
+                                                            .text,
+                                                    'image': selectedImage
+                                                        .value?.path,
                                                   };
-          
+
                                                   try {
                                                     await serviceController
                                                         .sendServiceRequest(
