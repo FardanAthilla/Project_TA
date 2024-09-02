@@ -23,13 +23,13 @@ class SalesController extends GetxController {
         case 'Hari ini':
           data = await fetchSalesData(days: 1);
           break;
-        case 'Minggu lalu':
+        case '7 Hari Yang Lalu':
           data = await fetchSalesData(days: 7);
           break;
-        case 'Bulan lalu':
+        case '30 Hari Yang Lalu':
           data = await fetchSalesData(months: 1);
           break;
-        case 'Tahun lalu':
+        case '12 Bulan Yang Lalu':
           data = await fetchSalesData(years: 1);
           break;
         default:

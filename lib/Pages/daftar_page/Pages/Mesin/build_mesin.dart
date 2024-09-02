@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_mesin.dart';
 import 'package:project_ta/Pages/daftar_page/controllers/controller_sparepart.dart';
@@ -12,6 +13,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
     SparepartController sparepartController) {
   final FocusNode searchFocusNode = FocusNode();
   var isLoading = false.obs;
+  final formatter = NumberFormat('#,##0', 'id_ID');
 
   Future<void> refreshItems() async {
     isLoading(true);
@@ -226,7 +228,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Rp.${item.price}',
+                                      'Rp.${formatter.format(item.price)}',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: isOutOfStock
@@ -234,7 +236,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
                                             : Warna.teks,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

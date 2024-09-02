@@ -34,7 +34,7 @@ class RekapPenjualanPage extends StatelessWidget {
                   controller.fetchSalesReports();
                 }
               },
-              items: <String>['Hari ini', 'Minggu lalu', 'Bulan lalu','Tahun lalu']
+              items: <String>['Hari ini', '7 Hari Yang Lalu', '30 Hari Yang Lalu','12 Bulan Yang Lalu']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
