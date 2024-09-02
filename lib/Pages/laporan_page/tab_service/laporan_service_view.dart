@@ -218,7 +218,7 @@ class ServiceReportPage extends StatelessWidget {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w800,
-                                      fontSize: 14,
+                                      fontSize: 12,
                                     ),
                                   ),
                                   Container(
