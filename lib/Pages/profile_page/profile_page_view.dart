@@ -69,12 +69,28 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 25),
-                      child: CircleAvatar(
-                        radius: screenWidth * 0.18,
-                        backgroundImage: NetworkImage(
-                          'https://rdo-app-o955y.ondigitalocean.app/' +
-                              userData['image'],
-                        ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: screenWidth * 0.18,
+                            backgroundColor: Colors.grey[300],
+                            backgroundImage: userData['image'] != null &&
+                                    userData['image'].isNotEmpty
+                                ? NetworkImage(
+                                    'https://rdo-app-o955y.ondigitalocean.app/' +
+                                        userData['image'],
+                                  )
+                                : null,
+                          ),
+                          if (userData['image'] == null ||
+                              userData['image'].isEmpty)
+                            Icon(
+                              Icons.person,
+                              size: screenWidth * 0.1,
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                        ],
                       ),
                     ),
                     SizedBox(width: 12),

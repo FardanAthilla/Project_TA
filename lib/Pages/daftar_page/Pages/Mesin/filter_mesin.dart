@@ -58,7 +58,7 @@ void showFilterModal(BuildContext context, StoreController storeController) {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      child: const Text('Hapus'),
+                      child: const Text('Bersihkan'),
                     ),
                   ),
                   SizedBox(
