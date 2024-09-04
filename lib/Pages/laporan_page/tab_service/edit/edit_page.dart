@@ -140,7 +140,7 @@ class EditPage extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Daftar Barang'),
+                        Text('Pilih Barang'),
                         Icon(Icons.chevron_right),
                       ],
                     ),
