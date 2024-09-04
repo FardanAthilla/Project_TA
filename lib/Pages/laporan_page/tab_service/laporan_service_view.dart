@@ -44,15 +44,15 @@ class ServiceReportPage extends StatelessWidget {
             if (_controller.userSpecificReports.isEmpty) {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => FormLaporanService(
-                              dateController: dateController,
-                            ));
-                      },
-                      child: Container(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => FormLaporanService(
+                          dateController: dateController,
+                        ));
+                  },
+                  child: Column(
+                    children: [
+                      Container(
                         padding: const EdgeInsets.all(12.0),
                         height: 60,
                         decoration: BoxDecoration(
@@ -69,51 +69,51 @@ class ServiceReportPage extends StatelessWidget {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Laporan Rekap Service'),
+                            Text('Kirim Laporan Service'),
                             Icon(Icons.chevron_right),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Belum Ada Laporan."),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 90, right: 90),
-                              child: ElevatedButton.icon(
-                                onPressed: () async {
-                                  _refreshData();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Warna.main,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                      SizedBox(height: 15),
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Belum Ada Laporan."),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15, left: 90, right: 90),
+                                child: ElevatedButton.icon(
+                                  onPressed: () async {
+                                    _refreshData();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Warna.main,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize: Size(double.infinity, 40),
                                   ),
-                                  minimumSize: Size(double.infinity, 40),
-                                ),
-                                icon: Icon(
-                                  Icons.replay_outlined,
-                                  color: Warna.white,
-                                ),
-                                label: Text(
-                                  "Segarkan",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
+                                  icon: Icon(
+                                    Icons.replay_outlined,
                                     color: Warna.white,
+                                  ),
+                                  label: Text(
+                                    "Segarkan",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      color: Warna.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             }
@@ -179,170 +179,199 @@ class ServiceReportPage extends StatelessWidget {
                     );
                   } else {
                     var report = _controller.userSpecificReports[index - 1];
-                    return GestureDetector(
-                      onTap: () {
-                        sparepartController.SparePartSelectService(
-                            sparepartController.searchControllerService.text);
-                        Get.to(() => EditPage(
-                              report: report,
-                              itemSelectionController: itemSelectionController,
-                            ));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Container(
-                          margin: EdgeInsets.all(8.0),
-                          padding: EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 1,
-                                blurRadius: 2,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    DateFormat('EEEE, d MMMM y', 'id_ID')
-                                        .format(report.date),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  DateFormat('EEEE, d MMMM y', 'id_ID')
+                                      .format(report.date),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6.0, horizontal: 12.0),
+                                  decoration: BoxDecoration(
+                                    color: Warna.main.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(color: Warna.main),
+                                  ),
+                                  child: Text(
+                                    '${report.status.statusName}',
                                     style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w800,
+                                      color: Warna.hitam,
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 6.0, horizontal: 12.0),
-                                    decoration: BoxDecoration(
-                                      color: Warna.main.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(color: Warna.main),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 3),
+                            Divider(),
+                            SizedBox(height: 8.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
+                                      child: Image.asset(
+                                        'Assets/serviceicon4.png',
+                                        width: 35,
+                                        height: 35,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                    child: Text(
-                                      '${report.status.statusName}',
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      'No Service: ${report.serviceReportId}',
                                       style: TextStyle(
-                                        color: Warna.hitam,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 12,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Nama Pelanggan: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.name}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Nama mesin: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.machineName}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Keluhan: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          '${report.complaints}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      sparepartController
+                                          .SparePartSelectService(
+                                              sparepartController
+                                                  .searchControllerService
+                                                  .text);
+                                      Get.to(() => EditPage(
+                                            report: report,
+                                            itemSelectionController:
+                                                itemSelectionController,
+                                          ));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Warna.main,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Edit Data",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              color: Warna.white,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              SizedBox(height: 3),
-                              Divider(),
-                              SizedBox(height: 8.0),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100.0),
-                                        child: Image.asset(
-                                          'Assets/serviceicon4.png',
-                                          width: 35,
-                                          height: 35,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                      SizedBox(width: 8.0),
-                                      Text(
-                                        'No Service: ${report.serviceReportId}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Customer: ',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${report.name}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Jenis mesin: ',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${report.machineName}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Keluhan: ',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Flexible(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10.0),
-                                          child: Text(
-                                            '${report.complaints}',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     );

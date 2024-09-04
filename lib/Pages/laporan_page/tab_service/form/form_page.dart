@@ -128,7 +128,7 @@ class FormLaporanService extends StatelessWidget {
                       description: '',
                     ),
                     EditableTextField(
-                      title: 'Nama Orang Pemilik Mesin',
+                      title: 'Nama Pelanggan',
                       controller: nameController,
                       maxLength: 20,
                       subtitle: "Masukkan Nama Pelanggan",
@@ -144,7 +144,7 @@ class FormLaporanService extends StatelessWidget {
                       controller: complaintsController,
                       maxLines: 4,
                       maxLength: 120,
-                      subtitle: "Keluhan Yang Dialami",
+                      subtitle: "Masukkan Keluhan",
                     ),
                     const SizedBox(height: 20),
                     Row(

@@ -111,7 +111,7 @@ class EditPage extends StatelessWidget {
                   controller: controller.complainController,
                   maxLines: 4,
                   maxLength: 120,
-                  subtitle: "Keluhan Yang Dialami",
+                  subtitle: "Masukkan Keluhan",
                 ),
                 GestureDetector(
                   onTap: () {
