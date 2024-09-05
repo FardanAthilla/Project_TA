@@ -33,6 +33,7 @@ class SalesReportController extends GetxController {
         Get.find<ItemSelectionController>().resetAllQuantities();
 
         if (!isSnackbarActive) {
+          Get.back();
           isSnackbarActive = true;
           Get.snackbar(
             'Berhasil',
@@ -44,6 +45,7 @@ class SalesReportController extends GetxController {
         }
       } else {
         print('${response.body}');
+        Get.back();
         if (!isSnackbarActive) {
           isSnackbarActive = true;
           Get.snackbar(
@@ -71,7 +73,7 @@ class SalesReportController extends GetxController {
       }
     } finally {
       isLoading.value = false;
-      Future.delayed(Duration(seconds: 5), () {
+      Future.delayed(Duration(seconds: 3), () {
         isSnackbarActive = false;
       });
     }

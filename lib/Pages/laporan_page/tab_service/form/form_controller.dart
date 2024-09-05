@@ -6,9 +6,11 @@ import 'package:project_ta/color.dart';
 class ServiceController extends GetxController {
   var isLoading = false.obs;
   bool isSnackbarActive = false;
-  final ServiceReportController serviceController = Get.put(ServiceReportController());
+  final ServiceReportController serviceController =
+      Get.put(ServiceReportController());
 
-  Future<void> sendServiceRequest(Map<String, dynamic> request, int userId) async {
+  Future<void> sendServiceRequest(
+      Map<String, dynamic> request, int userId) async {
     isLoading.value = true;
 
     try {
@@ -22,7 +24,8 @@ class ServiceController extends GetxController {
       requestMultipart.fields['complaints'] = request['complaints'];
 
       if (request['image'] != null) {
-        requestMultipart.files.add(await http.MultipartFile.fromPath('image', request['image']));
+        requestMultipart.files
+            .add(await http.MultipartFile.fromPath('image', request['image']));
       }
 
       var streamedResponse = await requestMultipart.send();
@@ -32,6 +35,7 @@ class ServiceController extends GetxController {
         serviceController.fetchServiceReportsByUserId(userId);
         Get.back();
         if (!isSnackbarActive) {
+          Get.back();
           isSnackbarActive = true;
           Get.snackbar(
             'Berhasil',

@@ -60,6 +60,7 @@ class EditPageController extends GetxController {
       if (response.statusCode == 200) {
         serviceController.fetchServiceReportsByUserId(userId);
         Get.back();
+        Get.back();
         Get.snackbar(
           'Berhasil',
           'Data berhasil dikirim!',

@@ -44,15 +44,15 @@ class ServiceReportPage extends StatelessWidget {
             if (_controller.userSpecificReports.isEmpty) {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => FormLaporanService(
-                              dateController: dateController,
-                            ));
-                      },
-                      child: Container(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => FormLaporanService(
+                          dateController: dateController,
+                        ));
+                  },
+                  child: Column(
+                    children: [
+                      Container(
                         padding: const EdgeInsets.all(12.0),
                         height: 60,
                         decoration: BoxDecoration(
@@ -69,51 +69,51 @@ class ServiceReportPage extends StatelessWidget {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Laporan Rekap Service'),
+                            Text('Kirim Laporan Service'),
                             Icon(Icons.chevron_right),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Belum Ada Laporan."),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 90, right: 90),
-                              child: ElevatedButton.icon(
-                                onPressed: () async {
-                                  _refreshData();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Warna.main,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                      SizedBox(height: 15),
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Belum Ada Laporan."),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15, left: 90, right: 90),
+                                child: ElevatedButton.icon(
+                                  onPressed: () async {
+                                    _refreshData();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Warna.main,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize: Size(double.infinity, 40),
                                   ),
-                                  minimumSize: Size(double.infinity, 40),
-                                ),
-                                icon: Icon(
-                                  Icons.replay_outlined,
-                                  color: Warna.white,
-                                ),
-                                label: Text(
-                                  "Segarkan",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
+                                  icon: Icon(
+                                    Icons.replay_outlined,
                                     color: Warna.white,
+                                  ),
+                                  label: Text(
+                                    "Segarkan",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      color: Warna.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             }
@@ -179,17 +179,18 @@ class ServiceReportPage extends StatelessWidget {
                     );
                   } else {
                     var report = _controller.userSpecificReports[index - 1];
-                    return GestureDetector(
-                      onTap: () {
-                        sparepartController.SparePartSelectService(
-                            sparepartController.searchControllerService.text);
-                        Get.to(() => EditPage(
-                              report: report,
-                              itemSelectionController: itemSelectionController,
-                            ));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          sparepartController.SparePartSelectService(
+                              sparepartController.searchControllerService.text);
+                          Get.to(() => EditPage(
+                                report: report,
+                                itemSelectionController:
+                                    itemSelectionController,
+                              ));
+                        },
                         child: Container(
                           margin: EdgeInsets.all(8.0),
                           padding: EdgeInsets.all(16.0),
@@ -274,7 +275,7 @@ class ServiceReportPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Customer: ',
+                                        'Nama Pelanggan: ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
@@ -295,7 +296,7 @@ class ServiceReportPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Jenis mesin: ',
+                                        'Nama mesin: ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
@@ -338,8 +339,7 @@ class ServiceReportPage extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ],
+                                  ),                                ],
                               ),
                             ],
                           ),

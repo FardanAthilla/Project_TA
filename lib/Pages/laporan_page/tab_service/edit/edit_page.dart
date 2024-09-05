@@ -28,6 +28,53 @@ class EditPage extends StatelessWidget {
           itemSelectionController: itemSelectionController,
         ));
 
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 4.0,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Mengirim...',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userId = profileController.userData?['user_id'] ?? 0;
@@ -111,7 +158,7 @@ class EditPage extends StatelessWidget {
                   controller: controller.complainController,
                   maxLines: 4,
                   maxLength: 120,
-                  subtitle: "Keluhan Yang Dialami",
+                  subtitle: "Masukkan Keluhan",
                 ),
                 GestureDetector(
                   onTap: () {
@@ -140,7 +187,7 @@ class EditPage extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Daftar Barang'),
+                        Text('Pilih Barang'),
                         Icon(Icons.chevron_right),
                       ],
                     ),
@@ -256,60 +303,71 @@ class EditPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    BottomBarButton(
-                      text: 'Bersihkan',
-                      backgroundColor: Colors.white,
-                      textColor: Warna.danger,
-                      borderColor: Warna.danger,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                'Konfirmasi',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              content: Text(
-                                'Apakah Anda yakin untuk membersihkannya?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Batal',
-                                    style: TextStyle(
-                                      color: Warna.main,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text(
-                                    'Ya',
-                                    style: TextStyle(
-                                      color: Warna.main,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    controller.resetForm();
-                                    Get.back();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                    Obx(
+                      () {
+                        final isDisabled = controller.itemSelectionController
+                            .selectedItemsSparepartService.isEmpty;
+                        return BottomBarButton(
+                          text: 'Bersihkan',
+                          backgroundColor: isDisabled
+                              ? (Colors.grey[300] ?? Colors.grey)
+                              : Colors.white,
+                          textColor: isDisabled ? Colors.grey : Warna.danger,
+                          borderColor: isDisabled ? Colors.grey : Warna.danger,
+                          onPressed: isDisabled
+                              ? null
+                              : () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          'Konfirmasi',
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        content: Text(
+                                          'Apakah Anda yakin untuk membersihkannya?',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text(
+                                              'Batal',
+                                              style: TextStyle(
+                                                color: Warna.main,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text(
+                                              'Ya',
+                                              style: TextStyle(
+                                                color: Warna.main,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              controller.resetForm();
+                                              Get.back();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
                         );
                       },
                     ),
@@ -371,6 +429,7 @@ class EditPage extends StatelessWidget {
                                               ),
                                               onPressed: () async {
                                                 Get.back();
+                                                showLoadingDialog(context);
                                                 controller.isLoading.value =
                                                     true;
                                                 await controller

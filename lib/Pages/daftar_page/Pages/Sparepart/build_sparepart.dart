@@ -240,7 +240,7 @@ Widget buildSparepartList(BuildContext context,
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '${item.quantity} Stok',
+                                  '${item.quantity} Pcs',
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.normal,

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +20,61 @@ class FormLaporanService extends StatelessWidget {
   FormLaporanService({
     required this.dateController,
   });
+
+  bool get isClearDisabled {
+    return nameController.text.isEmpty &&
+        machineNameController.text.isEmpty &&
+        complaintsController.text.isEmpty &&
+        dateController.apiDate.value.isEmpty &&
+        selectedImage.value == null;
+  }
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 4.0,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Mengirim...',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +182,7 @@ class FormLaporanService extends StatelessWidget {
                       description: '',
                     ),
                     EditableTextField(
-                      title: 'Nama Orang Pemilik Mesin',
+                      title: 'Nama Pelanggan',
                       controller: nameController,
                       maxLength: 20,
                       subtitle: "Masukkan Nama Pelanggan",
@@ -144,73 +198,84 @@ class FormLaporanService extends StatelessWidget {
                       controller: complaintsController,
                       maxLines: 4,
                       maxLength: 120,
-                      subtitle: "Keluhan Yang Dialami",
+                      subtitle: "Masukkan Keluhan",
                     ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        BottomBarButton(
-                          text: 'Bersihkan',
-                          backgroundColor: Colors.white,
-                          textColor: Warna.danger,
-                          borderColor: Warna.danger,
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                    'Konfirmasi',
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  content: const Text(
-                                    'Apakah Anda yakin untuk membersihkannya?',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text(
-                                        'Batal',
-                                        style: TextStyle(
-                                          color: Warna.main,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Get.back();
+                        Obx(() {
+                          return BottomBarButton(
+                            text: 'Bersihkan',
+                            backgroundColor: isClearDisabled
+                                ? Colors.grey
+                                : Colors.white,
+                            textColor: isClearDisabled
+                                ? Colors.grey
+                                : Warna.danger,
+                            borderColor: isClearDisabled
+                                ? Colors.grey 
+                                : Warna.danger,
+                            onPressed: isClearDisabled
+                                ? null
+                                : () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                            'Konfirmasi',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          content: const Text(
+                                            'Apakah Anda yakin untuk membersihkannya?',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text(
+                                                'Batal',
+                                                style: TextStyle(
+                                                  color: Warna.main,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text(
+                                                'Ya',
+                                                style: TextStyle(
+                                                  color: Warna.main,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                nameController.clear();
+                                                machineNameController.clear();
+                                                complaintsController.clear();
+                                                dateController.clear();
+                                                selectedImage.value = null;
+                                                Get.back();
+                                              },
+                                            ),
+                                          ],
+                                        );
                                       },
-                                    ),
-                                    TextButton(
-                                      child: Text(
-                                        'Ya',
-                                        style: TextStyle(
-                                          color: Warna.main,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        nameController.clear();
-                                        machineNameController.clear();
-                                        complaintsController.clear();
-                                        dateController.clear();
-                                        selectedImage.value = null;
-                                        Get.back();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
+                                    );
+                                  },
+                          );
+                        }),
                         const SizedBox(width: 10),
                         ValueListenableBuilder<bool>(
                           valueListenable: isLoading,
@@ -309,6 +374,7 @@ class FormLaporanService extends StatelessWidget {
                                                     'image': selectedImage
                                                         .value?.path,
                                                   };
+                                                  showLoadingDialog(context);
 
                                                   try {
                                                     await serviceController

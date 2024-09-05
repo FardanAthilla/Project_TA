@@ -243,7 +243,7 @@ Widget buildMesinList(BuildContext context, StoreController storeController,
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '${item.quantity} Stok',
+                                  '${item.quantity} Pcs',
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.normal,

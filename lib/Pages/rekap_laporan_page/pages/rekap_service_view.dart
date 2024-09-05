@@ -86,7 +86,7 @@ class RekapServicePage extends StatelessWidget {
                     thickness: 1,
                   ),
                   SizedBox(height: 10),
-                  _buildDetailRow('Pengguna', report.user.username),
+                  _buildDetailRow('Pekerja', report.user.username),
                   _buildDetailRow(
                       'Mulai',
                       DateFormat('EEEE, d MMMM y', 'id_ID')
@@ -211,8 +211,12 @@ class RekapServicePage extends StatelessWidget {
                   controller.fetchServiceReports();
                 }
               },
-              items: <String>['Hari ini', '7 Hari Yang Lalu', '30 Hari Yang Lalu','12 Bulan Yang Lalu']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'Hari ini',
+                '7 Hari Yang Lalu',
+                '30 Hari Yang Lalu',
+                '12 Bulan Yang Lalu'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -296,12 +300,12 @@ class RekapServicePage extends StatelessWidget {
                 itemCount: service.length,
                 itemBuilder: (context, index) {
                   var report = service[index];
-                  return GestureDetector(
-                    onTap: () {
-                      _showDetailsPopup(context, report);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: GestureDetector(
+                      onTap: () {
+                                    _showDetailsPopup(context, report);
+                                  },
                       child: Container(
                         margin: EdgeInsets.all(8.0),
                         padding: EdgeInsets.all(16.0),
@@ -360,8 +364,7 @@ class RekapServicePage extends StatelessWidget {
                                 Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0),
+                                      borderRadius: BorderRadius.circular(100.0),
                                       child: Image.asset(
                                         'Assets/serviceicon4.png',
                                         width: 35,
@@ -392,7 +395,7 @@ class RekapServicePage extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Customer: ',
+                                      'Pelanggan: ',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
