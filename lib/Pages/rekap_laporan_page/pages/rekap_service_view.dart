@@ -302,193 +302,168 @@ class RekapServicePage extends StatelessWidget {
                   var report = service[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                DateFormat('EEEE, d MMMM y', 'id_ID')
-                                    .format(report.dateEnd!),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 12.0),
-                                decoration: BoxDecoration(
-                                  color: Warna.main.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(color: Warna.main),
-                                ),
-                                child: Text(
-                                  '${report.status.statusName}',
+                    child: GestureDetector(
+                      onTap: () {
+                                    _showDetailsPopup(context, report);
+                                  },
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  DateFormat('EEEE, d MMMM y', 'id_ID')
+                                      .format(report.dateEnd!),
                                   style: TextStyle(
-                                    color: Warna.hitam,
-                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
                                     fontSize: 14,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 3),
-                          Divider(),
-                          SizedBox(height: 8.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    child: Image.asset(
-                                      'Assets/serviceicon4.png',
-                                      width: 35,
-                                      height: 35,
-                                      fit: BoxFit.contain,
-                                    ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6.0, horizontal: 12.0),
+                                  decoration: BoxDecoration(
+                                    color: Warna.main.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(color: Warna.main),
                                   ),
-                                  SizedBox(width: 8.0),
-                                  Text(
-                                    'No Service: ',
+                                  child: Text(
+                                    '${report.status.statusName}',
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${report.serviceReportId}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 4.0),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Pelanggan: ',
-                                    style: TextStyle(
+                                      color: Warna.hitam,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${report.name}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 4.0),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Jenis mesin: ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${report.machineName}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 4.0),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Keluhan: ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
-                                        '${report.complaints}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _showDetailsPopup(context, report);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Warna.main,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    alignment: Alignment.center,
-                                    width: double.infinity,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Lihat Detail",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            color: Warna.white,
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            SizedBox(height: 3),
+                            Divider(),
+                            SizedBox(height: 8.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(100.0),
+                                      child: Image.asset(
+                                        'Assets/serviceicon4.png',
+                                        width: 35,
+                                        height: 35,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      'No Service: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.serviceReportId}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Pelanggan: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.name}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Jenis mesin: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${report.machineName}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Keluhan: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          '${report.complaints}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

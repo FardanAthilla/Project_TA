@@ -16,7 +16,8 @@ class SalesTabView extends StatelessWidget {
   final DateController dateController;
   final SalesReportController salesReportController;
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final SalesReportController salesController = Get.put(SalesReportController());
+  final SalesReportController salesController =
+      Get.put(SalesReportController());
 
   SalesTabView({
     required this.itemSelectionController,
@@ -25,6 +26,53 @@ class SalesTabView extends StatelessWidget {
     required this.dateController,
     required this.salesReportController,
   });
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 4.0,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Mengirim...',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,62 +235,74 @@ class SalesTabView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BottomBarButton(
-                  text: 'Bersihkan',
-                  backgroundColor: Colors.white,
-                  textColor: Warna.danger,
-                  borderColor: Warna.danger,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text(
-                            'Konfirmasi',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          content: Text(
-                            'Apakah Anda yakin untuk membersihkannya?',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text(
-                                'Batal',
-                                style: TextStyle(
-                                  color: Warna.main,
-                                ),
-                              ),
-                              onPressed: () {
-                                Get.back();
-                              },
-                            ),
-                            TextButton(
-                              child: Text(
-                                'Ya',
-                                style: TextStyle(
-                                  color: Warna.main,
-                                ),
-                              ),
-                              onPressed: () {
-                                dateController.clear();
-                                itemSelectionController.resetAllQuantities();
-                                itemSelectionController.selectedItems.clear();
-                                Get.back();
-                              },
-                            ),
-                          ],
-                        );
-                      },
+                Obx(
+                  () {
+                    final isDisabled =
+                        itemSelectionController.selectedItems.isEmpty;
+                    return BottomBarButton(
+                      text: 'Bersihkan',
+                      backgroundColor: isDisabled
+                          ? (Colors.grey[300] ?? Colors.grey)
+                          : Colors.white,
+                      textColor: isDisabled ? Colors.grey : Warna.danger,
+                      borderColor: isDisabled ? Colors.grey : Warna.danger,
+                      onPressed: isDisabled
+                          ? null
+                          : () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      'Konfirmasi',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    content: Text(
+                                      'Apakah Anda yakin untuk membersihkannya?',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'Batal',
+                                          style: TextStyle(
+                                            color: Warna.main,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                          'Ya',
+                                          style: TextStyle(
+                                            color: Warna.main,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          dateController.clear();
+                                          itemSelectionController
+                                              .resetAllQuantities();
+                                          itemSelectionController.selectedItems
+                                              .clear();
+                                          Get.back();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                     );
                   },
                 ),
@@ -260,6 +320,18 @@ class SalesTabView extends StatelessWidget {
                       onPressed: value
                           ? null
                           : () {
+                              if (itemSelectionController
+                                      .selectedItems.isEmpty ||
+                                  dateController.displayDate.isEmpty) {
+                                Get.snackbar(
+                                  'Gagal Mengirim',
+                                  'Terjadi kesalahan. Silahkan isi semua datanya',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Warna.danger,
+                                  colorText: Warna.teksactive,
+                                );
+                                return;
+                              }
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -302,10 +374,14 @@ class SalesTabView extends StatelessWidget {
                                         ),
                                         onPressed: () async {
                                           Get.back();
+                                          showLoadingDialog(context);
                                           isLoading.value = true;
-                                          await salesReportController.sendSalesReport(
-                                                  dateController,
-                                                  itemSelectionController.selectedItems);
+                                          await salesReportController
+                                              .sendSalesReport(
+                                            dateController,
+                                            itemSelectionController
+                                                .selectedItems,
+                                          );
                                           isLoading.value = false;
                                         },
                                       ),
